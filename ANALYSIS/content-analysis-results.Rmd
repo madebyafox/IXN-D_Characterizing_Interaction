@@ -196,18 +196,18 @@ df_summary <- df %>%
   )
 
 #STACKED BAR BY TASK
-by_task <- ggplot(df_summary, aes(x = TASK, y=c, fill= DATASET)) + 
+ggplot(df_summary, aes(x = TASK, y=c, fill= DATASET)) + 
   geom_col() + 
   geom_text(aes(label=c), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") + 
   labs(title = "Utterances by TASK and DATASET")
 
 #STACKED BAR BY DATASET
-by_dataset <- ggplot(df_summary, aes(x = DATASET, y=c, fill= TASK)) + 
+ggplot(df_summary, aes(x = DATASET, y=c, fill= TASK)) + 
   geom_col() + 
   scale_fill_brewer(type="qual", palette = 1) +
   geom_text(aes(label=c), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") 
 
-(p_raw_utterances <- by_task + by_dataset) 
+
 
 ```
 
@@ -228,160 +228,69 @@ cont %>% addmargins() %>% kbl(caption = title, col.names = cols) %>%  kable_clas
 #SUMMARY TABLE
 title = "Utterances by Participant and DATASET"
 cols = c("Happiness","Space","Total Utterances")
-cont <- table(df$pid, df$DATASET
+cont <- table(df$pid, df$DATASET)
 cont %>% addmargins() %>% kbl(caption = title, col.names = cols) %>%  kable_classic()
 
 
-```
-
-
-```{r}
-
-#VISUALIZE TOTALS
-# gf_bar (~ TASK, fill = ~DATASET, data = df_raw) 
-# gf_bar (~ DATASET, fill = ~TASK, data = df_raw)
-
-ggplot(df_summary, aes(x = TASK, y=c, fill= DATASET)) + 
-  geom_col() + 
-  geom_text(aes(label=c), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") 
-
-# #MOSAIC PLOT
-# vcd::mosaic(main="Proportion of Utterances by TASK and DATASET",
-#             data = df_raw, TASK ~ DATASET, rot_labels=c(0,90,0,0), 
-#             offset_varnames = c(left = 4.5), offset_labels = c(left = -0.5),just_labels = "right",
-#             spacing = spacing_dimequal(unit(1:2, "lines")))
-# 
-# 
-mosaic(formula = ~DATASET + TASK,
-       data = df_raw,
-       main = "Proportion of Utterances by TASK and DATASET",
-       sub = "u = 734 utterance codes",
-       labeling = labeling_values,
-       labeling_args = list(set_varnames = c(graph = "TASK",
-                            datset = "DATASET")))
-
-
-#VISUALIZE PARTICIPANTS
-gf_bar( ~ TASK, fill = ~DATASET, data = df_raw) %>% 
-gf_facet_grid(.~pid)
 
 ```
+
+
+
 
 
 
 
 ```{r UTTERANCE-TASK, warning=FALSE, message=FALSE}
 
-#SUMMARY DFS
-# utterances_by_participant <- df_uniques %>% 
-#   group_by(pid, TASK) %>% 
-#   dplyr::summarise(
-#     n_utterances = n()
-#   )
 
-
-#SUMMARY TABLE
-title = "Utterances by Participant and Task"
-cols = c("Static Task","Interactive Task","Total Utterances")
-cont <- table(df_uniques$pid, df_uniques$TASK)
-cont %>% addmargins() %>% kbl(caption = title, col.names = cols) %>%  kable_classic()
-
-
-# FOR DODGED NOT STACKED
-# gf_bar(  pid ~ . , fill = ~ TASK, data = df_insights,
-#            position = position_dodge(),
-#            orientation = 'y') +
+#VISUALIZE TASK+DATASET FACET BY PARTICIPANTS
+gf_bar( ~ TASK, fill = ~DATASET, data = df) %>% 
+gf_facet_grid(~pid)
 
 #UTTERANCES by PARTICPANT and TASK (horizontal)
-gf_bar(  pid ~ uid , fill = ~ TASK, data = df_uniques) +
+gf_bar(  pid ~ uid , fill = ~ TASK, data = df) +
 # %>%   gf_facet_grid(.~TASK) +
   labs(
     title = "Number of Utterances by Participant and Task",
     subtitle = "some participants were far more talkative than others",
-    x = "number of unique utterances",
+    x = "number of coded utterances",
     y = "participant",
     fill = "Analysis Task"
   )
 
-```
-
-
-```{r UTTERANCE-DATASET, warning=FALSE, message=FALSE}
-
-#SUMMARY TABLE
-title = "Utterances by Participant and Dataset"
-cols = c("Happiness (numeric)"," Space (nominal)","Total Utterances")
-cont <- table(df_uniques$pid, df_uniques$DATASET)
-cont %>% addmargins() %>% kbl(caption = title, col.names = cols) %>%  kable_classic()
-
-
-
-# FOR DODGED NOT STACKED
-# gf_bar(  pid ~ . , fill = ~ TASK, data = df_insights,
-#            position = position_dodge(),
-#            orientation = 'y') +
-
 #UTTERANCES by PARTICPANT and DATASET (horizontal)
-gf_bar(  pid ~ uid , fill = ~ DATASET, data = df_uniques) + 
+gf_bar(  pid ~ uid , fill = ~ DATASET, data = df) + 
   # %>% gf_facet_grid(.~DATASET) +
   labs(
     title = "Number of Utterances by Participant and Dataset",
     subtitle = "Nominal outcome variable (happiness) tended to yield more utterances",
-    x = "number of unique utterances",
+    x = "number of coded utterances",
     y = "participant",
     fill = "Dataset"
   )
 
-
-```
-
-
-```{r UTTERANCE-TASK-DATASET, warning=FALSE, message=FALSE}
-
 #UTTERANCES by PARTICPANT and DATASET (horizontal)
-gf_bar(  pid ~ uid , fill = ~ DATASET, data = df_uniques) %>% 
+gf_bar(  pid ~ uid , fill = ~ DATASET, data = df) %>% 
   gf_facet_grid(.~TASK) + 
   labs(
     title = "Number of Utterances by Participant, Dataset and Task",
     subtitle = "",
-    x = "number of unique utterances",
+    x = "number of coded utterances",
     y = "participant",
     fill = "DATASET"
   )
 
-
-
-
-
-
 ```
-
 
 ## KINDS OF UTTERANCES
 
 ### BY Factors
 
-
 ```{r}
 
-#PREP DATASET FOR VIS
-df <- df_insights %>% mutate(
-  top_code = fct_rev(top_code), #reorder
-  pid = factor(pid, levels = c(
- "bjs827ee1u", "3r2sh20ei", "4728sjuiz", "7ACC0B75","92ghd48xe","iurmer28", "s294hoei", #HAPPINESS-FIRST
-  "j2719eertu2","lkin27js09b","li832lin23","7382kwtue","E1D39056","8v892iige")),
-  data_order = factor(paste(TASK,"_",DATASET)), #create an order var 
-  data_order = recode(data_order, "ixn _ happiness"="space-first",
-                                  "ixn _ space"="happiness-first",
-                                  "NA _ NA"="NA",
-                                  "static _ happiness"="happiness-first",
-                                  "static _ space"="space-first")) %>%  
-  select(pid,uid,TASK,DATASET,top_code, data_order) %>% 
-  #remove handful of rows missing data TODO RESOLVE W/ DYLAN
-  na.omit() %>% arrange(data_order)
-
 #SUMMARIZED DF
-df <- df_insights %>% mutate(
+df_summary <- df %>% mutate(
   top_code = fct_rev(top_code)) %>%  #reorder
   select( TASK, DATASET, top_code) %>% 
   group_by(TASK,DATASET, top_code) %>% 
@@ -389,16 +298,21 @@ df <- df_insights %>% mutate(
     c = n()
   )
 
+#SUMMARY TABLE
+title = "CODED Utterances by TYPE and DATASET"
+cols = c("Static Task","Interactive Task","Total Utterances")
+cont <- table(df$top_code, df$DATASET, df$TASK)
+cont %>% addmargins() 
+# %>% kbl(caption = title, col.names = cols) %>%  kable_classic()
 
-##[stacked bar] UTTERANCES by TYPE, TASK W/ COUNTS
-ggplot (df, aes(DATASET,c, fill= top_code)) + 
+#CODED UTTERANCES BAR BY TASK and DATASET
+(p_coded_utterances <- 
+  ggplot(df_summary, aes(x = TASK, y=c, fill= top_code)) + 
   geom_col() + 
-  facet_grid(.~df$TASK)+
-  geom_text(aes(label = c), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") +
-  scale_fill_brewer(type="qual", palette = 3) +
-  theme_minimal()
-
-
+  facet_grid(.~df_summary$DATASET)+
+  geom_text(aes(label=c), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") + 
+  scale_fill_brewer(type="qual", palette = 3) +  
+  labs(title = "CODED Utterances by TASK and DATASET"))
 
 
 ```
@@ -422,70 +336,177 @@ gf_bar(  TASK ~ uid , fill = ~ DATASET, data = df_insights) %>%
 
 ```{r}
 
-#PREP DATASET FOR VIS
-df <- df_insights %>% mutate(
-  top_code = fct_rev(top_code), #reorder
-  pid = factor(pid, levels = c(
- "bjs827ee1u", "3r2sh20ei", "4728sjuiz", "7ACC0B75","92ghd48xe","iurmer28", "s294hoei", #HAPPINESS-FIRST
-  "j2719eertu2","lkin27js09b","li832lin23","7382kwtue","E1D39056","8v892iige")),
-  data_order = factor(paste(TASK,"_",DATASET)), #create an order var 
-  data_order = recode(data_order, "ixn _ happiness"="space-first",
-                                  "ixn _ space"="happiness-first",
-                                  "NA _ NA"="NA",
-                                  "static _ happiness"="happiness-first",
-                                  "static _ space"="space-first")) %>%  
-  select(pid,uid,TASK,DATASET,top_code, data_order) %>% 
-  #remove handful of rows missing data TODO RESOLVE W/ DYLAN
-  na.omit() %>% arrange(data_order)
+#REMOVE NAS
+d <- df %>% na.omit()
 
-
-#TOP CODES BY FACTORS + PARTICIPANTS
-(parts <- gf_bar( pid ~ ., fill = ~top_code, data = df) %>% 
-  gf_facet_grid(DATASET ~ TASK) + 
-  scale_fill_brewer(type="qual", palette = 3)+
-  theme_minimal())
-
-##GGPLOT VERSION
-ggplot (df) + 
-  geom_bar(aes(y = pid, fill = top_code)) + 
-  facet_wrap(df$TASK)+
+#TOP CODE by PARTICIPANT & TASK
+ggplot (d) +
+  geom_bar(aes(y = pid, fill = top_code)) +
+  facet_wrap(d$TASK)+
   scale_fill_brewer(type="qual", palette = 3) +
-  theme_minimal()
+  theme_minimal() + 
+  labs(title = "TOP-CODE by TASK")
 
-#BIDIRECTIONAL BAR CHART
 
-#SUMMARIZED 
-df_summ <- df %>% group_by(pid,TASK,DATASET,top_code,data_order) %>% 
-  dplyr::summarise(
-    n_utterances = n()
-  ) %>% mutate(
-    adj_utterances = ifelse(TASK=="static", (n_utterances*-1), (n_utterances*1))
-  ) %>% arrange(data_order)
-  
-  
- ggplot (df_summ, aes(x=adj_utterances, y=pid, fill = top_code)) + 
-  geom_bar(stat="identity") + 
-  facet_wrap(~TASK) +
+#TOP CODE by PARTICIPANT & TASK
+ggplot (d) +
+  geom_bar(aes(y = pid, fill = top_code)) +
+  facet_wrap(d$DATASET)+
   scale_fill_brewer(type="qual", palette = 3) +
-  theme_minimal()
+  theme_minimal() + 
+  labs(title = "TOP-CODE by DATASET")
+
+
+#HACK BIDIRECTIONAL BAR CHART
+#SUMMARIZED == reverse static to make bidirectional
+# df_summ <- df %>% group_by(pid,TASK,DATASET,top_code,data_order) %>% 
+#   dplyr::summarise(
+#     n_utterances = n()
+#   ) %>% mutate(
+#     adj_utterances = ifelse(TASK=="static", (n_utterances*-1), (n_utterances*1))
+#   ) %>% arrange(data_order) %>% na.omit()
+#   
+#  #BIDIRECTIONAL REVERSED
+#  ggplot (df_summ, aes(x=adj_utterances, y=pid, fill = top_code)) + 
+#   geom_bar(stat="identity") + 
+#   facet_wrap(~TASK) +
+#   scale_fill_brewer(type="qual", palette = 3) +
+#   theme_minimal()
   
 # df_hap_first <- df %>% filter(data_order == "happiness-first")
 # df_space_first <- df %>% filter(data_order == "space-first")
 # 
-# top <- gf_bar( pid ~ ., fill = ~top_code, data = df_hap_first) %>% 
-#   gf_facet_grid(. ~ TASK) + 
+# top <- gf_bar( pid ~ ., fill = ~top_code, data = df_hap_first) %>%
+#   gf_facet_grid(. ~ TASK) +
 #   scale_fill_brewer(type="qual", palette = 3)+
 #   theme_minimal()
 # 
-# bottom <- gf_bar( pid ~ ., fill = ~top_code, data = df_space_first) %>% 
-#   gf_facet_grid(. ~ TASK) + 
+# bottom <- gf_bar( pid ~ ., fill = ~top_code, data = df_space_first) %>%
+#   gf_facet_grid(. ~ TASK) +
 #   scale_fill_brewer(type="qual", palette = 3)+
 #   theme_minimal()
 # 
-# top+bottom
+# top
+# bottom
 
 ```
 
+```{r}
+
+df_summary <- df %>% 
+group_by(TASK,DATASET, low_code) %>% 
+  dplyr::summarise( 
+    c = n()
+  )
+
+#SUMMARY TABLE
+print("DETAIL-CODES TYPE and DATASET") 
+table(df$low_code, df$TASK, df$DATASET) %>% addmargins()
+
+
+
+# #CODED UTTERANCES BAR BY TASK and DATASET
+# # (p_coded_utterances <- 
+#   ggplot(df_summary, aes(x = TASK, y=c, fill= low_code)) + 
+#   geom_col() + 
+#   facet_grid(.~df_summary$DATASET)+
+#   # geom_text(aes(label=c), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") + 
+#   scale_fill_brewer(type="qual", palette = 3) +  
+#   labs(title = "CODED Utterances by TASK and DATASET")
+#   # )
+# 
+# 
+
+
+```
+
+## PROCESS
+
+```{r PROCESS-codes}
+
+df_process <- df %>% filter(top_code == "PROCESS")
+
+
+summ_process <- df_process %>% 
+group_by(TASK,DATASET, low_code) %>% 
+  dplyr::summarise( 
+    c = n()
+  )
+
+#BY TASK
+gf_bar(df_process, ~TASK, fill = ~low_code)
+
+#BY PARTICIPANT
+gf_bar(df_process, ~TASK, fill = ~low_code) %>% 
+  gf_facet_grid(.~pid)
+
+
+```
+## DATASET
+```{r DATASET-codes}
+
+df_dataset <- df %>% filter(top_code == "DATASET")
+
+
+summ_process <- df_dataset %>% 
+group_by(TASK,DATASET, low_code) %>% 
+  dplyr::summarise( 
+    c = n()
+  )
+
+#BY TASK
+gf_bar(df_dataset, ~TASK, fill = ~low_code)
+
+#BY PARTICIPANT
+gf_bar(df_dataset, ~TASK, fill = ~low_code) %>% 
+  gf_facet_grid(.~pid)
+
+
+```
+## VARIABLE
+
+```{r VARIABLE-codes}
+
+df_variable <- df %>% filter(top_code == "VARIABLE")
+
+
+summ_process <- df_variable %>% 
+group_by(TASK,DATASET, low_code) %>% 
+  dplyr::summarise( 
+    c = n()
+  )
+
+#BY TASK
+gf_bar(df_variable, ~TASK, fill = ~low_code)
+
+#BY PARTICIPANT
+gf_bar(df_variable, ~TASK, fill = ~low_code) %>% 
+  gf_facet_grid(.~pid)
+
+
+```
+## RELATIONSHIP
+
+```{r RELATIONSHIP-codes}
+
+df_relationship <- df %>% filter(top_code == "RELATIONSHIP")
+
+
+summ_process <- df_relationship %>% 
+group_by(TASK,DATASET, low_code) %>% 
+  dplyr::summarise( 
+    c = n()
+  )
+
+#BY TASK
+gf_bar(df_relationship, ~TASK, fill = ~low_code)
+
+#BY PARTICIPANT
+gf_bar(df_relationship, ~TASK, fill = ~low_code) %>% 
+  gf_facet_grid(.~pid)
+
+
+```
 # MODELLING
 
 ```{r VIZ-B4-MODEL, message=FALSE}
