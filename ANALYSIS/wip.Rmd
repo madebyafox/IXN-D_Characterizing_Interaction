@@ -1,0 +1,109 @@
+---
+title: "IXN 1 — Exploratory Data Analysis"
+author: "ANONYMIZED"
+date: "2023-09-08"
+output:
+  html_document:
+    theme: flatly
+    code_folding: hide
+    fig_caption: yes
+    number_sections: yes
+    toc: yes
+    toc_float:
+      collapsed: yes
+      smooth_scroll: yes
+    toc_depth: 4
+  pdf_document:
+    toc: yes
+    toc_depth: '4'
+always_allow_html: yes
+font-family: DejaVu Sans
+mainfont: DejaVu Sans
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+#UTILITIES
+library(Hmisc) # %nin% operator
+library(tidyverse) #all the things
+library(summarytools) #data quality
+library(jtools) #Social Science regression utilities
+
+#VIZ
+library(kableExtra) #printing tables
+library(ggformula) #regression syntax viz
+library(vcd) #mosaic plots
+library(vcdExtra) #mosaic plot helpers
+
+#MODELLING
+# library(easystats) #modelling helpers
+# library(see)
+# library(sjPlot)
+# library(lme4)
+# library(lmerTest) #for CIs in glmer 
+
+options(readr.show_col_types = FALSE) #don't show coltypes on read_csv
+
+```
+
+```{r IMPORT}  
+
+#IMPORT (wrangled) data 
+df_raw <- read_csv("data/CLEAN_UtterancesForAnalysis.csv") 
+
+#WRANGLE into DF of coded utterances 
+#NOT unique utterances, 1 obs for each utterance+detail-code
+df_coded <- df_raw %>% 
+  #rename and factorize cols
+  mutate(
+    #UNIQUE IDS
+    sid = factor(SID), #unique ID for utterance+detail-code
+    pid = factor(PID, levels = c( #define level order so happiness first
+      #HAPPINESS-FIRST    
+      "bjs827ee1u", "3r2sh20ei", "4728sjuiz","7ACC0B75","92ghd48xe","iurmer28", "s294hoei",
+      #SPACE-FIRST    
+      "j2719eertu2","lkin27js09b","li832lin23","7382kwtue","E1D39056","8v892iige")),   
+    #create unique ID for utterances
+    uid = factor(as.numeric(factor(paste(pid,factor(Utterance))))), #construct a unique ID for utterances
+    #recode lower case and order based on true task order
+    TASK = factor(recode(Condition, "Static"="static", "Interactive"="ixn" )),
+    TASK = factor(TASK, levels = c("static", "ixn")), #reorder factor levels
+    #rename Notebook as DATASET
+    DATASET = factor(recode(Notebook, "Happiness"="happiness", "Space"="space")),
+    #create temp dataset order var
+    data_order = factor(paste(TASK,"_",DATASET)), #create an order var 
+    data_order = recode(data_order, "ixn _ happiness"="space-first",
+                                    "ixn _ space"="happiness-first",
+                                    "static _ happiness"="happiness-first",
+                                    "static _ space"="space-first"),
+    utterance = Utterance,
+    reps_group = factor(`group`),
+    reps_all = factor(`All representations`),
+    #rename flags
+    flag_story = `Flag Storytelling`,
+    flag_correction = `Flag Correction`,
+    flag_simultaneous = `Flag Simultaneous Characterization`,
+    #recode and order TOP LEVEL CODES 
+    code_topic = factor(Highlevel),
+    code_topic = recode(code_topic, "ANALYSIS PROCESS" = "PROCESS"),
+    code_topic = factor(code_topic, levels = c("PROCESS","DATASET","VARIABLE","RELATIONSHIP")),
+    code_datatype = factor(`Data Type`),
+    code_detail = factor(`Utterance Type`),
+    timestamp = Timestamp,
+    ixn = factor(interaction_used), #was interaction used?
+    PNUM = factor(PNUM, levels = c("P1", "P2", "P3", "P4", "P5", "P6", 
+                                   "P7", "P8", "P9", "P10", "P11","P12","P13")),
+    
+    ) %>% 
+  select(sid,pid,PNUM,uid,TASK,DATASET,timestamp,ixn,code_topic,code_detail,code_datatype,
+         flag_story, flag_correction, flag_simultaneous, utterance, reps_group, reps_all) 
+
+#REPLACE NA in logicals to FALSE  
+df_coded$flag_story[is.na(df_coded$flag_story)] <- FALSE
+df_coded$flag_correction[is.na(df_coded$flag_correction)] <- FALSE
+df_coded$flag_simultaneous[is.na(df_coded$flag_simultaneous)] <- FALSE
+
+```
+
+**There are `r nrow(df_coded)` rows in the `df_coded` dataset, where each row represents an utterance coding (i.e. utterance + detail code).  There are `r nlevels(df_coded$uid)` _unique_ utterances. The difference indicates utterances that were _dual-coded_ (i.e. two detail-level codes). No more than two codes were applied to a single utterance.  For the purposes of analysis, dual-coded utterances will be treated as two utterances, as they have two distinct (but lexically insepeperable) units of meaning. 
