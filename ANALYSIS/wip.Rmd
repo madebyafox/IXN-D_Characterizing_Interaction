@@ -35,6 +35,7 @@ library(kableExtra) #printing tables
 library(ggformula) #regression syntax viz
 library(vcd) #mosaic plots
 library(vcdExtra) #mosaic plot helpers
+library(ggstatsplot) #dummies
 
 #MODELLING
 # library(easystats) #modelling helpers
@@ -61,7 +62,7 @@ df_coded <- df_raw %>%
     sid = factor(SID), #unique ID for utterance+detail-code
     pid = factor(PID, levels = c( #define level order so happiness first
       #HAPPINESS-FIRST    
-      "bjs827ee1u", "3r2sh20ei", "4728sjuiz","7ACC0B75","92ghd48xe","iurmer28", "s294hoei",
+      "bjs827ee1u", "3r2sh20ei", "4728sjuiz","7ACC0B75","92ghd48xe","iurmer289", "s294hoei",
       #SPACE-FIRST    
       "j2719eertu2","lkin27js09b","li832lin23","7382kwtue","E1D39056","8v892iige")),   
     #create unique ID for utterances
@@ -92,12 +93,13 @@ df_coded <- df_raw %>%
     code_detail = factor(`Utterance Type`),
     timestamp = Timestamp,
     ixn = factor(interaction_used), #was interaction used?
-    PNUM = factor(PNUM, levels = c("P1", "P2", "P3", "P4", "P5", "P6", 
-                                   "P7", "P8", "P9", "P10", "P11","P12","P13")),
+    PNUM = factor(PNUM,levels = c("P6", "P9", "P10", "P2", "P4", "P12","P13", 
+                                   "P5", "P7", "P8", "P3", "P1","P11")),
     
     ) %>% 
   select(sid,pid,PNUM,uid,TASK,DATASET,timestamp,ixn,code_topic,code_detail,code_datatype,
-         flag_story, flag_correction, flag_simultaneous, utterance, reps_group, reps_all) 
+         flag_story, flag_correction, flag_simultaneous, utterance, reps_group, reps_all, data_order) %>% 
+  arrange(data_order)
 
 #REPLACE NA in logicals to FALSE  
 df_coded$flag_story[is.na(df_coded$flag_story)] <- FALSE
@@ -107,3 +109,191 @@ df_coded$flag_simultaneous[is.na(df_coded$flag_simultaneous)] <- FALSE
 ```
 
 **There are `r nrow(df_coded)` rows in the `df_coded` dataset, where each row represents an utterance coding (i.e. utterance + detail code).  There are `r nlevels(df_coded$uid)` _unique_ utterances. The difference indicates utterances that were _dual-coded_ (i.e. two detail-level codes). No more than two codes were applied to a single utterance.  For the purposes of analysis, dual-coded utterances will be treated as two utterances, as they have two distinct (but lexically insepeperable) units of meaning. 
+
+# DATA PROFILE
+
+```{r data-profile, results="asis", warning=FALSE, message=FALSE}
+
+df_coded%>% summarytools::dfSummary(
+             plain.ascii  = FALSE,
+             graph.magnif = 0.75,
+             style        = "grid",
+             tmp.img.dir  = "temp",
+             missing.col = FALSE, 
+             method = "render"
+)
+
+```
+
+
+# UTTERANCES
+
+## by TASK
+
+```{r results='asis'}
+
+print("BY TASK")
+freq(df_coded$TASK, 
+     cumul      = FALSE,
+     headings   = FALSE,
+     report.nas = FALSE,
+     plain.ascii = FALSE) 
+
+```
+
+##  by TASK and DATASET
+```{r results="asis", message=FALSE}
+
+#COUNT BY TASK AND DATASET
+ctable(x = df_coded$TASK, 
+       y = df_coded$DATASET, 
+       prop = "t")  
+
+#DF SUMMARIZED BY TASK + DATASET
+df_summary <- df_coded %>% 
+  group_by(TASK,DATASET) %>% 
+  dplyr::summarise(
+    c = n()
+  )
+
+#STACKED BAR BY TASK
+ggplot(df_summary, aes(x = TASK, y=c, fill= DATASET)) + 
+  geom_col() + 
+  geom_text(aes(label=c), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") + 
+  # scale_fill_brewer(type="qual", palette = 4) +
+  labs( title = "Utterances by TASK and DATASET",
+        subtitle = "More utterances in STATIC; more utterances in HAPPINESS",
+        x= "TASK", y = "count") + theme_minimal() 
+# + theme(legend.position = "blank")
+
+```
+
+## by PARTICIPANT
+```{r results="asis", message=FALSE}
+
+#COUNT BY PARTICIPANT AND TASK
+ctable(x = df_coded$PNUM, 
+       y = df_coded$TASK, 
+       prop = "r")  
+
+#UTTERANCES by PARTICPANT facet TASK
+gf_bar( PNUM ~., fill = ~ DATASET, data = df_coded) %>% 
+  gf_facet_grid(.~TASK) + 
+  labs(
+    title = "Utterances by Participant, Dataset and Task",
+    subtitle = "",
+    x = "number of coded utterances",
+    y = "participant",
+    fill = "DATASET"
+  )
+
+```
+
+# TOP-CODE
+
+## by TASK
+```{r results='asis', message=FALSE}
+
+#COUNT BY TASK
+ctable(x = df_coded$code_topic, 
+       y = df_coded$TASK, 
+       prop = "r")  
+
+#DF SUMMARIZED BY TASK + DATASET
+df_summary <- df_coded %>% 
+  group_by(code_topic, TASK) %>% 
+  dplyr::summarise(
+    c = n()
+  )
+
+#STACKED BAR BY TASK
+ggplot(df_summary, aes(x = TASK, y=c, fill= fct_rev(code_topic))) + 
+  geom_col() + 
+  geom_text(aes(label=c), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") + 
+  scale_fill_brewer(type="qual", palette = 3) +
+  labs( title = "TOPICS by TASK",
+        subtitle = "",
+        x= "TASK", y = "count", fill="TOPIC") + theme_minimal() 
+# + theme(legend.position = "blank")
+```
+
+##  by TASK and DATASET
+```{r results="asis", message=FALSE}
+
+#COUNT BY TASK AND DATASET
+table(df_coded$code_topic, df_coded$TASK, df_coded$DATASET) %>% addmargins()
+
+#DF SUMMARIZED BY TASK + DATASET
+df_summary <- df_coded %>%
+  group_by(code_topic, TASK,DATASET) %>%
+  dplyr::summarise(
+    c = n()
+  )
+
+#STACKED BAR BY TASK FACET DATASET
+ggplot(df_summary, aes(x = TASK, y=c, fill= fct_rev(code_topic))) +
+  facet_wrap(df_summary$DATASET) +
+  geom_col() +
+  geom_text(aes(label=c), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") +
+  scale_fill_brewer(type="qual", palette = 3) +
+  labs( title = "TOPICS by TASK and DATASET",
+        subtitle = "",
+        x= "TASK", y = "count", fill="TOPIC") + theme_minimal()
+# + theme(legend.position = "blank")
+
+```
+
+
+
+## by PARTICIPANT
+```{r results="asis", message=FALSE}
+
+#COUNT BY PARTICIPANT 
+ctable(x = df_coded$PNUM, 
+       y = df_coded$code_topic, 
+       prop = "r")  
+
+#TOPICS by PARTICPANT facet TASK
+gf_bar( PNUM ~., fill = ~ fct_rev(code_topic), data = df_coded) %>% 
+  gf_facet_grid(.~TASK) + 
+  scale_fill_brewer(type="qual", palette = 3) +
+  labs(
+    title = "Utterances by Participant, Dataset and Task",
+    subtitle = "",
+    x = "number of coded utterances",
+    y = "participant",
+    fill = "DATASET"
+  )
+
+
+#TOPICS by PARTICPANT facet TASK
+gf_bar( PNUM ~., fill = ~ fct_rev(code_topic), data = df_coded) %>% 
+  gf_facet_grid(DATASET~TASK) + 
+  scale_fill_brewer(type="qual", palette = 3) +
+  labs(
+    title = "Utterances by Participant, Dataset and Task",
+    subtitle = "",
+    x = "number of coded utterances",
+    y = "participant",
+    fill = "DATASET"
+  )
+```
+
+
+
+
+
+
+# REPRESENTATIONS
+
+How many representations were created?
+```{r results='asis'}
+
+# print("BY TASK")
+# freq(df_coded$TASK, 
+#      cumul      = FALSE,
+#      headings   = FALSE,
+#      report.nas = FALSE,
+#      plain.ascii = FALSE) 
+
+```

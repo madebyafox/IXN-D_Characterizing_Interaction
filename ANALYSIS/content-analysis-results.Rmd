@@ -101,61 +101,7 @@ glimpse(df_uniques)
 ```
 
 
-# DATA PROFILE
-
-TODO TALK WITH DYLAN
-- resolve missing data in TASK, outcomeType, timestamp... 
-- are these the result of 'exploded' utterances that were dual coded? <-- need to carry the other attributes across both obs 
-- max of 2 detail-codes applied, correct?
-- where are the flag codes?
-
-```{r profile, results="asis", warning=FALSE, message=FALSE}
-
-df_insights %>% summarytools::dfSummary(
-             plain.ascii  = FALSE,
-             graph.magnif = 0.75,
-             style        = "grid",
-             tmp.img.dir  = "temp",
-             missing.col = FALSE, 
-             method = "render"
-)
-
-```
-
-
-
-
-
 # UTTERANCES
-
-**How many utterances have we collected and coded?** 
-
-```{r SHAPE, warning=FALSE, error=FALSE}
-
-#COUNTS 
-n_rows <- df_insights %>% nrow()
-n_unique <- nlevels(df_insights$uid)
-n_participants <- nlevels(df_insights$pid)
-
-#count number of codes per unique utterance
-s <- df_insights %>% group_by(uid) %>% 
-    dplyr::summarise(
-      count = n()
-) %>% arrange(desc(count), .by_group = TRUE)
-
-max_codes <- max(s$count)
-
-#display frequencies
-(f <- freq(s$count,
-     order    = "freq",
-     rows     = 1:10,
-     headings = FALSE))
-
-coded_single <- f[1,1]
-coded_double <- f[2,1]
-```
-
-*There are `r n_rows` coded utterances, representing `r n_unique` unique statements made by `r n_participants` in the study. `r coded_single` utterances were single-coded, while `r coded_double` utterances received two detail codes. No more than `r max_codes` were applied to any single utterance.*
 
 
 ## NUMBER OF UTTERANCES 
