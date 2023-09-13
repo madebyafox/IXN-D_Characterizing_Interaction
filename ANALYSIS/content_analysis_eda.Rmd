@@ -121,7 +121,7 @@ df_time <- df_coded %>% mutate(
     task_second = task_end - task_start,
     relative_time = timestamp-task_start,
     rel_time = as.double(relative_time)
-  ) %>% ungroup() %>% select(pid,PNUM, code_topic,TASK,DATASET,timestamp,task_start,relative_time,rel_time)
+  ) %>% ungroup() %>% select(pid,PNUM, code_topic,code_detail, TASK,DATASET,timestamp,task_start,relative_time,rel_time)
 
 
 ```
@@ -268,8 +268,6 @@ ggplot(df_summary, aes(x = TASK, y=c, fill= fct_rev(code_topic))) +
 ##  by TASK and DATASET
 ```{r results="asis", message=FALSE}
 
-#COUNT BY TASK AND DATASET
-table(df_coded$code_topic, df_coded$TASK, df_coded$DATASET) %>% addmargins()
 
 #DF SUMMARIZED BY TASK + DATASET
 df_summary <- df_coded %>%
@@ -310,8 +308,8 @@ gf_bar( PNUM ~., fill = ~ fct_rev(code_topic), data = df_coded) %>%
     subtitle = "",
     x = "number of coded utterances",
     y = "participant",
-    fill = "DATASET"
-  )
+    fill = "TOPIC"
+  ) + theme_minimal()
 
 
 # #TOPICS by PARTICPANT facet TASK
@@ -336,7 +334,7 @@ ggplot(df_time, aes(x=rel_time, y = PNUM, color=fct_rev(code_topic))) +
   facet_grid(df_time$TASK) +
   scale_color_brewer(type="qual", palette = 3) +
   theme_minimal() + labs(
-    title = "Participant Utterances over timecourse of Task",
+    title = "Topic of Utterances over timecourse of Task",
     x= "timecourse of task (seconds)", y = "Participant",
     color = "Topic"
   ) 
@@ -350,7 +348,7 @@ ggplot(df_time, aes(x = rel_time)) +
   scale_fill_brewer(type="qual", palette = 3) +
   scale_color_brewer(type="qual", palette = 3) +
   theme_minimal() + labs(
-    title = "Participant Utterances over timecourse of Task",
+    title = "Topic of Utterance over timecourse of Task",
     x= "timecourse of task (seconds)", y = "frequency of utterances",
     fill = "Topic"
   ) + theme_minimal() + theme(legend.position = "blank")
@@ -363,22 +361,274 @@ ggplot(df_time, aes(x = rel_time)) +
 
 
 
-# REPRESENTATIONS
 
-How many representations were created?
-```{r results='asis'}
 
-print("BY TASK")
-freq(df_coded$reps_all,
-     cumul      = FALSE,
-     headings   = FALSE,
-     report.nas = FALSE,
-     plain.ascii = FALSE)
+# DETAIL—PROCESS
+
+```{r, message=FALSE}
+
+#PREP DATA FRAMES
+df_process <- df_coded %>% 
+  filter(code_topic=="PROCESS") %>% 
+  dplyr::select(pid,PNUM,TASK,DATASET,code_detail)
+
+df_time_process <- df_time %>% 
+  filter(code_topic=="PROCESS") %>% 
+  dplyr::select(pid,PNUM,TASK,DATASET,rel_time,code_detail)
+
+df_summary <- df_process %>% 
+  group_by(code_detail, TASK) %>% 
+  dplyr::summarise(c = n())
+
+
+#DETAILS BY TASK
+ggplot(df_summary, aes(x = TASK, y=c, fill= code_detail)) + 
+  geom_col() + 
+  geom_text(aes(label=c), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") + 
+  scale_fill_brewer(palette="Set2") +
+  labs( title = "PROCESS Utterances by TASK",
+        subtitle = "",
+        x= "TASK", y = "count") + theme_minimal() 
+
+
+#DETAILS DOTPLOT
+ggplot(df_time_process, aes(x=rel_time, y = PNUM, color=fct_rev(code_detail))) + 
+  geom_point(alpha=0.5, size=3) +
+  facet_grid(df_time_process$TASK) +
+  scale_color_brewer(palette="Set2") +
+  theme_minimal() + labs(
+    title = "PROCESS Utterances by timecourse of Task",
+    x= "timecourse of task (seconds)", y = "Participant",
+    color = "Topic"
+  ) 
+
+#DETAIL HISTOGRAMS BY TASK
+ggplot(df_time_process, aes(x = rel_time, fill = fct_rev(code_detail))) + 
+  geom_histogram(binwidth = 30) + 
+  facet_grid(df_time_process$TASK ~ df_time_process$code_detail ) +
+  scale_fill_brewer(palette = "Set2") +
+  theme_minimal() + labs(
+    title = "PROCESS Utterances by timecourse of Task",
+    x= "timecourse of task (seconds)", y = "frequency of utterances"
+  ) + theme_minimal() + theme(legend.position = "blank")
+
 
 ```
 
 
 
+
+# DETAIL—DATASET
+
+```{r, message=FALSE}
+
+#PREP DATA FRAMES
+df_dataset <- df_coded %>% 
+  filter(code_topic=="DATASET") %>% 
+  dplyr::select(pid,PNUM,TASK,DATASET,code_detail)
+
+df_time_dataset <- df_time %>% 
+  filter(code_topic=="DATASET") %>% 
+  dplyr::select(pid,PNUM,TASK,DATASET,rel_time,code_detail)
+
+df_summary <- df_dataset %>% 
+  group_by(code_detail, TASK) %>% 
+  dplyr::summarise(c = n())
+
+
+#DETAILS BY TASK
+ggplot(df_summary, aes(x = TASK, y=c, fill= code_detail)) + 
+  geom_col() + 
+  geom_text(aes(label=c), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") + 
+  scale_fill_brewer(type = "seq", palette = 4) +
+  labs( title = "DATASET Utterances by TASK",
+        subtitle = "",
+        x= "TASK", y = "count") + theme_minimal() 
+
+
+#DETAILS DOTPLOT
+ggplot(df_time_dataset, aes(x=rel_time, y = PNUM, color=fct_rev(code_detail))) + 
+  geom_point(alpha=0.5, size=3) +
+  facet_grid(df_time_dataset$TASK) +
+  scale_color_brewer(type = "seq", palette = 4) +
+  theme_minimal() + labs(
+    title = "VARIABLE Utterances by timecourse of Task",
+    x= "timecourse of task (seconds)", y = "Participant",
+    color = "Topic"
+  ) 
+
+#DETAIL HISTOGRAMS BY TASK
+ggplot(df_time_dataset, aes(x = rel_time, fill = fct_rev(code_detail))) + 
+  geom_histogram(binwidth = 30) + 
+  facet_grid(df_time_dataset$TASK ~ df_time_dataset$code_detail ) +
+  scale_fill_brewer(type = "seq", palette = 4) +
+  theme_minimal() + labs(
+    title = "VARIABLE Utterances by timecourse of Task",
+    x= "timecourse of task (seconds)", y = "frequency of utterances"
+  ) + theme_minimal() + theme(legend.position = "blank")
+
+
+```
+
+
+
+
+
+
+
+# DETAIL—VARIABLE
+
+```{r, message=FALSE}
+
+#PREP DATA FRAMES
+df_variable <- df_coded %>% 
+  filter(code_topic=="VARIABLE") %>% 
+  dplyr::select(pid,PNUM,TASK,DATASET,code_detail)
+
+df_time_variable <- df_time %>% 
+  filter(code_topic=="VARIABLE") %>% 
+  dplyr::select(pid,PNUM,TASK,DATASET,rel_time,code_detail)
+
+df_summary <- df_variable %>% 
+  group_by(code_detail, TASK) %>% 
+  dplyr::summarise(c = n())
+
+
+#DETAILS BY TASK
+ggplot(df_summary, aes(x = TASK, y=c, fill= code_detail)) + 
+  geom_col() + 
+  geom_text(aes(label=c), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") + 
+  scale_fill_brewer(type = "seq", palette = 5) +
+  labs( title = "VARIABLE Utterances by TASK",
+        subtitle = "",
+        x= "TASK", y = "count") + theme_minimal() 
+
+
+#DETAILS DOTPLOT
+ggplot(df_time_variable, aes(x=rel_time, y = PNUM, color=fct_rev(code_detail))) + 
+  geom_point(alpha=0.5, size=3) +
+  facet_grid(df_time_variable$TASK) +
+  scale_color_brewer(type = "seq", palette = 5) +
+  theme_minimal() + labs(
+    title = "VARIABLE Utterances by timecourse of Task",
+    x= "timecourse of task (seconds)", y = "Participant",
+    color = "Topic"
+  ) 
+
+#DETAIL HISTOGRAMS BY TASK
+ggplot(df_time_variable, aes(x = rel_time, fill = fct_rev(code_detail))) + 
+  geom_histogram(binwidth = 30) + 
+  facet_grid(df_time_variable$TASK ~ df_time_variable$code_detail) +
+  scale_fill_brewer(type = "seq", palette = 5) +
+  theme_minimal() + labs(
+    title = "VARIABLE Utterances by timecourse of Task",
+    x= "timecourse of task (seconds)", y = "frequency of utterances"
+  ) + theme_minimal() + theme(legend.position = "blank")
+
+
+```
+
+
+
+
+
+
+
+
+
+
+# DETAIL—RELATIONSHIP
+
+```{r, message=FALSE}
+
+#PREP DATA FRAMES
+df_relationship <- df_coded %>% 
+  filter(code_topic=="RELATIONSHIP") %>% 
+  dplyr::select(pid,PNUM,TASK,DATASET,code_detail)
+
+df_time_relationship <- df_time %>% 
+  filter(code_topic=="RELATIONSHIP") %>% 
+  dplyr::select(pid,PNUM,TASK,DATASET,rel_time,code_detail)
+
+df_summary <- df_relationship %>% 
+  group_by(code_detail, TASK) %>% 
+  dplyr::summarise(c = n())
+
+
+#DETAILS BY TASK
+ggplot(df_summary, aes(x = TASK, y=c, fill= code_detail)) + 
+  geom_col() + 
+  geom_text(aes(label=c), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") + 
+  scale_fill_brewer(type = "seq", palette = 3) +
+  labs( title = "RELATIONSHIP Utterances by TASK",
+        subtitle = "",
+        x= "TASK", y = "count") + theme_minimal() 
+
+
+#DETAILS DOTPLOT
+ggplot(df_time_relationship, aes(x=rel_time, y = PNUM, color=fct_rev(code_detail))) + 
+  geom_point(alpha=0.5, size=3) +
+  facet_grid(df_time_relationship$TASK) +
+  scale_color_brewer(type = "seq", palette = 3) +
+  theme_minimal() + labs(
+    title = "RELATIONSHIP Utterances by timecourse of Task",
+    x= "timecourse of task (seconds)", y = "Participant",
+    color = "Topic"
+  ) 
+
+#DETAIL HISTOGRAMS BY TASK
+ggplot(df_time_relationship, aes(x = rel_time, fill = fct_rev(code_detail))) + 
+  geom_histogram(binwidth = 30) + 
+  facet_grid(df_time_relationship$TASK ~ df_time_relationship$code_detail) +
+  scale_fill_brewer(type = "seq", palette = 3) +
+  theme_minimal() + labs(
+    title = "RELATIONSHIP Utterances by timecourse of Task",
+    x= "timecourse of task (seconds)", y = "frequency of utterances"
+  ) + theme_minimal() + theme(legend.position = "blank")
+
+
+```
+
+
+
+
+
+
+
+
+
+
+# REPRESENTATIONS
+
+## Representation Groups
+How many representations were created?
+```{r results='asis'}
+
+print("BY TASK")
+ctable(df_coded$reps_group, df_coded$TASK,
+    prop = "t",
+    plain.ascii = FALSE)
+
+
+print("BY DATASET")
+ctable(df_coded$reps_group, df_coded$DATASET,
+    prop = "t",
+    plain.ascii = FALSE)
+
+```
+
+## TOPICS + REPRESENTATIONS
+```{r results='asis'}
+
+df <- df_coded 
+
+ctable(df$reps_group, df$code_topic,
+    prop = "t",
+    plain.ascii = FALSE)
+
+
+```
+## TODO PICK UP HERE
 
 # MODELLING
 
