@@ -29,6 +29,7 @@ library(Hmisc) # %nin% operator
 library(tidyverse) #all the things
 library(summarytools) #data quality
 library(jtools) #Social Science regression utilities
+library(lubridate) #dealing with dates
 
 #VIZ
 library(kableExtra) #printing tables
@@ -38,11 +39,11 @@ library(vcdExtra) #mosaic plot helpers
 library(ggstatsplot) #dummies
 
 #MODELLING
-# library(easystats) #modelling helpers
-# library(see)
-# library(sjPlot)
-# library(lme4)
-# library(lmerTest) #for CIs in glmer 
+library(easystats) #modelling helpers
+library(see)
+library(sjPlot)
+library(lme4)
+library(lmerTest) #for CIs in glmer
 
 options(readr.show_col_types = FALSE) #don't show coltypes on read_csv
 
@@ -91,7 +92,7 @@ df_coded <- df_raw %>%
     code_topic = factor(code_topic, levels = c("PROCESS","DATASET","VARIABLE","RELATIONSHIP")),
     code_datatype = factor(`Data Type`),
     code_detail = factor(`Utterance Type`),
-    timestamp = Timestamp,
+    timestamp = adj_timestamp,
     ixn = factor(interaction_used), #was interaction used?
     PNUM = factor(PNUM,levels = c("P6", "P9", "P10", "P2", "P4", "P12","P13", 
                                    "P5", "P7", "P8", "P3", "P1","P11")),
@@ -105,6 +106,23 @@ df_coded <- df_raw %>%
 df_coded$flag_story[is.na(df_coded$flag_story)] <- FALSE
 df_coded$flag_correction[is.na(df_coded$flag_correction)] <- FALSE
 df_coded$flag_simultaneous[is.na(df_coded$flag_simultaneous)] <- FALSE
+
+
+
+#CALCULATE RELATIVE TASK TIMES
+df_time <- df_coded %>% mutate(
+  time = hms::as_hms(timestamp)
+) %>% group_by(pid, TASK) %>% 
+  # dplyr::summarise( .groups="keep",
+  mutate(
+    task_start = hms::as_hms(min(time)),
+    task_end = hms::as_hms(max(time)),
+    task_mins = round(difftime(task_end,task_start, units="mins"),1),
+    task_second = task_end - task_start,
+    relative_time = timestamp-task_start,
+    rel_time = as.double(relative_time)
+  ) %>% ungroup() %>% select(pid,PNUM, code_topic,TASK,DATASET,timestamp,task_start,relative_time,rel_time)
+
 
 ```
 
@@ -141,7 +159,7 @@ freq(df_coded$TASK,
 
 ```
 
-##  by TASK and DATASET
+## by TASK and DATASET
 ```{r results="asis", message=FALSE}
 
 #COUNT BY TASK AND DATASET
@@ -186,6 +204,36 @@ gf_bar( PNUM ~., fill = ~ DATASET, data = df_coded) %>%
     y = "participant",
     fill = "DATASET"
   )
+
+```
+
+
+## by TIME
+
+```{r}
+
+#DOTPLOT
+ggplot(df_time, aes(x=rel_time, y = PNUM)) + 
+  geom_point(alpha=0.5, size=3) +
+  facet_grid(df_time$TASK) +
+  scale_color_brewer(type="qual", palette = 3) +
+  theme_minimal() + labs(
+    title = "Participant Utterances over timecourse of Task",
+    x= "timecourse of task (seconds)", y = "Participant",
+    color = "Topic"
+  ) 
+
+
+#HISTOGRAMS BY TASK
+ggplot(df_time, aes(x = rel_time)) + 
+  geom_histogram(binwidth = 30,aes(y=..density..)) + 
+  geom_density()+
+  facet_grid(df_time$TASK) +
+  theme_minimal() + labs(
+    title = "Participant Utterances over timecourse of Task",
+    x= "timecourse of task (seconds)", y = "frequency of utterances",
+  ) + theme_minimal() + theme(legend.position = "blank")
+
 
 ```
 
@@ -266,17 +314,48 @@ gf_bar( PNUM ~., fill = ~ fct_rev(code_topic), data = df_coded) %>%
   )
 
 
-#TOPICS by PARTICPANT facet TASK
-gf_bar( PNUM ~., fill = ~ fct_rev(code_topic), data = df_coded) %>% 
-  gf_facet_grid(DATASET~TASK) + 
+# #TOPICS by PARTICPANT facet TASK
+# gf_bar( PNUM ~., fill = ~ fct_rev(code_topic), data = df_coded) %>% 
+#   gf_facet_grid(DATASET~TASK) + 
+#   scale_fill_brewer(type="qual", palette = 3) +
+#   labs(
+#     title = "Utterances by Participant, Dataset and Task",
+#     subtitle = "",
+#     x = "number of coded utterances",
+#     y = "participant",
+#     fill = "DATASET"
+#   )
+```
+## by TIME
+
+```{r}
+
+#DOTPLOT
+ggplot(df_time, aes(x=rel_time, y = PNUM, color=fct_rev(code_topic))) + 
+  geom_point(alpha=0.5, size=3) +
+  facet_grid(df_time$TASK) +
+  scale_color_brewer(type="qual", palette = 3) +
+  theme_minimal() + labs(
+    title = "Participant Utterances over timecourse of Task",
+    x= "timecourse of task (seconds)", y = "Participant",
+    color = "Topic"
+  ) 
+
+
+#HISTOGRAMS BY TASK
+ggplot(df_time, aes(x = rel_time)) + 
+  geom_histogram(binwidth = 30,aes(y=..density.., fill = fct_rev(code_topic), color = fct_rev(code_topic))) + 
+  geom_density()+
+  facet_grid(df_time$code_topic ~ df_time$TASK) +
   scale_fill_brewer(type="qual", palette = 3) +
-  labs(
-    title = "Utterances by Participant, Dataset and Task",
-    subtitle = "",
-    x = "number of coded utterances",
-    y = "participant",
-    fill = "DATASET"
-  )
+  scale_color_brewer(type="qual", palette = 3) +
+  theme_minimal() + labs(
+    title = "Participant Utterances over timecourse of Task",
+    x= "timecourse of task (seconds)", y = "frequency of utterances",
+    fill = "Topic"
+  ) + theme_minimal() + theme(legend.position = "blank")
+
+
 ```
 
 
@@ -289,11 +368,116 @@ gf_bar( PNUM ~., fill = ~ fct_rev(code_topic), data = df_coded) %>%
 How many representations were created?
 ```{r results='asis'}
 
-# print("BY TASK")
-# freq(df_coded$TASK, 
-#      cumul      = FALSE,
-#      headings   = FALSE,
-#      report.nas = FALSE,
-#      plain.ascii = FALSE) 
+print("BY TASK")
+freq(df_coded$reps_all,
+     cumul      = FALSE,
+     headings   = FALSE,
+     report.nas = FALSE,
+     plain.ascii = FALSE)
 
 ```
+
+
+
+
+# MODELLING
+
+```{r VIZ-B4-MODEL, message=FALSE}
+
+#DEFINE DATAFRAME
+df <- df_coded %>% select(pid, uid, TASK, DATASET) 
+  
+#MOSAIC PLOT
+mosaic(formula = ~DATASET + TASK, 
+       data = df,
+       main = "Proportion of Utterances by TASK and DATASET", 
+       sub = "u = 734 utterance-codes",
+       labeling = labeling_values,
+       labeling_args = list(set_varnames = c(graph = "TASK",
+                            datset = "DATASET")))
+
+
+
+
+```
+
+
+## UTTERANCES
+
+*How much variance in number of utterances is explained DATASET, TASK and PARTICIPANT?*
+
+### OLS Mixed Effects Models
+```{r OLS-MIXED-EFFECTS-MODELS}
+
+#DEFINE DATAFRAME
+df <- df_coded %>% group_by(pid, DATASET, TASK) %>% 
+  dplyr::summarise( .groups = "keep",
+    n_utterances = n()
+  )
+
+#NUMBER UTTERANCES predicted by DATASET + TASK | participatnt--> MIXED LINEAR REGRESSION
+print("LMER, UTTERANCES ~ DATASET + TASK")
+mm1 <- lmer(n_utterances ~ DATASET + TASK+ (1|pid), data = df)
+paste("Model")
+summ(mm1)
+paste("Partition Variance")
+anova(mm1)
+paste("Confidence Interval on Parameter Estimates")
+confint(mm1)
+report(mm1) #sanity check
+plot_model(mm1,  show.intercept = TRUE)
+check_model(mm1)
+
+
+#NUMBER UTTERANCES predicted by DATASET * TASK  | participatnt--> MIXED LINEAR REGRESSION
+print("LMER, UTTERANCES ~ DATASET X TASK")
+mm2 <- lmer(n_utterances ~ DATASET * TASK + (1|pid), data = df)
+paste("Model")
+summ(mm2)
+paste("Partition Variance")
+anova(mm2)
+paste("Confidence Interval on Parameter Estimates")
+confint(mm2)
+report(mm2) #sanity check
+plot_model(mm2,  show.intercept = TRUE)
+check_model(mm2)
+```
+
+### POISSON Mixed Effects Models
+```{r POISSON-MIXED-EFFECTS-MODELS}
+
+# 
+# #NUMBER UTTERANCES predicted by TASK + DATASET  | participatnt--> POISSON MIXED LINEAR REGRESSION
+# print("POISSON-MER, UTTERANCES ~ DATASET + TASK")
+# pmm1 <- glmer(n_utterances ~ TASK + DATASET + (1|pid), data = df, family = "poisson")
+# paste("Model")
+# summ(pmm1)
+# paste("Partition Variance")
+# anova(pmm1)
+# paste("Confidence Interval on Parameter Estimates")
+# confint(pmm1)
+# report(pmm1) #sanity check
+# plot_model(pmm1,  show.intercept = TRUE)
+# check_model(pmm1)
+# 
+# #NUMBER UTTERANCES predicted by TASK X DATASET  | participatnt--> POISSON MIXED LINEAR REGRESSION
+# print("POISSON-MER, UTTERANCES ~ DATASET X TASK")
+# pmm2 <- glmer(n_utterances ~ TASK * DATASET + (1|pid), data = df, family = "poisson")
+# paste("Model")
+# summ(pmm2)
+# paste("Partition Variance")
+# anova(pmm2)
+# paste("Confidence Interval on Parameter Estimates")
+# confint(pmm2)
+# report(pmm2) #sanity check
+# plot_model(pmm2,  show.intercept = TRUE)
+# check_model(pmm2)
+
+```
+
+
+
+
+
+
+
