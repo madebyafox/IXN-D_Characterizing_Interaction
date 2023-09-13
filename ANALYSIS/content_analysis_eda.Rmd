@@ -49,10 +49,11 @@ options(readr.show_col_types = FALSE) #don't show coltypes on read_csv
 
 ```
 
-```{r IMPORT}
+```{r IMPORT, message=FALSE, warning=FALSE}
 
 #IMPORT (wrangled) data 
 df_raw <- read_csv("data/CLEAN_coded_utterances.csv") 
+df_reps <- read_csv("data/CLEAN_coded_utterances.csv") 
 
 #WRANGLE into DF of coded utterances 
 #NOT unique utterances, 1 obs for each utterance+detail-code
@@ -151,7 +152,15 @@ df_coded%>% summarytools::dfSummary(
 **Utterances** are the lowest-level discrete units of meaning transcribed from the EDA Task transcripts. Utterances are coded at two levels of analysis: (1) **topic-code** gives a *high level* topic of the participant's verbalization, (2) **detail-code** gives the *lower level* detail of the subject.
 
 In the following subsections we explore the distribution of *number of utterances* based on TASK, DATASET, and PARTICIPANT, before describing the distribution of utterances *through the timecourse* of the TASK.
+
 ## [Aggregated] Utterances
+
+FIRST we explore the distribution of utterances by Analysis Task, Dataset, Participant and Time, irrespective of what the utterance was about (topic, detail).
+
+***RQ: How much did participants talk aloud during EDA? When did they talk aloud?***
+
+***Answer:** Inspection of frequency tables and visualizations suggests that the most substantial determinant of how many utterances an individual made is individual participant-level differences, rather than structural differences imposed by the TASK or DATASET. This is not altogether unexpected given the fact that across both tasks (static/interactive) and datasets the structure of the experimental task was the same*
+
 ### by TASK
 
 ```{r results='asis'}
@@ -245,6 +254,18 @@ ggplot(df_time, aes(x = relative_time)) +
 ```
 
 ## [TOPIC of] Utterances
+
+NEXT we explore the distribution of utterances coded by high level TOPIC, across Analysis Task, Dataset, Participant and Time.
+
+***RQ: What kinds of things did participants talk aloud during EDA? Did they progress through any 'topical phases' over the course of the task? Or are topics equally distributed across analysis time?***
+
+***Answer:** Inspection of frequency tables and visualizations suggests that:*
+
+1.  *Individual differences continue to play an important role*
+
+2.  *There do not appear to be strong TASK/DATASET effects on topic that are consistent across participants.*
+
+3.  *PROCESS and RELATIONSHIP topics are more evenly distributed across the timecourse of analysis, while DATASET AND VARIABLE topics are more tightly clustered near the beginning of the analysis. This pattern of distribution is sensical given what we know about EDA, and is consistent with the intuition that patterns of thought during EDA are likely more iterative and situational than we think (or model).*
 
 ### by TASK
 
@@ -386,6 +407,13 @@ ggsave(p, file="figures/topics_in_time.png")
 ```
 
 ## [DETAIL of] Utterances
+
+NEXT we explore the distribution of specific detail utterances across Analysis Task, Dataset, Participant and Time.
+
+***RQ: What specific things did participants talk aloud during EDA? Are there any details folks only*** **mention during static(v)interactive, or nominal(v)numeric tasks? Any substantial changes in proportion by TASK or DATASET?**
+
+***Answer:***
+
 ### DETAIL---PROCESS
 
 ```{r, message=FALSE}
@@ -399,28 +427,44 @@ df_time_process <- df_time %>%
   filter(code_topic=="PROCESS") %>% 
   dplyr::select(pid,PNUM,TASK,DATASET,relative_time,code_detail)
 
-df_summary <- df_process %>% 
+df_summary_task <- df_process %>% 
   group_by(code_detail, TASK) %>% 
+  dplyr::summarise(c = n())
+
+df_summary_dataset <- df_process %>% 
+  group_by(code_detail, DATASET) %>% 
   dplyr::summarise(c = n())
 
 
 #DETAILS BY TASK
-ggplot(df_summary, aes(x = TASK, y=c, fill= code_detail)) + 
+ggplot(df_summary_task, aes(x = TASK, y=c, fill= code_detail)) + 
   geom_col() + 
   geom_text(aes(label=c), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") + 
-  scale_fill_brewer(palette="Set2") +
+  scale_fill_brewer(type="seq", palette = "PuRd") +
   labs( title = "PROCESS Utterances by TASK",
         subtitle = "",
+        caption = "weak to moderate difference in PROCESS utterances by TASK, \n but these do not seem substantial when broken into the two categories",
         x= "TASK", y = "count") + theme_minimal() 
+
+#DETAILS BY DATASET
+ggplot(df_summary_dataset, aes(x = DATASET, y=c, fill= code_detail)) + 
+  geom_col() + 
+  geom_text(aes(label=c), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") + 
+  scale_fill_brewer(type="seq", palette = "PuRd") +
+  labs( title = "PROCESS Utterances by DATASET",
+        subtitle = "",
+        caption = "much more substantial differences in PROCESS utterances by DATASET, \n consistent with intution Ps had more to say about the numeric (vs) nominal outcome variable",
+        x= "DATASET", y = "count") + theme_minimal() 
 
 
 #DETAILS DOTPLOT
 ggplot(df_time_process, aes(x=relative_time, y = PNUM, color=fct_rev(code_detail))) + 
   geom_point(alpha=0.5, size=3) +
   facet_grid(df_time_process$TASK) +
-  scale_color_brewer(palette="Set2") +
+  scale_color_brewer(type="seq", palette = "PuRd") +
   theme_minimal() + labs(
     title = "PROCESS Utterances by timecourse of Task",
+    caption = "appear randomly distributed through time \n expected and reasonable given PROCESS utterances are meta-level",
     x= "timecourse of task (seconds)", y = "Participant",
     color = "Topic"
   ) 
@@ -429,7 +473,7 @@ ggplot(df_time_process, aes(x=relative_time, y = PNUM, color=fct_rev(code_detail
 ggplot(df_time_process, aes(x = relative_time, fill = fct_rev(code_detail))) + 
   geom_histogram(binwidth = 30) + 
   facet_grid(df_time_process$TASK ~ df_time_process$code_detail ) +
-  scale_fill_brewer(palette = "Set2") +
+  scale_fill_brewer(type="seq", palette = "PuRd") +
   theme_minimal() + labs(
     title = "PROCESS Utterances by timecourse of Task",
     x= "timecourse of task (seconds)", y = "frequency of utterances"
@@ -439,10 +483,11 @@ ggplot(df_time_process, aes(x = relative_time, fill = fct_rev(code_detail))) +
 #PROCESSES by PARTICPANT facet TASK
 (p <- gf_bar( PNUM ~., fill = ~ fct_rev(code_detail), data = df_process) %>% 
   gf_facet_grid(.~TASK) + 
-  scale_fill_brewer(type="qual", palette = 3) +
+  scale_fill_brewer(type="seq", palette = "PuRd") +
   labs(
-    title = "Process Utterances by Participant, Dataset and Task",
+    title = "PROCESS Utterances by Participant and Task",
     subtitle = "",
+    caption = "TODO explore P13 representation comments",
     x = "number of coded utterances",
     y = "participant",
     fill = "TOPIC"
@@ -467,29 +512,45 @@ df_time_dataset <- df_time %>%
   filter(code_topic=="DATASET") %>% 
   dplyr::select(pid,PNUM,TASK,DATASET,relative_time,code_detail)
 
-df_summary <- df_dataset %>% 
+df_summary_task <- df_dataset %>% 
   group_by(code_detail, TASK) %>% 
+  dplyr::summarise(c = n())
+
+df_summary_dataset <- df_dataset %>% 
+  group_by(code_detail, DATASET) %>% 
   dplyr::summarise(c = n())
 
 
 #DETAILS BY TASK
-ggplot(df_summary, aes(x = TASK, y=c, fill= code_detail)) + 
+ggplot(df_summary_task, aes(x = TASK, y=c, fill= code_detail)) + 
   geom_col() + 
   geom_text(aes(label=c), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") + 
-  scale_fill_brewer(type = "seq", palette = 4) +
+  scale_fill_brewer(type="seq", palette = 4) +
   labs( title = "DATASET Utterances by TASK",
         subtitle = "",
+        caption = "notable decrease MISSING DATA utterances in IXN \n unsure what might explain this, explore at individual level",
         x= "TASK", y = "count") + theme_minimal() 
+
+#DETAILS BY DATASET
+ggplot(df_summary_dataset, aes(x = DATASET, y=c, fill= code_detail)) + 
+  geom_col() + 
+  geom_text(aes(label=c), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") + 
+  scale_fill_brewer(type="seq", palette = 4) +
+  labs( title = "DATASET Utterances by DATASET",
+        subtitle = "",
+        caption = "minor differences by DATASET  reasonable given DATASET \n  represenations are typically tabluar (data dictionary, describe, head/tail)",
+        x= "DATASET", y = "count") + theme_minimal() 
 
 
 #DETAILS DOTPLOT
 ggplot(df_time_dataset, aes(x=relative_time, y = PNUM, color=fct_rev(code_detail))) + 
   geom_point(alpha=0.5, size=3) +
   facet_grid(df_time_dataset$TASK) +
-  scale_color_brewer(type = "seq", palette = 4) +
+  scale_color_brewer(type="seq", palette = 4) +
   theme_minimal() + labs(
     title = "DATASET Utterances by timecourse of Task",
     x= "timecourse of task (seconds)", y = "Participant",
+    caption = "notable sparsity in center of timecourse, reasonable as EDA normative behavior \n is to consider dataframe shape and missing data at the start of an analysis",
     color = "Topic"
   ) 
 
@@ -497,27 +558,29 @@ ggplot(df_time_dataset, aes(x=relative_time, y = PNUM, color=fct_rev(code_detail
 ggplot(df_time_dataset, aes(x = relative_time, fill = fct_rev(code_detail))) + 
   geom_histogram(binwidth = 30) + 
   facet_grid(df_time_dataset$TASK ~ df_time_dataset$code_detail ) +
-  scale_fill_brewer(type = "seq", palette = 4) +
+  scale_fill_brewer(type="seq", palette = 4) +
   theme_minimal() + labs(
     title = "DATASET Utterances by timecourse of Task",
-    x= "timecourse of task (seconds)", y = "frequency of utterances"
+    x= "timecourse of task (seconds)", y = "frequency of utterances",
+        caption = "sensical that the most uniformly distributed detail code is missing data \n as this can be discovered via graphing",
   ) + theme_minimal() + theme(legend.position = "blank")
 
-#DETAILS by PARTICPANT facet TASK
+
+#DATASET UTTERANCES by PARTICPANT facet TASK
 (p <- gf_bar( PNUM ~., fill = ~ fct_rev(code_detail), data = df_dataset) %>% 
   gf_facet_grid(.~TASK) + 
-  scale_fill_brewer(type="seq", palette = 2) +
+  scale_fill_brewer(type="seq", palette = 4) +
   labs(
-    title = "Dataset Utterances by Participant, Dataset and Task",
+    title = "DATASET Utterances by Participant and Task",
     subtitle = "",
     x = "number of coded utterances",
     y = "participant",
-    fill = "TOPIC"
+    fill = "TOPIC",
+    caption = "P11, P12 contribute to MISSING DATA \n P9 contributes largely to variable metadata \n INVESTIGATE FURTHER",
   ) + theme_minimal()
 )
 
 ggsave(p, file="figures/dataset_counts.png")
-
 
 
 
@@ -536,28 +599,44 @@ df_time_variable <- df_time %>%
   filter(code_topic=="VARIABLE") %>% 
   dplyr::select(pid,PNUM,TASK,DATASET,relative_time,code_detail)
 
-df_summary <- df_variable %>% 
+df_summary_task <- df_variable %>% 
   group_by(code_detail, TASK) %>% 
+  dplyr::summarise(c = n())
+
+df_summary_dataset <- df_variable %>% 
+  group_by(code_detail, DATASET) %>% 
   dplyr::summarise(c = n())
 
 
 #DETAILS BY TASK
-ggplot(df_summary, aes(x = TASK, y=c, fill= code_detail)) + 
+ggplot(df_summary_task, aes(x = TASK, y=c, fill= code_detail)) + 
   geom_col() + 
   geom_text(aes(label=c), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") + 
-  scale_fill_brewer(type = "seq", palette = 5) +
+  scale_fill_brewer(type="seq", palette = 5) +
   labs( title = "VARIABLE Utterances by TASK",
         subtitle = "",
+        caption = "notably more RANGE obs in STATIC than INTERACTIVE \n TODO consider collapsing distribution-variance ",
         x= "TASK", y = "count") + theme_minimal() 
+
+#DETAILS BY DATASET
+ggplot(df_summary_dataset, aes(x = DATASET, y=c, fill= code_detail)) + 
+  geom_col() + 
+  geom_text(aes(label=c), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") + 
+  scale_fill_brewer(type="seq", palette = 5) +
+  labs( title = "VARIABLE Utterances by DATASET",
+        caption = "Notably more SHAPE in SPACE than HAPPINESS \n notably fewer RANGE in SPACE than HAPPINESS \n TODO are shape and range normalized across variable types? ",
+        subtitle = "",
+        x= "DATASET", y = "count") + theme_minimal() 
 
 
 #DETAILS DOTPLOT
 ggplot(df_time_variable, aes(x=relative_time, y = PNUM, color=fct_rev(code_detail))) + 
   geom_point(alpha=0.5, size=3) +
   facet_grid(df_time_variable$TASK) +
-  scale_color_brewer(type = "seq", palette = 5) +
+  scale_color_brewer(type="seq", palette = 5) +
   theme_minimal() + labs(
     title = "VARIABLE Utterances by timecourse of Task",
+    caption = "IXN appears more BIMODAL than STATIC where the distribution is more uniform",
     x= "timecourse of task (seconds)", y = "Participant",
     color = "Topic"
   ) 
@@ -565,28 +644,30 @@ ggplot(df_time_variable, aes(x=relative_time, y = PNUM, color=fct_rev(code_detai
 #DETAIL HISTOGRAMS BY TASK
 ggplot(df_time_variable, aes(x = relative_time, fill = fct_rev(code_detail))) + 
   geom_histogram(binwidth = 30) + 
-  facet_grid(df_time_variable$TASK ~ df_time_variable$code_detail) +
-  scale_fill_brewer(type = "seq", palette = 5) +
+  facet_grid(df_time_variable$TASK ~ df_time_variable$code_detail ) +
+  scale_fill_brewer(type="seq", palette = 5) +
   theme_minimal() + labs(
     title = "VARIABLE Utterances by timecourse of Task",
     x= "timecourse of task (seconds)", y = "frequency of utterances"
   ) + theme_minimal() + theme(legend.position = "blank")
 
 
-#DETAILS by PARTICPANT facet TASK
+#VARIABLE UTTERANCES by PARTICPANT facet TASK
 (p <- gf_bar( PNUM ~., fill = ~ fct_rev(code_detail), data = df_variable) %>% 
   gf_facet_grid(.~TASK) + 
   scale_fill_brewer(type="seq", palette = 5) +
   labs(
-    title = "Variable Utterances by Participant, Dataset and Task",
+    title = "VARIABLE Utterances by Participant and Task",
     subtitle = "",
     x = "number of coded utterances",
     y = "participant",
-    fill = "TOPIC"
+    fill = "TOPIC",
+    caption = "substantial individual differences, most everyone made some comments \n at some point about distribution shape, but \n discussion of outliers, variance and range was more idiosyncratic \n TODO INVESTIGATE P4 STATIC RANGE very high",
   ) + theme_minimal()
 )
 
-ggsave(p, file="figures/variables_counts.png")
+ggsave(p, file="figures/variable_counts.png")
+
 
 ```
 
@@ -603,28 +684,49 @@ df_time_relationship <- df_time %>%
   filter(code_topic=="RELATIONSHIP") %>% 
   dplyr::select(pid,PNUM,TASK,DATASET,relative_time,code_detail)
 
-df_summary <- df_relationship %>% 
+df_summary_task <- df_relationship %>% 
   group_by(code_detail, TASK) %>% 
+  dplyr::summarise(c = n())
+
+df_summary_relationship <- df_relationship %>% 
+  group_by(code_detail, DATASET) %>% 
   dplyr::summarise(c = n())
 
 
 #DETAILS BY TASK
-ggplot(df_summary, aes(x = TASK, y=c, fill= code_detail)) + 
+ggplot(df_summary_task, aes(x = TASK, y=c, fill= code_detail)) + 
   geom_col() + 
   geom_text(aes(label=c), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") + 
-  scale_fill_brewer(type = "seq", palette = 3) +
+  scale_fill_brewer(type="seq", palette = 3) +
   labs( title = "RELATIONSHIP Utterances by TASK",
         subtitle = "",
+        caption = "TODO think about proportion of existence and strength/direction",
         x= "TASK", y = "count") + theme_minimal() 
 
+#DETAILS BY DATASET
+ggplot(df_summary_relationship, aes(x = DATASET, y=c, fill= code_detail)) + 
+  geom_col() + 
+  geom_text(aes(label=c), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") + 
+  scale_fill_brewer(type="seq", palette = 3) +
+  labs( title = "RELATIONSHIP Utterances by DATASET",
+        subtitle = "",
+        caption = "substantial differences by DATASET, \n consistent with pattern of results with VARIABLE utterances \n perhaps due to sparsity of knowledge of analysis of nominal X nominal relationships, and tool coverage",
+        x= "DATASET", y = "count") + theme_minimal() 
+
+
+gf_bar( ~code_detail, fill = ~code_detail, data = df_relationship) %>% 
+  gf_facet_grid(TASK ~ DATASET) + labs(
+    caption = "TODO CONSIDER THIS",
+  )
 
 #DETAILS DOTPLOT
 ggplot(df_time_relationship, aes(x=relative_time, y = PNUM, color=fct_rev(code_detail))) + 
   geom_point(alpha=0.5, size=3) +
   facet_grid(df_time_relationship$TASK) +
-  scale_color_brewer(type = "seq", palette = 3) +
+  scale_color_brewer(type="seq", palette = 3) +
   theme_minimal() + labs(
     title = "RELATIONSHIP Utterances by timecourse of Task",
+    caption = "uniformly distributed, as expected \n may see variance if dimension of HYPOTHESIS vs OBSERVATION was coded",
     x= "timecourse of task (seconds)", y = "Participant",
     color = "Topic"
   ) 
@@ -632,20 +734,20 @@ ggplot(df_time_relationship, aes(x=relative_time, y = PNUM, color=fct_rev(code_d
 #DETAIL HISTOGRAMS BY TASK
 ggplot(df_time_relationship, aes(x = relative_time, fill = fct_rev(code_detail))) + 
   geom_histogram(binwidth = 30) + 
-  facet_grid(df_time_relationship$TASK ~ df_time_relationship$code_detail) +
-  scale_fill_brewer(type = "seq", palette = 3) +
+  facet_grid(df_time_relationship$TASK ~ df_time_relationship$code_detail ) +
+  scale_fill_brewer(type="seq", palette = 3) +
   theme_minimal() + labs(
     title = "RELATIONSHIP Utterances by timecourse of Task",
     x= "timecourse of task (seconds)", y = "frequency of utterances"
   ) + theme_minimal() + theme(legend.position = "blank")
 
 
-#DETAILS by PARTICPANT facet TASK
+#RELATIONSHIP UTTERANCES by PARTICPANT facet TASK
 (p <- gf_bar( PNUM ~., fill = ~ fct_rev(code_detail), data = df_relationship) %>% 
   gf_facet_grid(.~TASK) + 
   scale_fill_brewer(type="seq", palette = 3) +
   labs(
-    title = "Relationship Utterances by Participant, Dataset and Task",
+    title = "RELATIONSHIP Utterances by Participant and Task",
     subtitle = "",
     x = "number of coded utterances",
     y = "participant",
@@ -718,7 +820,7 @@ df <- df_coded %>% select(pid, uid, TASK, DATASET)
 
 *How much variance in number of utterances is explained DATASET, TASK and PARTICIPANT?*
 
-### OLS Mixed Effects Models
+### OLS Mixed Effects Model
 
 ```{r OLS-MIXED-EFFECTS-MODELS}
 
@@ -756,10 +858,13 @@ plot_model(mm2,  show.intercept = TRUE)
 check_model(mm2)
 ```
 
-### POISSON Mixed Effects Models
+
 
 ```{r POISSON-MIXED-EFFECTS-MODELS}
-
+### POISSON Mixed Effects Models
+### ARF poisson is recommended over OLS regression for count data 
+### BUT they are challenging to interpret (log odds) and the estimates need to be translated (logodds?)
+### NOT innapropriate to use OLS instead
 # 
 # #NUMBER UTTERANCES predicted by TASK + DATASET  | participatnt--> POISSON MIXED LINEAR REGRESSION
 # print("POISSON-MER, UTTERANCES ~ DATASET + TASK")
