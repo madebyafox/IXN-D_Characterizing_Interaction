@@ -452,7 +452,7 @@ ggplot(df_time_dataset, aes(x=rel_time, y = PNUM, color=fct_rev(code_detail))) +
   facet_grid(df_time_dataset$TASK) +
   scale_color_brewer(type = "seq", palette = 4) +
   theme_minimal() + labs(
-    title = "VARIABLE Utterances by timecourse of Task",
+    title = "DATASET Utterances by timecourse of Task",
     x= "timecourse of task (seconds)", y = "Participant",
     color = "Topic"
   ) 
@@ -463,7 +463,7 @@ ggplot(df_time_dataset, aes(x = rel_time, fill = fct_rev(code_detail))) +
   facet_grid(df_time_dataset$TASK ~ df_time_dataset$code_detail ) +
   scale_fill_brewer(type = "seq", palette = 4) +
   theme_minimal() + labs(
-    title = "VARIABLE Utterances by timecourse of Task",
+    title = "DATASET Utterances by timecourse of Task",
     x= "timecourse of task (seconds)", y = "frequency of utterances"
   ) + theme_minimal() + theme(legend.position = "blank")
 
