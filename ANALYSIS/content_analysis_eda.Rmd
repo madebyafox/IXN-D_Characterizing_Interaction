@@ -165,7 +165,30 @@ df_joined <- df_coded %>%
     reps_group  = factor(str_replace(reps_group, "Multi-view Chart", "multiviewchart")),                         
     reps_multi  = str_detect(reps_group,"_")) %>%  #flag multiple-representations 
   separate_longer_delim(reps_group, delim = "_") %>% #pivot longer based _ in reps_group
-  mutate (REP = factor(reps_group)) %>% 
+  mutate (
+    REP = factor(reps_group),
+    #create simplified condensed detail reps
+    rep_simple = recode(REP,
+                       
+          "multiviewchart" = "multi-view chart",  
+          "heatmap" = "heatmap",         
+          "pairplot" = "pairplot",        
+          "stripplot" = "stripplot",       
+          "lineplot" = "lineplot",        
+          "scatterplot" = "scatterplot",     
+          "barplot" = "barplot",         
+          "double-profiler" = "profile", 
+          "profile" = "profile", 
+          "hist" = "histogram",            
+          "python" = "CODE",           
+          "dictionary" = "TABLE",   
+          "describe" = "TABLE",
+          "dataframe" = "TABLE",        
+          "info" = "TABLE",             
+          "columns" = "TABLE",          
+          "none"  ="NONE"     
+          
+          )) %>% 
   dplyr::select(-reps_group) %>%  #drop reps_group column since now separated
   mutate(
     rep_type = recode(REP, 
@@ -737,63 +760,60 @@ gf_bar( ~ rep_type, fill = ~code_detail , data = df) %>%
 
 ```{r}
 
-
-
-# gf_bar(  ~ REP, fill = ~fct_rev(rep_type), data = df_telemetry) %>% 
-#   gf_facet_grid( DATASET ~ TASK) + 
-#   scale_fill_brewer(type="qual", palette = 1, direction = -1) +
-#   coord_flip() + 
-#   scale_x_discrete(limits = c( 
-#                           "multiviewchart",
-#                           "heatmap",
-#                           "pairplot",
-#                           "stripplot",
-#                           "lineplot",
-#                           "scatterplot",
-#                           "barplot",
-#                           "profile",
-#                           "hist",
-#                           "describe",
-#                           "info",
-#                           "columns",
-#                           "dataframe"
-#     
-#   ))+
-#   theme_minimal() + labs(
-#     title = "[TELEMETRY]  Representations DETAIL by FACTORS"
-# )
-
+#PAPER FIGURE
 d <- df_joined %>% filter(code_topic =="PROCESS")
-
-gf_bar(  ~ REP, fill = ~(code_detail), data = d) %>% 
+(p <- gf_bar(  ~ rep_simple, fill = ~(code_detail), data = d) %>% 
   gf_facet_grid( DATASET ~ TASK) + 
   # scale_fill_brewer(type="qual", palette = 1, direction = -1) +
   scale_fill_manual(values = c("#C4B6D9","#957EB4"))+
   coord_flip() + 
-  # scale_x_discrete(limits = c(
-                           "multiviewchart",
-                           "heatmap",
-                           "pairplot",
-                           "stripplot",
-                           "lineplot",
-                           "scatterplot",
-                           "barplot",
-                           "profile",
-                           "hist",
-                           "info",
-                           "dictionary",
-                           "describe",
-                           "dataframe",
-                            "python"
-                           "none"
-  # 
-  # ))+
+  scale_x_discrete(limits = c(
+           "multi-view chart",
+           "heatmap",
+           "pairplot",
+           "stripplot",
+           "lineplot",
+           "scatterplot",
+           "barplot",
+           "profile",
+           "histogram",
+           "CODE",
+           "TABLE",
+           "NONE"
+  ))+
   theme_minimal() + labs(
-    title = "[TELEMETRY]  Representations DETAIL by FACTORS"
-)
+    title = "Utterance-Representations DETAIL by FACTORS"
+))
+
+ggsave(p, file="figures/UTTERANCE-REP_detail_PROCESS_factors.png", width=6, height=4)
 
 
 ```
+#### PROCESS-REPS-IXN
+```{r}
+
+#PAPER FIGURE
+d <- df_joined %>% filter(code_topic == "PROCESS") %>% filter(TASK=="ixn")
+
+#PAPER FIGURE
+#DOTPLOT—BW
+( p <- ggplot(d, aes(x=relative_time, y = PNUM, color = ixn)) + 
+  geom_point(alpha=0.5, size=3) +
+  facet_grid(d$DATASET) +
+  # scale_color_brewer(type="qual", palette = 3) +
+  scale_color_manual(values=c("black","#D81897")) +
+  theme_minimal() + labs(
+    title = "PROCESS Utterances USING INTERACTION",
+    x= "timecourse of task (seconds)", y = "Participant",
+    color = "USING IXN"
+  ))
+
+
+ggsave(p, file="figures/IXN_PROCESS_time.png", width=6, height=4)
+
+
+```
+
 
 
 #### PROCESS-REPS-LOW STUCK HERE
@@ -943,6 +963,64 @@ ggsave(p, file="figures/UTTERANCE_detail_DATASET_participants.png",width=6, heig
 
 ```
 
+
+#### DATASET-REPS-LOW
+
+```{r}
+
+#PAPER FIGURE
+d <- df_joined %>% filter(code_topic =="DATASET")
+(p <- gf_bar(  ~ rep_simple, fill = ~(code_detail), data = d) %>% 
+  gf_facet_grid( DATASET ~ TASK) + 
+  scale_fill_brewer(type="seq", palette = "Greens") +
+  coord_flip() + 
+  scale_x_discrete(limits = c(
+           "multi-view chart",
+           "heatmap",
+           "pairplot",
+           "stripplot",
+           "lineplot",
+           "scatterplot",
+           "barplot",
+           "profile",
+           "histogram",
+           "CODE",
+           "TABLE",
+           "NONE"
+  ))+
+  theme_minimal() + labs(
+    title = "Utterance-Representations DETAIL by FACTORS"
+))
+
+ggsave(p, file="figures/UTTERANCE-REP_detail_DATASET_factors.png", width=6, height=4)
+
+
+```
+
+#### DATASET-REPS-IXN
+```{r}
+
+#PAPER FIGURE
+d <- df_joined %>% filter(code_topic == "DATASET") %>% filter(TASK=="ixn")
+
+#PAPER FIGURE
+#DOTPLOT—BW
+( p <- ggplot(d, aes(x=relative_time, y = PNUM, color = ixn)) + 
+  geom_point(alpha=0.5, size=3) +
+  facet_grid(d$DATASET) +
+  scale_color_manual(values=c("black","#D81897")) +
+  theme_minimal() + labs(
+    title = "DATASET Utterances USING INTERACTION",
+    x= "timecourse of task (seconds)", y = "Participant",
+    color = "USING IXN"
+  ))
+
+
+ggsave(p, file="figures/IXN_DATASET_time.png", width=6, height=4)
+
+
+```
+
 ### DETAIL---VARIABLE
 
 ```{r, message=FALSE}
@@ -1025,6 +1103,63 @@ ggplot(df_time_variable, aes(x = relative_time, fill = fct_rev(code_detail))) +
 )
 
 ggsave(p, file="figures/UTTERANCE_detail_VARIABLE_participants.png", width=6, height=4)
+
+
+```
+
+#### VARIABLE-REPS-LOW
+
+```{r}
+
+#PAPER FIGURE
+d <- df_joined %>% filter(code_topic =="VARIABLE")
+(p <- gf_bar(  ~ rep_simple, fill = ~(code_detail), data = d) %>% 
+  gf_facet_grid( DATASET ~ TASK) + 
+  scale_fill_manual(values=c("#5AB4AC","#AED8D2","#03655E"))+
+  coord_flip() + 
+  scale_x_discrete(limits = c(
+           "multi-view chart",
+           "heatmap",
+           "pairplot",
+           "stripplot",
+           "lineplot",
+           "scatterplot",
+           "barplot",
+           "profile",
+           "histogram",
+           "CODE",
+           "TABLE",
+           "NONE"
+  ))+
+  theme_minimal() + labs(
+    title = "Utterance-Representations DETAIL by FACTORS"
+))
+
+ggsave(p, file="figures/UTTERANCE-REP_detail_VARIABLE_factors.png", width=6, height=4)
+
+
+```
+
+#### VARIABLE-REPS-IXN
+```{r}
+
+#PAPER FIGURE
+d <- df_joined %>% filter(code_topic == "VARIABLE") %>% filter(TASK=="ixn")
+
+#PAPER FIGURE
+#DOTPLOT—BW
+( p <- ggplot(d, aes(x=relative_time, y = PNUM, color = ixn)) + 
+  geom_point(alpha=0.5, size=3) +
+  facet_grid(d$DATASET) +
+  scale_color_manual(values=c("black","#D81897")) +
+  theme_minimal() + labs(
+    title = "VARIABLE Utterances USING INTERACTION",
+    x= "timecourse of task (seconds)", y = "Participant",
+    color = "USING IXN"
+  ))
+
+
+ggsave(p, file="figures/IXN_VARIABLE_time.png", width=6, height=4)
 
 
 ```
@@ -1126,9 +1261,68 @@ ggsave(p, file="figures/UTTERANCE_detail_RELATIONSHIP_participants.png")
 
 ```
 
+#### RELATIONSHIP-REPS-LOW
+
+```{r}
+
+#PAPER FIGURE
+d <- df_joined %>% filter(code_topic =="RELATIONSHIP")
+(p <- gf_bar(  ~ rep_simple, fill = ~(code_detail), data = d) %>% 
+  gf_facet_grid( DATASET ~ TASK) + 
+ scale_fill_manual(values=c(
+              "#C5D3DE",
+              "#C0DCF1",
+              "#90CBE4",
+              "#4EB0DA",
+              "#0083C2",
+              "#0051A1"))+
+  coord_flip() + 
+  scale_x_discrete(limits = c(
+           "multi-view chart",
+           "heatmap",
+           "pairplot",
+           "stripplot",
+           "lineplot",
+           "scatterplot",
+           "barplot",
+           "profile",
+           "histogram",
+           "CODE",
+           "TABLE",
+           "NONE"
+  ))+
+  theme_minimal() + labs(
+    title = "Utterance-Representations DETAIL by FACTORS"
+))
+
+ggsave(p, file="figures/UTTERANCE-REP_detail_RELATIONSHIP_factors.png", width=6, height=4)
 
 
+```
 
+#### RELATIONSHIP-REPS-IXN
+```{r}
+
+#PAPER FIGURE
+d <- df_joined %>% filter(code_topic == "RELATIONSHIP") %>% filter(TASK=="ixn")
+
+#PAPER FIGURE
+#DOTPLOT—BW
+( p <- ggplot(d, aes(x=relative_time, y = PNUM, color = ixn)) + 
+  geom_point(alpha=0.5, size=3) +
+  facet_grid(d$DATASET) +
+  scale_color_manual(values=c("black","#D81897")) +
+  theme_minimal() + labs(
+    title = "RELATIONSHIP Utterances USING INTERACTION",
+    x= "timecourse of task (seconds)", y = "Participant",
+    color = "USING IXN"
+  ))
+
+
+ggsave(p, file="figures/IXN_RELATIONSHIP_time.png", width=6, height=4)
+
+
+```
 # REPRESENTATIONS
 
 **Representations** are computationally-generated visual-spatial artifacts that participants use during the EDA tasks. These include data visualizations, but also tabular code outputs, or other data structures returned by Python code.  
