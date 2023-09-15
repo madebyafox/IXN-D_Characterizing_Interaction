@@ -144,17 +144,17 @@ df_joined <- df_coded %>%
   dplyr::select(-reps_group) %>%  #drop reps_group column since now separated
   mutate(
     rep_type = recode(REP, 
-                      "hist" = "VIS",                      
-                      "profile" = "VIS",                   
-                      "scatterplot" = "VIS",               
-                      "barplot" = "VIS",                   
-                      "stripplot" = "VIS",                 
-                      "lineplot" = "VIS",                     
-                      "heatmap" = "VIS",                    
-                      "pairplot" = "VIS",                   
-                      "multiviewchart" = "VIS",           
-                      "double-profiler" = "VIS",           
-                      "profile" = "VIS", 
+                      "hist" = "CHART",                      
+                      "profile" = "CHART",                   
+                      "scatterplot" = "CHART",               
+                      "barplot" = "CHART",                   
+                      "stripplot" = "CHART",                 
+                      "lineplot" = "CHART",                     
+                      "heatmap" = "CHART",                    
+                      "pairplot" = "CHART",                   
+                      "multiviewchart" = "CHART",           
+                      "double-profiler" = "CHART",           
+                      "profile" = "CHART", 
                       "python" = "CODE",                    
                       "dictionary" = "CODE",   
                       "describe" = "CODE",
@@ -200,24 +200,27 @@ df_telemetry <- df_raw_telemetry %>%
     #none and other are python code not of the tabular forms we look for
     REP %nin% c("none","error","markdown","other")
   ) %>% mutate(
+    REP = recode_factor(REP, 
+               "double-profiler" = "profile",
+               "countplot" = "barplot"),
     REP = factor(REP), #reset factor levels
     rep_type = recode(REP,
-                      "dictionary" = "TABLE",   
+                      # "dictionary" = "TABLE",   
                       "describe" = "TABLE",
                       "dataframe" = "TABLE",         
                       "info" = "TABLE",                      
                       "columns" = "TABLE",
-                      "hist" = "VIS",                      
-                      "profile" = "VIS",                   
-                      "double-profiler" = "VIS",           
-                      "countplot" = "VIS",
-                      "barplot" = "VIS",                   
-                      "scatterplot" = "VIS",               
-                      "lineplot" = "VIS",                     
-                      "stripplot" = "VIS",                 
-                      "pairplot" = "VIS",                   
-                      "heatmap" = "VIS",                    
-                      "multiviewchart" = "VIS"
+                      "hist" = "CHART",                      
+                      "profile" = "CHART",                   
+                      "double-profiler" = "CHART",           
+                      "countplot" = "CHART",
+                      "barplot" = "CHART",                   
+                      "scatterplot" = "CHART",               
+                      "lineplot" = "CHART",                     
+                      "stripplot" = "CHART",                 
+                      "pairplot" = "CHART",                   
+                      "heatmap" = "CHART",                    
+                      "multiviewchart" = "CHART"
                       )) %>%      
   dplyr::select(pid,PNUM,TASK,DATASET,data_order,timestamp,time_elapsed,technique,IXN,REP,rep_type,cell_content)
 
@@ -281,6 +284,8 @@ FIRST we explore the distribution of utterances by Analysis Task, Dataset, Parti
 ***RQ: How much did participants talk aloud during EDA? When did they talk aloud?***
 
 ***Answer:** Inspection of frequency tables and visualizations suggests that the most substantial determinant of how many utterances an individual made is individual participant-level differences, rather than structural differences imposed by the TASK or DATASET. This is not altogether unexpected given the fact that across both tasks (static/interactive) and datasets the structure of the experimental task was the same*
+
+
 
 ### by TASK
 
@@ -387,6 +392,38 @@ NEXT we explore the distribution of utterances coded by high level TOPIC, across
 2.  *There do not appear to be strong TASK/DATASET effects on topic that are consistent across participants.*
 
 3.  *PROCESS and RELATIONSHIP topics are more evenly distributed across the timecourse of analysis, while DATASET AND VARIABLE topics are more tightly clustered near the beginning of the analysis. This pattern of distribution is sensical given what we know about EDA, and is consistent with the intuition that patterns of thought during EDA are likely more iterative and situational than we think (or model).*
+
+### TOPICS
+```{r}
+
+freq(df_coded$code_topic, 
+     cumul      = FALSE,
+     headings   = TRUE,
+     report.nas = FALSE,
+     plain.ascii = FALSE) 
+
+gf_bar(~code_topic, fill = ~code_topic, position="stack", data = df_coded) + 
+  scale_fill_brewer(type="qual", palette = 3) 
+
+df_summary <- df_coded %>% 
+  group_by(code_topic) %>% 
+  summarise(n = n()) %>%
+  mutate(freq = n / sum(n),
+         dumm =  factor("x"))
+
+#TOPIC $
+(p <-ggplot(df_summary, aes(y=freq, x = dumm, fill= fct_rev(code_topic))) + 
+  geom_col() + 
+  geom_text(aes(label=paste(round(freq*100,0),"%")), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") + 
+  scale_fill_brewer(type="qual", palette = 3) +
+  labs( title = "TOPIC OF UTTERANCES",
+        subtitle = "",
+        caption = "The most frequent topic of utterance was relationship (38%) \n with only 16% concerned with nature of variables",
+        x= "TASK", y = "count") + theme_minimal() )
+ggsave(p, file="figures/topic-frequency.png")
+
+
+```
 
 ### by TASK
 
@@ -506,10 +543,11 @@ ggplot(df_coded, aes(x = relative_time)) +
     title = "Topic of Utterances over timecourse of Task",
     x= "timecourse of task (seconds)", y = "Task",
     color = "Topic"
-  )) 
+  ))
+ggsave(p, file="figures/topics_in_time_FACET.png")
 
 #DOTPLOT
-ggplot(df_coded, aes(x=relative_time, y = fct_rev(TASK), color=fct_rev(code_topic))) + 
+(p <- ggplot(df_coded, aes(x=relative_time, y = fct_rev(TASK), color=fct_rev(code_topic))) + 
   geom_point(alpha=0.5, size=3) +
   facet_grid(df_coded$PNUM) +
   # facet_grid(df_coded$TASK ~ df_coded$DATASET) +
@@ -518,11 +556,10 @@ ggplot(df_coded, aes(x=relative_time, y = fct_rev(TASK), color=fct_rev(code_topi
     title = "Topic of Utterances over timecourse of Task",
     x= "timecourse of task (seconds)", y = "Participant",
     color = "Topic"
-) 
+)) 
+ggsave(p, file="figures/topics_in_time_STACK.png")
 
 
-
-ggsave(p, file="figures/topics_in_time.png")
 
 
 ```
@@ -988,14 +1025,14 @@ ggsave(p, file="figures/relationship_counts.png")
 
 In the following subsections we start by exploring the distribution of *kinds of representations* participants generated based on TASK, DATASET, and PARTICIPANT. We then explore a _subset_ of representations that are associated with _utterances_ (i.e. not every representation is commented on). And finally we dig further into the utterances that are associated with _realtime interaction_  with an interactive visualization (i.e. not every representation generated during the IXN task is interactive, and not every interactive visualization generated is acted upon by the participant). 
 
-## WIP [All] Representations
+## [TELEMETRY] Representations
 
 
 ***RQ: How many representations did participants generate? Of what kinds? At what times during the process of analysis?***
 (These are the representations coming from telemetry. Not connected to utterances explicitly.  Code only reps are excluded, but tabular output of code cells (eg. .info(), .describe(), etc. included)
 
 
-### NUMBER of REPRESENTATIONS
+### NUMBER of REPS
 
 ```{r}
 #COUNT BY TASK AND DATASET
@@ -1020,8 +1057,231 @@ ggplot(df_summary, aes(x = TASK, y=c, fill= DATASET)) +
         x= "TASK", y = "count") + theme_minimal() 
 # + theme(legend.position = "blank")
 ```
+### HIGH LEVEL by TASK DATASET
+```{r}
+
+#DF SUMMARIZED BY TASK + DATASET
+df_summary <- df_telemetry %>%
+  group_by(rep_type, TASK,DATASET) %>%
+  dplyr::summarise(
+    c = n()
+  )
+
+#STACKED BAR BY TASK FACET DATASET
+(p <- ggplot(df_summary, aes(x = TASK, y=c, fill= fct_rev(rep_type))) +
+  facet_wrap(df_summary$DATASET) +
+  geom_col() +
+  geom_text(aes(label=c), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") +
+  scale_fill_brewer(type="qual", palette = 1, direction = -1) +
+  labs( title = "[ TELEMETRY] REPRESENTATIONS by TASK and DATASET",
+        subtitle = "",
+        x= "TASK", y = "count", fill="REP-TYPE") + theme_minimal()
+)
+
+ggsave(p, file="figures/telemetry_reptypes_by_factors.png")
+# + theme(legend.position = "blank")
+
+# #HIGH LEVEL
+# gf_bar(  ~ rep_type, fill = ~rep_type, position="stack", data = df_telemetry) %>% 
+#   gf_facet_grid( DATASET ~ TASK) +
+#   scale_fill_brewer(type="qual", palette = 1) +
+#   theme_minimal() + labs(
+#     title = "[TELEMETRY]  Representations HIGH"
+#   )
+
+```
+
+### DETAIL REPS
+
+```{r}
+
+
+#COUNT BY TASK 
+ctable(x = df_telemetry$REP, 
+       y = df_telemetry$TASK, 
+       prop = "t")  
+
+#COUNT BY DATASET
+ctable(x = df_telemetry$REP, 
+       y = df_telemetry$DATASET, 
+       prop = "t")  
+
+
+#DETAIL
+(p <- gf_bar(  ~ REP, fill = ~fct_rev(rep_type), data = df_telemetry) %>% 
+  gf_facet_grid( DATASET ~ TASK) + 
+  scale_fill_brewer(type="qual", palette = 1, direction = -1) +
+  coord_flip() + 
+  scale_x_discrete(limits = c( 
+                          "multiviewchart",
+                          "heatmap",
+                          "pairplot",
+                          "stripplot",
+                          "lineplot",
+                          "scatterplot",
+                          "barplot",
+                          "profile",
+                          "hist",
+                          "describe",
+                          "info",
+                          "columns",
+                          "dataframe"
+    
+  ))+
+  theme_minimal() + labs(
+    title = "[TELEMETRY]  Representations DETAIL by FACTORS"
+))
+
+ggsave(p, file="figures/telemetry_REPS_by_factors.png", width = 7, height = 5, units ="in")
+
+
+#flipped
+# gf_bar(  ~ REP, fill = ~fct_rev(rep_type), data = df_telemetry) %>% 
+#   gf_facet_grid( TASK ~ DATASET) + 
+#   scale_fill_brewer(type="qual", palette = 1, direction = -1) +
+#   coord_flip() + 
+#   scale_x_discrete(limits = c( 
+#                           "multiviewchart",
+#                           "heatmap",
+#                           "pairplot",
+#                           "stripplot",
+#                           "lineplot",
+#                           "scatterplot",
+#                           "barplot",
+#                           "profile",
+#                           "hist",
+#                           "describe",
+#                           "info",
+#                           "columns",
+#                           "dataframe"
+#     
+#   ))+
+#   theme_minimal() + labs(
+#     title = "[TELEMETRY]  Representations DETAIL by FACTORS"
+# )
+
+# #DF BY REP
+# df_summary <- df_telemetry %>% 
+#   group_by(REP) %>% 
+#   dplyr::summarise(
+#     c = n()
+#   )
+
+# #STACKED BAR 
+# ggplot(df_summary, aes(x = REP, y=c, fill= REP)) + 
+#   geom_col() + 
+#   geom_text(aes(label=c), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") + 
+#   # scale_fill_brewer(type="qual", palette = 4) +
+#   coord_flip()+
+#   labs( title = "(Telemetry) Representations DETAIL",
+#         subtitle = "",
+#         x= "TASK", y = "count") + theme_minimal() 
+# # + theme(legend.position = "blank")
+
+
+
+
+```
+
+### WIP
+
+```{r}
+
+#COUNT BY TASK 
+ctable(x = df_telemetry$rep_type, 
+       y = df_telemetry$TASK, 
+       prop = "t")  
+
+#COUNT BY TASK AND DATASET
+ctable(x = df_telemetry$rep_type, 
+       y = df_telemetry$DATASET, 
+       prop = "t")  
+
+#DF SUMMARIZED BY TASK + DATASET
+df_summary <- df_telemetry %>% 
+  group_by(rep_type, TASK,DATASET) %>% 
+  dplyr::summarise(
+    c = n()
+  )
+
+#STACKED BAR BY TASK AND DATASET
+ggplot(df_summary, aes(x = TASK, y=c, fill= DATASET)) + 
+  geom_col() + 
+  facet_grid(TASK ~ DATASET)+
+  geom_text(aes(label=c), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") + 
+  # scale_fill_brewer(type="qual", palette = 4) +
+  labs( title = "(Telemetry) Representations by TASK and DATASET",
+        subtitle = "",
+        x= "TASK", y = "count") + theme_minimal() 
+# + theme(legend.position = "blank")
+
+#DF BY REP
+df_summary <- df_telemetry %>% 
+  group_by(rep_type, TASK, DATASET) %>% 
+  dplyr::summarise(
+    c = n()
+  )
+
+#STACKED BAR 
+ggplot(df_summary, aes(x = rep_type, y=c, fill= rep_type)) + 
+  geom_col() + 
+  geom_text(aes(label=c), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") + 
+  # scale_fill_brewer(type="qual", palette = 4) +
+  labs( title = "(Telemetry) Representations DETAIL",
+        subtitle = "",
+        x= "TASK", y = "count") + theme_minimal() 
+# + theme(legend.position = "blank")
+
+
+
+#ALL Representations by task/dataset + made interactive
+gf_bar(  ~ REP, fill = ~IXN, data = df_telemetry) %>% 
+  gf_facet_grid( DATASET ~ TASK) + coord_flip() + 
+  theme_minimal() + labs(
+    title = "ALL Representations by task/dataset + made interactive"
+  )
+
+
+
+
+
+gf_bar( PNUM ~., fill = ~ fct_rev(rep_type), data = df_telemetry) %>% 
+  gf_facet_grid(.~TASK) + 
+  scale_fill_brewer(type="qual", palette = 3) +
+  labs(
+    title = "Utterances by Participant, Dataset and Task",
+    subtitle = "",
+    x = "number of representations",
+    y = "participant",
+    fill = "TOPIC"
+  ) + theme_minimal()
+
+gf_bar( PNUM ~., fill = ~ fct_rev(DATASET), data = df_telemetry) %>% 
+  gf_facet_grid(REP~.) + 
+  scale_fill_brewer(type="qual", palette = 3) +
+  labs(
+    title = "Utterances by Participant, Dataset and Task",
+    subtitle = "",
+    x = "number of representations",
+    y = "participant",
+    fill = "TOPIC"
+  ) + theme_minimal()
+
+
+#ALL Representations by task/dataset + made interactive
+gf_bar(  ~ REP, fill = ~rep_type, data = df_telemetry) %>% 
+  gf_facet_grid( DATASET ~ TASK) + coord_flip() + 
+  scale_fill_brewer(type="qual", palette = 1) +
+  theme_minimal() + labs(
+    title = "ALL Representations by task/dataset by REP TYPE"
+  )
+
+```
 
 ### ADDING INTERACTIONS
+
+
+
 ```{r}
 #ADDED INTERACTION
 df <- df_telemetry %>% filter(rep_type=="VIS")
@@ -1035,11 +1295,26 @@ gf_bar(~ IXN, fill = ~IXN,data = df %>% filter(TASK=="ixn")) %>%
     fill = "added ixn"
   )
 
+
+df <- df_telemetry %>% filter(rep_type=="VIS")
+gf_bar(~ REP, fill = ~IXN,data = df %>% filter(TASK=="ixn")) %>% 
+  gf_facet_grid(DATASET~.) +
+  coord_flip()+
+  scale_fill_brewer(type="qual", palette = 2, direction = -1) +
+  theme_minimal() + labs(
+    title = "Where do participants add Interaction?",
+    subtitle="(during the Interactive Task) which visualizations are made interactive?",
+    caption = "TODO INVESTIGATE where is profiler seems really low \n added ixn here means they added an ixn technique",
+    fill = "added ixn"
+  )
+
 ```
 
 ### TODO IXN TECHNIQUES
 ```{r} 
 freq(df_telemetry$technique)
+
+gf_bar(~technique, data = df_telemetry) + coord_flip()
 ```
 
 ### TYPES by TASK
@@ -1074,53 +1349,7 @@ ctable(x = df_telemetry$REP,
        y = df_telemetry$DATASET, 
        prop = "t")   
 ```
-### by TASK and DATASET -- TYPE 
 
-```{r}
-
-#DF SUMMARIZED BY TASK + DATASET
-df_summary <- df_telemetry %>%
-  group_by(rep_type, TASK,DATASET) %>%
-  dplyr::summarise( .groups = "keep",
-    c = n()
-  )
-
-#STACKED BAR BY TASK FACET DATASET
-ggplot(df_summary, aes(x = TASK, y=c, fill= fct_rev(rep_type))) +
-  facet_wrap(df_summary$DATASET) +
-  geom_col() +
-  geom_text(aes(label=c), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") +
-  scale_fill_brewer(type="qual", palette = 4) +
-  labs( title = "REPRESENTATIONS by TASK and DATASET",
-        subtitle = "",
-        x= "TASK", y = "count", fill="REP-TYPE") + theme_minimal()
-
-```
-
-
-### EXAMINE THIS! by TASK and DATASET -- DETAIL 
-
-```{r}
-
-#DF SUMMARIZED BY TASK + DATASET
-df_summary <- df_telemetry %>%
-  group_by(REP, TASK,DATASET) %>%
-  dplyr::summarise( .groups = "keep",
-    c = n()
-  )
-
-#STACKED BAR BY TASK FACET DATASET
-ggplot(df_summary, aes(x = TASK, y=c, fill= DATASET)) +
-  facet_wrap(df_summary$REP) +
-  geom_col() +
-  geom_text(aes(label=c), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") +
-  scale_fill_brewer(type="qual", palette = 4) +
-  labs( title = "REPRESENTATIONS by TASK and DATASET",
-        subtitle = "",
-        x= "TASK", y = "count", fill="DATASET") + 
-  scale_fill_brewer(type="qual", palette = 1) + theme_minimal()
-
-```
 
 
 ### by PARTICIPANT — TOTAL
@@ -1136,7 +1365,7 @@ gf_bar( PNUM ~., fill = ~ DATASET, data = df_telemetry) %>%
     x = "number of REPRESENTATIONS",
     y = "participant",
     fill = "DATASET"
-  ) + scale_fill_brewer(type="qual", palette = 1) + theme_minimal()
+  ) + scale_fill_brewer(type="qual", palette = 2) + theme_minimal()
 
 ```
 
@@ -1158,7 +1387,7 @@ gf_bar( PNUM ~., fill = ~ fct_rev(rep_type), data = df_telemetry) %>%
     x = "number of REPRESENTATIONS",
     y = "participant",
     fill = "REP-TYPE"
-  ) + scale_fill_brewer(type="qual", palette = 4) + theme_minimal()
+  ) + scale_fill_brewer(type="qual", palette = 1, direction = -1) + theme_minimal()
 
 ```
 
@@ -1317,7 +1546,7 @@ ggplot(df_joined, aes(x = relative_time)) +
 
 
 
-#DOTPLOT
+#DOTPLOT — FACET TASK
 (p <- ggplot(df_joined, aes(x=relative_time, y = PNUM, color=fct_rev(rep_type))) + 
   geom_point(alpha=0.5, size=3) +
   facet_grid(df_joined$TASK) +
@@ -1327,9 +1556,10 @@ ggplot(df_joined, aes(x = relative_time)) +
     x= "timecourse of task (seconds)", y = "Task",
     color = "Topic"
   )) 
+ggsave(p, file="figures/uttrep_high_time_FACET.png")
 
-#DOTPLOT
-ggplot(df_joined, aes(x=relative_time, y = fct_rev(TASK), color=fct_rev(rep_type))) + 
+#DOTPLOT STACKED TASKS
+(p <- ggplot(df_joined, aes(x=relative_time, y = fct_rev(TASK), color=fct_rev(rep_type))) + 
   geom_point(alpha=0.5, size=3) +
   facet_grid(df_joined$PNUM) +
   # facet_grid(df_joined$TASK ~ df_joined$DATASET) +
@@ -1338,11 +1568,9 @@ ggplot(df_joined, aes(x=relative_time, y = fct_rev(TASK), color=fct_rev(rep_type
     title = "Utterance-Reps over timecourse of Task",
     x= "timecourse of task (seconds)", y = "Participant",
     color = "Topic"
-) 
+)) 
+ggsave(p, file="figures/uttrep_high_time_STACK.png")
 
-
-
-ggsave(p, file="figures/utterance_reptypes_in_time.png")
 
 
 ```
@@ -1351,6 +1579,23 @@ ggsave(p, file="figures/utterance_reptypes_in_time.png")
 ## [Enacted] Representations [TODO PRIORITY]
 
 THIS SECTION would include the (very) small number of UTTERANCE-REPS that are flagged as occuring when interaction was ACTIVELY BEING USED SHOULD be a quick but effective. 
+
+```{r}
+
+#DOTPLOT
+df <- df_joined %>% filter(TASK=="ixn")
+ggplot(df, aes(x=relative_time, y = fct_rev(TASK), color=fct_rev(ixn))) + 
+  geom_point(alpha=0.5, size=3) +
+  facet_grid(df$PNUM) +
+  # facet_grid(df_joined$TASK ~ df_joined$DATASET) +
+  scale_color_brewer(type="qual", palette = 4) +
+  theme_minimal() + labs(
+    title = "Utterance USING ixn during TASK",
+    x= "timecourse of task (seconds)", y = "Participant",
+    color = "IXV"
+) 
+
+```
 
 ```{r}
 
@@ -1509,3 +1754,7 @@ check_model(mm2)
 # check_model(pmm2)
 
 ```
+
+
+
+
