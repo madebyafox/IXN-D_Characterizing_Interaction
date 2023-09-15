@@ -100,6 +100,24 @@ df_coded <- df_raw_insights %>%
                          "distribution variance (sd, var)" = "distribution shape [shape, skew, kurtosis]",
                          "relationship faceted distribution characterization" = "relationship strength and/or direction"  
                          ),
+    #reorder factor for good graphs
+    code_detail = factor(code_detail, levels = c(
+    "distribution outlier (variable)",             
+    "distribution range [min, max]",               
+    "distribution shape [shape, skew, kurtosis]",  
+    "data size",                                   
+    "variable metadata",    
+    "data provenance",                             
+    "data orientation",                            
+    "missing data",                                
+    "relationship range constriction",             
+    "relationship form (linearity/non-linearity)", 
+    "relationship cluster(s)/subgroup/ unexpected",
+    "relationship existence / non-existence",      
+    "outlier (relationship)",                      
+    "relationship strength and/or direction",      
+    "plan of action",                              
+    "representation comment")),                    
     timestamp = adj_timestamp,
     ixn = factor(interaction_used), #was interaction used?
     PNUM = factor(PNUM,levels = c("P6", "P9", "P10", "P2", "P4", "P12","P13", 
@@ -473,10 +491,16 @@ df_summary <- df_coded %>%
 
 #PAPER FIGURE HERE
 #STACKED BAR BY TASK FACET DATASET
-(p <- ggplot(df_summary, aes(x = TASK, y=c, fill= fct_rev(code_topic))) +
+(p <- ggplot(df_summary, aes(x = TASK, y=c, fill= (code_topic))) +
   facet_wrap(df_summary$DATASET) +
   geom_col() +
   geom_text(aes(label=c), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") +
+  # scale_fill_manual(values=c(
+  #   "#7FADCB", ##ACA2BA",
+  #   "#A2D8D0", ##33A02C", #"#C2E2B7",
+  #   "#B2DF8A", #AED8D2",
+  #   "#ACA2BA" #AECDE1"
+  # ))  +
   scale_fill_brewer(type="qual", palette = 3) +
   labs( title = "TOPICS by TASK and DATASET",
         subtitle = "",
@@ -653,20 +677,22 @@ ggplot(df_time_process, aes(x = relative_time, fill = fct_rev(code_detail))) +
 
 #PAPER FIGURE HERE
 #PROCESSES by PARTICPANT facet TASK
-(p <- gf_bar( PNUM ~., fill = ~ fct_rev(code_detail), data = df_process) %>% 
+(p <- gf_bar( PNUM ~., fill = ~ (code_detail), data = df_process) %>% 
   gf_facet_grid(.~TASK) + 
-  scale_fill_brewer(type="seq", palette = "PuRd") +
+  scale_fill_manual(values = c("#C4B6D9","#957EB4"))+
+  # scale_fill_brewer(palette = "PRGn", direction=-1) +
+  # scale_fill_brewer(type="seq", palette = "PuRd") +
   labs(
     title = "PROCESS Utterances by Participant and Task",
     subtitle = "",
-    caption = "TODO explore P13 representation comments",
+    # caption = "TODO explore P13 representation comments",
     x = "number of coded utterances",
     y = "participant",
     fill = "TOPIC"
   ) + theme_minimal()
 )
 
-ggsave(p, file="figures/UTTERANCE_detail_PROCESS_participants.png")
+ggsave(p, file="figures/UTTERANCE_detail_PROCESS_participants.png", width=6, height=4)
 
 
 ```
@@ -707,7 +733,67 @@ gf_bar( ~ rep_type, fill = ~code_detail , data = df) %>%
 
 
 ```
+#### PROCESS-REPS-LOW
 
+```{r}
+
+
+
+# gf_bar(  ~ REP, fill = ~fct_rev(rep_type), data = df_telemetry) %>% 
+#   gf_facet_grid( DATASET ~ TASK) + 
+#   scale_fill_brewer(type="qual", palette = 1, direction = -1) +
+#   coord_flip() + 
+#   scale_x_discrete(limits = c( 
+#                           "multiviewchart",
+#                           "heatmap",
+#                           "pairplot",
+#                           "stripplot",
+#                           "lineplot",
+#                           "scatterplot",
+#                           "barplot",
+#                           "profile",
+#                           "hist",
+#                           "describe",
+#                           "info",
+#                           "columns",
+#                           "dataframe"
+#     
+#   ))+
+#   theme_minimal() + labs(
+#     title = "[TELEMETRY]  Representations DETAIL by FACTORS"
+# )
+
+d <- df_joined %>% filter(code_topic =="PROCESS")
+
+gf_bar(  ~ REP, fill = ~(code_detail), data = d) %>% 
+  gf_facet_grid( DATASET ~ TASK) + 
+  # scale_fill_brewer(type="qual", palette = 1, direction = -1) +
+  scale_fill_manual(values = c("#C4B6D9","#957EB4"))+
+  coord_flip() + 
+  # scale_x_discrete(limits = c(
+                           "multiviewchart",
+                           "heatmap",
+                           "pairplot",
+                           "stripplot",
+                           "lineplot",
+                           "scatterplot",
+                           "barplot",
+                           "profile",
+                           "hist",
+                           "info",
+                           "dictionary",
+                           "describe",
+                           "dataframe",
+                            "python"
+                           "none"
+  # 
+  # ))+
+  theme_minimal() + labs(
+    title = "[TELEMETRY]  Representations DETAIL by FACTORS"
+)
+
+
+```
 
 
 #### PROCESS-REPS-LOW STUCK HERE
@@ -838,20 +924,20 @@ ggplot(df_time_dataset, aes(x = relative_time, fill = fct_rev(code_detail))) +
 
 #PAPER FIGURE HERE
 #DATASET UTTERANCES by PARTICPANT facet TASK
-(p <- gf_bar( PNUM ~., fill = ~ fct_rev(code_detail), data = df_dataset) %>% 
+(p <- gf_bar( PNUM ~., fill = ~ (code_detail), data = df_dataset) %>% 
   gf_facet_grid(.~TASK) + 
-  scale_fill_brewer(type="seq", palette = 4) +
+  scale_fill_brewer(type="seq", palette = "Greens") +
   labs(
     title = "DATASET Utterances by Participant and Task",
     subtitle = "",
     x = "number of coded utterances",
     y = "participant",
     fill = "TOPIC",
-    caption = "P11, P12 contribute to MISSING DATA \n P9 contributes largely to variable metadata \n INVESTIGATE FURTHER",
+    # caption = "P11, P12 contribute to MISSING DATA \n P9 contributes largely to variable metadata \n INVESTIGATE FURTHER",
   ) + theme_minimal()
 )
 
-ggsave(p, file="figures/UTTERANCE_detail_DATASET_participants.png")
+ggsave(p, file="figures/UTTERANCE_detail_DATASET_participants.png",width=6, height=4)
 
 
 
@@ -924,20 +1010,21 @@ ggplot(df_time_variable, aes(x = relative_time, fill = fct_rev(code_detail))) +
 
 #PAPER FIGURE HERE
 #VARIABLE UTTERANCES by PARTICPANT facet TASK
-(p <- gf_bar( PNUM ~., fill = ~ fct_rev(code_detail), data = df_variable) %>% 
+(p <- gf_bar( PNUM ~., fill = ~ (code_detail), data = df_variable) %>% 
   gf_facet_grid(.~TASK) + 
-  scale_fill_brewer(type="seq", palette = 5) +
+  # scale_fill_brewer(type="seq", palette = 5) +
+  scale_fill_manual(values=c("#5AB4AC","#AED8D2","#03655E"))+
   labs(
     title = "VARIABLE Utterances by Participant and Task",
     subtitle = "",
     x = "number of coded utterances",
     y = "participant",
     fill = "TOPIC",
-    caption = "substantial individual differences, most everyone made some comments \n at some point about distribution shape, but \n discussion of outliers, variance and range was more idiosyncratic \n TODO INVESTIGATE P4 STATIC RANGE very high",
+    # caption = "substantial individual differences, most everyone made some comments \n at some point about distribution shape, but \n discussion of outliers, variance and range was more idiosyncratic \n TODO INVESTIGATE P4 STATIC RANGE very high",
   ) + theme_minimal()
 )
 
-ggsave(p, file="figures/UTTERANCE_detail_VARIABLE_participants.png")
+ggsave(p, file="figures/UTTERANCE_detail_VARIABLE_participants.png", width=6, height=4)
 
 
 ```
@@ -1016,9 +1103,16 @@ ggplot(df_time_relationship, aes(x = relative_time, fill = fct_rev(code_detail))
 
 #PAPER FIGURE HERE
 #RELATIONSHIP UTTERANCES by PARTICPANT facet TASK
-(p <- gf_bar( PNUM ~., fill = ~ fct_rev(code_detail), data = df_relationship) %>% 
+(p <- gf_bar( PNUM ~., fill = ~ (code_detail), data = df_relationship) %>% 
   gf_facet_grid(.~TASK) + 
-  scale_fill_brewer(type="seq", palette = 3) +
+  # scale_fill_brewer(type="seq", palette = 1) +
+  scale_fill_manual(values=c(
+              "#C5D3DE",
+              "#C0DCF1",
+              "#90CBE4",
+              "#4EB0DA",
+              "#0083C2",
+              "#0051A1"))+
   labs(
     title = "RELATIONSHIP Utterances by Participant and Task",
     subtitle = "",
