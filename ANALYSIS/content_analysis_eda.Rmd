@@ -691,11 +691,14 @@ ggsave(p, file="figures/UTTERANCE_topics_by_time_STACK.png")
 
 NEXT we explore the distribution of specific detail utterances across Analysis Task, Dataset, Participant and Time.
 
+We organize these sections according to the high-level topic codes: (ANALYSIS) PROCESS, DATASET, VARIABLE, RELATIONSHIP
+
 ***RQ: What specific things did participants talk aloud during EDA? Are there any details folks only*** **mention during static(v)interactive, or nominal(v)numeric tasks? Any substantial changes in proportion by TASK or DATASET?**
 
-***Answer:***
 
-### DETAIL---PROCESS
+### PROCESS UTTERANCES
+
+#### PROCESS Utterances
 
 ```{r, message=FALSE}
 
@@ -721,7 +724,8 @@ df_summary_dataset <- df_process %>%
 ggplot(df_summary_task, aes(x = TASK, y=c, fill= code_detail)) + 
   geom_col() + 
   geom_text(aes(label=c), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") + 
-  scale_fill_brewer(type="seq", palette = "PuRd") +
+  scale_fill_manual(values = c("#C4B6D9","#957EB4"))+
+  # scale_fill_brewer(type="seq", palette = "PuRd") +
   labs( title = "PROCESS Utterances by TASK",
         subtitle = "",
         caption = "weak to moderate difference in PROCESS utterances by TASK, \n but these do not seem substantial when broken into the two categories",
@@ -731,7 +735,8 @@ ggplot(df_summary_task, aes(x = TASK, y=c, fill= code_detail)) +
 ggplot(df_summary_dataset, aes(x = DATASET, y=c, fill= code_detail)) + 
   geom_col() + 
   geom_text(aes(label=c), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") + 
-  scale_fill_brewer(type="seq", palette = "PuRd") +
+  scale_fill_manual(values = c("#C4B6D9","#957EB4"))+
+  # scale_fill_brewer(type="seq", palette = "PuRd") +
   labs( title = "PROCESS Utterances by DATASET",
         subtitle = "",
         caption = "much more substantial differences in PROCESS utterances by DATASET, \n consistent with intution Ps had more to say about the numeric (vs) nominal outcome variable",
@@ -742,7 +747,8 @@ ggplot(df_summary_dataset, aes(x = DATASET, y=c, fill= code_detail)) +
 ggplot(df_time_process, aes(x=relative_time, y = PNUM, color=fct_rev(code_detail))) + 
   geom_point(alpha=0.5, size=3) +
   facet_grid(df_time_process$TASK) +
-  scale_color_brewer(type="seq", palette = "PuRd") +
+  scale_color_manual(values = c("#C4B6D9","#957EB4"))+
+  # scale_color_brewer(type="seq", palette = "PuRd") +
   theme_minimal() + labs(
     title = "PROCESS Utterances by timecourse of Task",
     caption = "appear randomly distributed through time \n expected and reasonable given PROCESS utterances are meta-level",
@@ -754,7 +760,8 @@ ggplot(df_time_process, aes(x=relative_time, y = PNUM, color=fct_rev(code_detail
 ggplot(df_time_process, aes(x = relative_time, fill = fct_rev(code_detail))) + 
   geom_histogram(binwidth = 30) + 
   facet_grid(df_time_process$TASK ~ df_time_process$code_detail ) +
-  scale_fill_brewer(type="seq", palette = "PuRd") +
+  # scale_fill_brewer(type="seq", palette = "PuRd") +
+  scale_fill_manual(values = c("#C4B6D9","#957EB4"))+
   theme_minimal() + labs(
     title = "PROCESS Utterances by timecourse of Task",
     x= "timecourse of task (seconds)", y = "frequency of utterances"
@@ -782,53 +789,35 @@ ggsave(p, file="figures/UTTERANCE_detail_PROCESS_participants.png", width=6, hei
 
 
 ```
+*NOTE: Across TASKS and DATASET participants had more to say about _Representations_ than their _Plans of Action_. Both kinds of PROCESS utterances were more or less evenly distributed across the timecourse of the tasks. *
 
-#### PROCESS-REPS-HIGH
+#### PROCESS Representations
 
-PROOF OF CONCEPT FOR reporting REPRESENTATIONS (high level type) LINKED TO UTTERANCES
 
 ```{r}
 
 #FILTER JOINED DATAFRAME
 df <- df_codedrep %>% filter(code_topic =="PROCESS")
 
-#AGGREGATE PROCESS X REP TYPE
-gf_bar( ~ rep_type, fill = ~code_detail , data = df) %>% 
-  gf_facet_grid(TASK~code_detail) + 
-  scale_fill_brewer(type="seq", palette = "PuRd") + 
-  labs(title = "PROCESS Utterances & Representations ",
-    subtitle = "",
-    caption = "",
-    x = "REPN",
-    y = "number of coded utterances",
-    fill = "TOPIC")+
-  theme_minimal()
 
-#PAPER FIGURE HERE MAYBE
-#PARTICIPANT PROCESS X REP 
-(p <- gf_bar( PNUM ~., fill = ~ fct_rev(code_detail), data = df) %>% 
-  gf_facet_grid(rep_type~TASK) + 
-  scale_fill_brewer(type="seq", palette = "PuRd") +
+#DETAIL REP TYPE
+(p <- gf_bar( rep_type ~., fill = ~ fct_rev(code_detail), data = df) %>%
+  gf_facet_grid(DATASET~TASK) +
+  scale_fill_manual(values = c("#C4B6D9","#957EB4"))+
+  # scale_fill_brewer(type="seq", palette = "PuRd") +
   labs(
-    title = "PROCESS Utterances & Representations ",
+    title = "PROCESS Utterance-Representations (TYPE) ",
     subtitle = "",
     caption = "",
     x = "number of coded utterances",
-    y = "participant",
-    fill = "TOPIC"
+    y = "Representation Type",
+    fill = "(code_detail)"
   ) + theme_minimal()
 )
 
-
-```
-
-#### PROCESS-REPS-LOW
-
-```{r}
-
 #PAPER FIGURE
-d <- df_codedrep %>% filter(code_topic =="PROCESS")
-(p <- gf_bar(  ~ rep_simple, fill = ~(code_detail), data = d) %>% 
+#DETAIL REP DETAIL
+(p <- gf_bar(  ~ rep_simple, fill = ~(code_detail), data = df) %>% 
   gf_facet_grid( DATASET ~ TASK) + 
   # scale_fill_brewer(type="qual", palette = 1, direction = -1) +
   scale_fill_manual(values = c("#C4B6D9","#957EB4"))+
@@ -848,26 +837,20 @@ d <- df_codedrep %>% filter(code_topic =="PROCESS")
            "NONE"
   ))+
   theme_minimal() + labs(
-    title = "Utterance-Representations DETAIL by FACTORS"
+    title = "PROCESS Utterance-Representations (DETAIL)"
 ))
 
 ggsave(p, file="figures/UTTERANCE-REP_detail_PROCESS_factors.png", width=6, height=4)
 
 
-```
-
-#### PROCESS-REPS-IXN
-
-```{r}
+#FILTER ON ONLY ACTIVELY USING IXN
+df <- df_codedrep %>% filter(code_topic == "PROCESS") %>% filter(TASK=="ixn")
 
 #PAPER FIGURE
-d <- df_codedrep %>% filter(code_topic == "PROCESS") %>% filter(TASK=="ixn")
-
-#PAPER FIGURE
-#DOTPLOT—BW
-( p <- ggplot(d, aes(x=relative_time, y = PNUM, color = ixn)) + 
+#DOTPLOT—IXN
+( p <- ggplot(df, aes(x=relative_time, y = PNUM, color = ixn)) + 
   geom_point(alpha=0.5, size=3) +
-  facet_grid(d$DATASET) +
+  facet_grid(df$DATASET) +
   # scale_color_brewer(type="qual", palette = 3) +
   scale_color_manual(values=c("black","#D81897")) +
   theme_minimal() + labs(
@@ -879,66 +862,12 @@ d <- df_codedrep %>% filter(code_topic == "PROCESS") %>% filter(TASK=="ixn")
 
 ggsave(p, file="figures/IXN_PROCESS_time.png", width=6, height=4)
 
-
 ```
 
-#### PROCESS-REPS-LOW STUCK HERE
 
-WHOAH nelly how to [heatmap??] a contingency table? Most likely need to reduce REP list by removing zero cells and just focus on what reps WERE used
+### DATASET UTTERANCES
 
-```{r results="asis"}
-
-#FILTER JOINED DATAFRAME
-# df <- df_codedrep %>% filter(code_topic =="PROCESS")
-# 
-# c <- table(  df$REP, df$code_detail)
-# d <- as.data.frame.matrix(c)
-# 
-# plot(d)
-
-
-
-#HERE
-vcd::mosaic(formula = ~REP + code_detail,
-       data = df,
-       main = "Proportion of Utterances by TASK and DATASET",
-       sub = "u = 734 utterance-codes",
-       # labeling = labeling_values,
-       labeling_args = list(set_varnames = c(graph = "TASK",
-                            datset = "DATASET")))
-
-
-
-# #AGGREGATE PROCESS X REP TYPE
-# gf_bar( ~ rep_type, fill = ~code_detail , data = df) %>%
-#   gf_facet_grid(TASK~code_detail) +
-#   scale_fill_brewer(type="seq", palette = "PuRd") +
-#   labs(title = "PROCESS Utterances & Representations ",
-#     subtitle = "",
-#     caption = "",
-#     x = "REPN",
-#     y = "number of coded utterances",
-#     fill = "TOPIC")+
-#   theme_minimal()
-#
-# #PARTICIPANT PROCESS X REP
-# (p <- gf_bar( PNUM ~., fill = ~ fct_rev(code_detail), data = df) %>%
-#   gf_facet_grid(rep_type~TASK) +
-#   scale_fill_brewer(type="seq", palette = "PuRd") +
-#   labs(
-#     title = "PROCESS Utterances & Representations ",
-#     subtitle = "",
-#     caption = "",
-#     x = "number of coded utterances",
-#     y = "participant",
-#     fill = "TOPIC"
-#   ) + theme_minimal()
-# )
-
-
-```
-
-### DETAIL---DATASET
+#### DATASET Utterances
 
 ```{r, message=FALSE}
 
@@ -964,7 +893,8 @@ df_summary_dataset <- df_dataset %>%
 ggplot(df_summary_task, aes(x = TASK, y=c, fill= code_detail)) + 
   geom_col() + 
   geom_text(aes(label=c), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") + 
-  scale_fill_brewer(type="seq", palette = 4) +
+  scale_fill_brewer(type="seq", palette = "Greens") +
+  # scale_fill_brewer(type="seq", palette = 4) +
   labs( title = "DATASET Utterances by TASK",
         subtitle = "",
         caption = "notable decrease MISSING DATA utterances in IXN \n unsure what might explain this, explore at individual level",
@@ -974,7 +904,8 @@ ggplot(df_summary_task, aes(x = TASK, y=c, fill= code_detail)) +
 ggplot(df_summary_dataset, aes(x = DATASET, y=c, fill= code_detail)) + 
   geom_col() + 
   geom_text(aes(label=c), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") + 
-  scale_fill_brewer(type="seq", palette = 4) +
+  scale_fill_brewer(type="seq", palette = "Greens") +
+  # scale_fill_brewer(type="seq", palette = 4) +
   labs( title = "DATASET Utterances by DATASET",
         subtitle = "",
         caption = "minor differences by DATASET  reasonable given DATASET \n  represenations are typically tabluar (data dictionary, describe, head/tail)",
@@ -985,7 +916,8 @@ ggplot(df_summary_dataset, aes(x = DATASET, y=c, fill= code_detail)) +
 ggplot(df_time_dataset, aes(x=relative_time, y = PNUM, color=fct_rev(code_detail))) + 
   geom_point(alpha=0.5, size=3) +
   facet_grid(df_time_dataset$TASK) +
-  scale_color_brewer(type="seq", palette = 4) +
+  scale_color_brewer(type="seq", palette = "Greens") +
+  # scale_color_brewer(type="seq", palette = 4) +
   theme_minimal() + labs(
     title = "DATASET Utterances by timecourse of Task",
     x= "timecourse of task (seconds)", y = "Participant",
@@ -997,7 +929,8 @@ ggplot(df_time_dataset, aes(x=relative_time, y = PNUM, color=fct_rev(code_detail
 ggplot(df_time_dataset, aes(x = relative_time, fill = fct_rev(code_detail))) + 
   geom_histogram(binwidth = 30) + 
   facet_grid(df_time_dataset$TASK ~ df_time_dataset$code_detail ) +
-  scale_fill_brewer(type="seq", palette = 4) +
+  scale_fill_brewer(type="seq", palette = "Greens") +
+  # scale_fill_brewer(type="seq", palette = 4) +
   theme_minimal() + labs(
     title = "DATASET Utterances by timecourse of Task",
     x= "timecourse of task (seconds)", y = "frequency of utterances",
@@ -1026,13 +959,32 @@ ggsave(p, file="figures/UTTERANCE_detail_DATASET_participants.png",width=6, heig
 
 ```
 
-#### DATASET-REPS-LOW
+
+
+
+#### DATASET Representations
 
 ```{r}
 
+df <- df_codedrep %>% filter(code_topic =="DATASET")
+
+#DETAIL REP TYPE
+(p <- gf_bar( rep_type ~., fill = ~ fct_rev(code_detail), data = df) %>%
+  gf_facet_grid(DATASET~TASK) +
+  scale_fill_brewer(type="seq", palette = "Greens") +
+  # scale_fill_brewer(type="seq", palette = "PuRd") +
+  labs(
+    title = "DATASET Utterance-Representations (TYPE) ",
+    subtitle = "",
+    caption = "",
+    x = "number of coded utterances",
+    y = "Representation Type",
+    fill = "(code_detail)"
+  ) + theme_minimal()
+)
+
 #PAPER FIGURE
-d <- df_codedrep %>% filter(code_topic =="DATASET")
-(p <- gf_bar(  ~ rep_simple, fill = ~(code_detail), data = d) %>% 
+(p <- gf_bar(  ~ rep_simple, fill = ~(code_detail), data = df) %>% 
   gf_facet_grid( DATASET ~ TASK) + 
   scale_fill_brewer(type="seq", palette = "Greens") +
   coord_flip() + 
@@ -1051,26 +1003,21 @@ d <- df_codedrep %>% filter(code_topic =="DATASET")
            "NONE"
   ))+
   theme_minimal() + labs(
-    title = "Utterance-Representations DETAIL by FACTORS"
+    title = "DATASET Utterance-Representations (DETAIL)"
 ))
 
 ggsave(p, file="figures/UTTERANCE-REP_detail_DATASET_factors.png", width=6, height=4)
 
 
-```
 
-#### DATASET-REPS-IXN
 
-```{r}
+df <- df_codedrep %>% filter(code_topic == "DATASET") %>% filter(TASK=="ixn")
 
 #PAPER FIGURE
-d <- df_codedrep %>% filter(code_topic == "DATASET") %>% filter(TASK=="ixn")
-
-#PAPER FIGURE
-#DOTPLOT—BW
-( p <- ggplot(d, aes(x=relative_time, y = PNUM, color = ixn)) + 
+#DOTPLOT—IXN
+( p <- ggplot(df, aes(x=relative_time, y = PNUM, color = ixn)) + 
   geom_point(alpha=0.5, size=3) +
-  facet_grid(d$DATASET) +
+  facet_grid(df$DATASET) +
   scale_color_manual(values=c("black","#D81897")) +
   theme_minimal() + labs(
     title = "DATASET Utterances USING INTERACTION",
@@ -1084,7 +1031,9 @@ ggsave(p, file="figures/IXN_DATASET_time.png", width=6, height=4)
 
 ```
 
-### DETAIL---VARIABLE
+### VARIABLE UTTERANCES
+
+#### VARIABLE Utterances
 
 ```{r, message=FALSE}
 
@@ -1110,7 +1059,8 @@ df_summary_dataset <- df_variable %>%
 ggplot(df_summary_task, aes(x = TASK, y=c, fill= code_detail)) + 
   geom_col() + 
   geom_text(aes(label=c), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") + 
-  scale_fill_brewer(type="seq", palette = 5) +
+  scale_fill_manual(values=c("#5AB4AC","#AED8D2","#03655E"))+
+  # scale_fill_brewer(type="seq", palette = 5) +
   labs( title = "VARIABLE Utterances by TASK",
         subtitle = "",
         caption = "notably more RANGE obs in STATIC than INTERACTIVE \n TODO consider collapsing distribution-variance ",
@@ -1120,7 +1070,8 @@ ggplot(df_summary_task, aes(x = TASK, y=c, fill= code_detail)) +
 ggplot(df_summary_dataset, aes(x = DATASET, y=c, fill= code_detail)) + 
   geom_col() + 
   geom_text(aes(label=c), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") + 
-  scale_fill_brewer(type="seq", palette = 5) +
+  # scale_fill_brewer(type="seq", palette = 5) +
+  scale_fill_manual(values=c("#5AB4AC","#AED8D2","#03655E"))+
   labs( title = "VARIABLE Utterances by DATASET",
         caption = "Notably more SHAPE in SPACE than HAPPINESS \n notably fewer RANGE in SPACE than HAPPINESS \n TODO are shape and range normalized across variable types? ",
         subtitle = "",
@@ -1131,7 +1082,8 @@ ggplot(df_summary_dataset, aes(x = DATASET, y=c, fill= code_detail)) +
 ggplot(df_time_variable, aes(x=relative_time, y = PNUM, color=fct_rev(code_detail))) + 
   geom_point(alpha=0.5, size=3) +
   facet_grid(df_time_variable$TASK) +
-  scale_color_brewer(type="seq", palette = 5) +
+  # scale_color_brewer(type="seq", palette = 5) +
+  scale_color_manual(values=c("#5AB4AC","#AED8D2","#03655E"))+
   theme_minimal() + labs(
     title = "VARIABLE Utterances by timecourse of Task",
     caption = "IXN appears more BIMODAL than STATIC where the distribution is more uniform",
@@ -1143,7 +1095,8 @@ ggplot(df_time_variable, aes(x=relative_time, y = PNUM, color=fct_rev(code_detai
 ggplot(df_time_variable, aes(x = relative_time, fill = fct_rev(code_detail))) + 
   geom_histogram(binwidth = 30) + 
   facet_grid(df_time_variable$TASK ~ df_time_variable$code_detail ) +
-  scale_fill_brewer(type="seq", palette = 5) +
+  # scale_fill_brewer(type="seq", palette = 5) +
+  scale_fill_manual(values=c("#5AB4AC","#AED8D2","#03655E"))+
   theme_minimal() + labs(
     title = "VARIABLE Utterances by timecourse of Task",
     x= "timecourse of task (seconds)", y = "frequency of utterances"
@@ -1170,13 +1123,28 @@ ggsave(p, file="figures/UTTERANCE_detail_VARIABLE_participants.png", width=6, he
 
 ```
 
-#### VARIABLE-REPS-LOW
+#### VARIABLE Representations
 
 ```{r}
 
-#PAPER FIGURE
-d <- df_codedrep %>% filter(code_topic =="VARIABLE")
-(p <- gf_bar(  ~ rep_simple, fill = ~(code_detail), data = d) %>% 
+
+df <- df_codedrep %>% filter(code_topic =="VARIABLE")
+
+
+#DETAIL REP TYPE
+gf_bar( rep_type ~., fill = ~ fct_rev(code_detail), data = df) %>%
+ gf_facet_grid(DATASET~TASK) +
+ scale_fill_manual(values=c("#5AB4AC","#AED8D2","#03655E"))+
+  labs(
+    title = "VARIABLE Utterance-Representations (TYPE) ",
+    subtitle = "",
+    caption = "",
+    x = "number of coded utterances",
+    y = "Representation Type",
+    fill = "(code_detail)"
+  ) + theme_minimal()
+
+(p <- gf_bar(  ~ rep_simple, fill = ~(code_detail), data = df) %>% 
   gf_facet_grid( DATASET ~ TASK) + 
   scale_fill_manual(values=c("#5AB4AC","#AED8D2","#03655E"))+
   coord_flip() + 
@@ -1195,26 +1163,19 @@ d <- df_codedrep %>% filter(code_topic =="VARIABLE")
            "NONE"
   ))+
   theme_minimal() + labs(
-    title = "Utterance-Representations DETAIL by FACTORS"
+    title = "VARIABLE Utterance-Representations (DETAIL)"
 ))
 
 ggsave(p, file="figures/UTTERANCE-REP_detail_VARIABLE_factors.png", width=6, height=4)
 
 
-```
-
-#### VARIABLE-REPS-IXN
-
-```{r}
+df <- df_codedrep %>% filter(code_topic == "VARIABLE") %>% filter(TASK=="ixn")
 
 #PAPER FIGURE
-d <- df_codedrep %>% filter(code_topic == "VARIABLE") %>% filter(TASK=="ixn")
-
-#PAPER FIGURE
-#DOTPLOT—BW
-( p <- ggplot(d, aes(x=relative_time, y = PNUM, color = ixn)) + 
+#DOTPLOT—IXN
+( p <- ggplot(df, aes(x=relative_time, y = PNUM, color = ixn)) + 
   geom_point(alpha=0.5, size=3) +
-  facet_grid(d$DATASET) +
+  facet_grid(df$DATASET) +
   scale_color_manual(values=c("black","#D81897")) +
   theme_minimal() + labs(
     title = "VARIABLE Utterances USING INTERACTION",
@@ -1228,7 +1189,9 @@ ggsave(p, file="figures/IXN_VARIABLE_time.png", width=6, height=4)
 
 ```
 
-### DETAIL---RELATIONSHIP
+### RELATIONSHIP UTTERANCES
+
+#### RELATIONSHIP Utterances
 
 ```{r, message=FALSE}
 
@@ -1254,7 +1217,14 @@ df_summary_relationship <- df_relationship %>%
 ggplot(df_summary_task, aes(x = TASK, y=c, fill= code_detail)) + 
   geom_col() + 
   geom_text(aes(label=c), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") + 
-  scale_fill_brewer(type="seq", palette = 3) +
+  # scale_fill_brewer(type="seq", palette = 3) +
+  scale_fill_manual(values=c(
+              "#C5D3DE",
+              "#C0DCF1",
+              "#90CBE4",
+              "#4EB0DA",
+              "#0083C2",
+              "#0051A1"))+
   labs( title = "RELATIONSHIP Utterances by TASK",
         subtitle = "",
         caption = "TODO think about proportion of existence and strength/direction",
@@ -1264,25 +1234,31 @@ ggplot(df_summary_task, aes(x = TASK, y=c, fill= code_detail)) +
 ggplot(df_summary_relationship, aes(x = DATASET, y=c, fill= code_detail)) + 
   geom_col() + 
   geom_text(aes(label=c), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") + 
-  scale_fill_brewer(type="seq", palette = 3) +
+  # scale_fill_brewer(type="seq", palette = 3) +
+  scale_fill_manual(values=c(
+              "#C5D3DE",
+              "#C0DCF1",
+              "#90CBE4",
+              "#4EB0DA",
+              "#0083C2",
+              "#0051A1"))+
   labs( title = "RELATIONSHIP Utterances by DATASET",
         subtitle = "",
         caption = "substantial differences by DATASET, \n consistent with pattern of results with VARIABLE utterances \n perhaps due to sparsity of knowledge of analysis of nominal X nominal relationships, and tool coverage",
         x= "DATASET", y = "count") + theme_minimal() 
 
-
-##CONSIDER THIS
-gf_bar( ~code_detail, fill = ~code_detail, data = df_relationship) %>% 
-  gf_facet_grid(TASK ~ DATASET) + labs(
-    title="LOOK at this more closely for data validation on relationship utts",
-    caption = "TODO CONSIDER THIS",
-  )
-
 #DETAILS DOTPLOT
 ggplot(df_time_relationship, aes(x=relative_time, y = PNUM, color=fct_rev(code_detail))) + 
   geom_point(alpha=0.5, size=3) +
   facet_grid(df_time_relationship$TASK) +
-  scale_color_brewer(type="seq", palette = 3) +
+  # scale_color_brewer(type="seq", palette = 3) +
+  scale_color_manual(values=c(
+              "#C5D3DE",
+              "#C0DCF1",
+              "#90CBE4",
+              "#4EB0DA",
+              "#0083C2",
+              "#0051A1"))+
   theme_minimal() + labs(
     title = "RELATIONSHIP Utterances by timecourse of Task",
     caption = "uniformly distributed, as expected \n may see variance if dimension of HYPOTHESIS vs OBSERVATION was coded",
@@ -1294,7 +1270,14 @@ ggplot(df_time_relationship, aes(x=relative_time, y = PNUM, color=fct_rev(code_d
 ggplot(df_time_relationship, aes(x = relative_time, fill = fct_rev(code_detail))) + 
   geom_histogram(binwidth = 30) + 
   facet_grid(df_time_relationship$TASK ~ df_time_relationship$code_detail ) +
-  scale_fill_brewer(type="seq", palette = 3) +
+  # scale_fill_brewer(type="seq", palette = 3) +
+  scale_fill_manual(values=c(
+              "#C5D3DE",
+              "#C0DCF1",
+              "#90CBE4",
+              "#4EB0DA",
+              "#0083C2",
+              "#0051A1"))+
   theme_minimal() + labs(
     title = "RELATIONSHIP Utterances by timecourse of Task",
     x= "timecourse of task (seconds)", y = "frequency of utterances"
@@ -1321,17 +1304,39 @@ ggplot(df_time_relationship, aes(x = relative_time, fill = fct_rev(code_detail))
   ) + theme_minimal()
 )
 
-ggsave(p, file="figures/UTTERANCE_detail_RELATIONSHIP_participants.png")
+ggsave(p, file="figures/UTTERANCE_detail_RELATIONSHIP_participants.png", width=8, height=4)
 
 ```
 
-#### RELATIONSHIP-REPS-LOW
+#### RELATIONSHIP Representations
 
 ```{r}
 
+
+df <- df_codedrep %>% filter(code_topic =="RELATIONSHIP")
+
+#DETAIL REP TYPE
+gf_bar( rep_type ~., fill = ~ fct_rev(code_detail), data = df) %>%
+  gf_facet_grid(DATASET~TASK) +
+  scale_fill_manual(values=c(
+              "#C5D3DE",
+              "#C0DCF1",
+              "#90CBE4",
+              "#4EB0DA",
+              "#0083C2",
+              "#0051A1"))+
+  labs(
+    title = "RELATIONSHIP Utterance-Representations (TYPE) ",
+    subtitle = "",
+    caption = "",
+    x = "number of coded utterances",
+    y = "Representation Type",
+    fill = "(code_detail)"
+  ) + theme_minimal()
+
+
 #PAPER FIGURE
-d <- df_codedrep %>% filter(code_topic =="RELATIONSHIP")
-(p <- gf_bar(  ~ rep_simple, fill = ~(code_detail), data = d) %>% 
+(p <- gf_bar(  ~ rep_simple, fill = ~(code_detail), data = df) %>% 
   gf_facet_grid( DATASET ~ TASK) + 
  scale_fill_manual(values=c(
               "#C5D3DE",
@@ -1356,26 +1361,20 @@ d <- df_codedrep %>% filter(code_topic =="RELATIONSHIP")
            "NONE"
   ))+
   theme_minimal() + labs(
-    title = "Utterance-Representations DETAIL by FACTORS"
+    title = "RELATIONSHIP Utterance-Representations (DETAIL)"
 ))
 
 ggsave(p, file="figures/UTTERANCE-REP_detail_RELATIONSHIP_factors.png", width=8, height=4)
 
 
-```
 
-#### RELATIONSHIP-REPS-IXN
-
-```{r}
+df <- df_codedrep %>% filter(code_topic == "RELATIONSHIP") %>% filter(TASK=="ixn")
 
 #PAPER FIGURE
-d <- df_codedrep %>% filter(code_topic == "RELATIONSHIP") %>% filter(TASK=="ixn")
-
-#PAPER FIGURE
-#DOTPLOT—BW
-( p <- ggplot(d, aes(x=relative_time, y = PNUM, color = ixn)) + 
+#DOTPLOT—IXN
+( p <- ggplot(df, aes(x=relative_time, y = PNUM, color = ixn)) + 
   geom_point(alpha=0.5, size=3) +
-  facet_grid(d$DATASET) +
+  facet_grid(df$DATASET) +
   scale_color_manual(values=c("black","#D81897")) +
   theme_minimal() + labs(
     title = "RELATIONSHIP Utterances USING INTERACTION",
