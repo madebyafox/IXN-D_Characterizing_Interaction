@@ -1295,7 +1295,7 @@ d <- df_joined %>% filter(code_topic =="RELATIONSHIP")
     title = "Utterance-Representations DETAIL by FACTORS"
 ))
 
-ggsave(p, file="figures/UTTERANCE-REP_detail_RELATIONSHIP_factors.png", width=6, height=4)
+ggsave(p, file="figures/UTTERANCE-REP_detail_RELATIONSHIP_factors.png", width=8, height=4)
 
 
 ```
