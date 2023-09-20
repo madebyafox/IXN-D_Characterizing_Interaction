@@ -3,9 +3,6 @@ title: "IXN D — Exploratory Data Analysis"
 author: "ANONYMIZED"
 date: "2023-09-08"
 output:
-  pdf_document:
-    toc: yes
-    toc_depth: '5'
   html_document:
     theme: sandstone
     code_folding: hide
@@ -16,6 +13,9 @@ output:
       collapsed: yes
       smooth_scroll: yes
     toc_depth: 5
+  pdf_document:
+    toc: yes
+    toc_depth: '5'
 always_allow_html: yes
 font-family: DejaVu Sans
 mainfont: DejaVu Sans
@@ -105,9 +105,9 @@ df_coded <- df_raw_utterances %>%
     reps_group = factor(Final_Group),
     reps_all = factor(`All representations`),
     #rename flags
-    flag_story = `Dylan Flag Storytelling`,
-    flag_correction = `Dylan Flag Correction`,
-    flag_simultaneous = `Dylan Flag Simultaneous Characterization`,
+    flag_story = `Flag_Storytelling`,
+    flag_correction = `Flag_Correction`,
+    flag_simultaneous = `Flag_Simultaneous_Characterization`,
     #recode and order TOP LEVEL CODES 
     code_topic = factor(Highlevel),
     code_topic = recode(code_topic, "ANALYSIS PROCESS" = "PROCESS"),

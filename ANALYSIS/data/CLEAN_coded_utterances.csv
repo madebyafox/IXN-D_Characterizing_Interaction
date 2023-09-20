@@ -1,4 +1,4 @@
-SID,Final_Group,Utterance Type,Utterance,Data Type,interaction_used,Highlevel,PID,Notebook,Condition,All representations,Timestamp,adj_timestamp,Dylan Flag Storytelling,Dylan Flag Correction,Dylan Flag Simultaneous Characterization,Vis_Was_Interactive,Timestamp,PNUM
+SID,Final_Group,Utterance Type,Utterance,Data Type,interaction_used,Highlevel,PID,Notebook,Condition,All representations,Timestamp,adj_timestamp,Flag_Storytelling,Flag_Correction,Flag_Simultaneous_Characterization,Vis_Was_Interactive,Timestamp,PNUM
 0,dataframe,data orientation,"""Alright, so every row is the passenger, their home planet, whether or not they were asleep, what cabin they were in
 destination",,FALSE,DATASET,j2719eertu2,Space,Static,"titanicDataFrame_head2_j2719eertu2space, ",19:57,0:19:57,,,,FALSE,19:57,P5
 1,dataframe,data orientation,I guess output variable would be whether or not they survived.,,FALSE,DATASET,j2719eertu2,Space,Static,"titanicDataFrame_head2_j2719eertu2space, ",20:10,0:20:10,,,,FALSE,20:10,P5
