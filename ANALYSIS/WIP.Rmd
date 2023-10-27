@@ -51,6 +51,10 @@ library(lmerTest) #for CIs in glmer
 
 options(readr.show_col_types = FALSE) #don't show coltypes on read_csv
 
+
+#ARF ONLY — MANUAL RUN
+# setwd("~/Code/IXN-Characterizing_Interaction/IXN-D_Characterizing_Interaction/ANALYSIS")
+
 ```
 
 Data are imported for analysis from two sources:
@@ -104,8 +108,8 @@ df_coded <- df_raw_utterances %>%
                                     "static _ happiness"="happiness-first",
                                     "static _ space"="space-first"),
     utterance = Utterance,
-    reps_group = factor(Final_Group),
-    reps_all = factor(`All representations`),
+    reps_group = factor(Final_Group), #TODO CLARIFY FROM DD
+    reps_all = factor(`All representations`), #TODO DEFINE FROM DD
     #rename flags
     flag_story = `Flag_Storytelling`,
     flag_correction = `Flag_Correction`,
@@ -212,7 +216,7 @@ df_codedrep <- df_coded %>%
           "none"  ="NONE"     
           
           )) %>% 
-  dplyr::select(-reps_group) %>%  #drop reps_group column since now separated
+  # dplyr::select(-reps_group) %>%  #drop reps_group column since now separated
   mutate(
     rep_type = recode(REP, 
                       "hist" = "CHART",                      
@@ -233,7 +237,11 @@ df_codedrep <- df_coded %>%
                       "info" = "CODE",                      
                       "columns" = "CODE",                  
                       "none"  ="NONE"     
-  ))
+  ),
+  #rm trailing string from reps_all, rename for future join with telemetry
+    rep_name = str_replace(reps_all, ",", "")
+  ) %>% #drop reps_all don't need it 
+  select(-reps_all)
 
 ##PRIMARY REPRESENATION DF
 #ROW ==? 
@@ -275,6 +283,7 @@ df_telemetry <- df_raw_telemetry %>%
                "double-profiler" = "profile",
                "countplot" = "barplot"),
     REP = factor(REP), #reset factor levels
+    rep_name = factor(rep_name),
     rep_type = recode(REP,
                       # "dictionary" = "TABLE",   
                       "describe" = "TABLE",
@@ -293,8 +302,24 @@ df_telemetry <- df_raw_telemetry %>%
                       "heatmap" = "CHART",                    
                       "multiviewchart" = "CHART"
                       )) %>%      
-  dplyr::select(pid,PNUM,TASK,DATASET,data_order,timestamp,time_elapsed,technique,IXN,REP,rep_type,cell_content)
+  dplyr::select(pid,PNUM,TASK,DATASET,data_order,timestamp,time_elapsed,technique,IXN,REP,rep_type,cell_content,rep_name)
 
+
+
+
+
+##JOINED DF OF UTTERANCE REPS W/ TELEMETRY DATA BC IXN TECHNIQUES ARE ALREADY PARSED IN THE TELEMENTRY FILE 
+
+
+#ICKY BAD GPT-3
+# result <- df_codedrep %>%
+#   rowwise() %>%
+#   left_join(df_telemetry, by = character()) %>%
+#   filter(str_detect(reps_all, fixed(rep_name))) %>%
+#   ungroup()
+
+df_coded_ixns <- 
+  left_join( x = df_codedrep, y = df_telemetry, by = join_by(rep_name))
 ```
 
 The following variables, some common across dataframes, are especially important to the subsequent analyses:
@@ -478,7 +503,7 @@ ggplot(df_coded, aes(x=relative_time, y = PNUM, color = DATASET)) +
 #HISTOGRAMS BY TASK
 ggplot(df_coded, aes(x = relative_time)) + 
   geom_histogram(binwidth = 30,aes(y=..density..)) + 
-  geom_density()+
+  # geom_density()+
   facet_grid(df_coded$TASK) +
   theme_minimal() + labs(
     title = "Participant Utterances over timecourse of Task",
@@ -869,6 +894,17 @@ ggsave(p, file="figures/IXN_PROCESS_time.png", width=6, height=4)
 
 ```
 
+
+
+
+#### !!TODO!! here PROCESS IXNS? 
+
+
+
+
+
+
+
 ### DATASET UTTERANCES
 
 #### DATASET Utterances
@@ -1018,6 +1054,7 @@ df <- df_codedrep %>% filter(code_topic == "DATASET") %>% filter(TASK=="ixn")
 
 #PAPER FIGURE
 #DOTPLOT—IXN
+#color only utterances made when IXN was being used [manually coded]
 ( p <- ggplot(df, aes(x=relative_time, y = PNUM, color = ixn)) + 
   geom_point(alpha=0.5, size=3) +
   facet_grid(df$DATASET) +
