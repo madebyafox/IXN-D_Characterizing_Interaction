@@ -1,0 +1,12 @@
+#R history
+
+*.Rhistory
+
+# Logs
+logs
+*.log
+
+
+#MAC storage files 
+.DS_Store
+.Rproj.user
