@@ -196,7 +196,6 @@ df_codedrep <- df_coded %>%
     REP = factor(reps_group),
     #create simplified condensed detail reps
     rep_simple = recode(REP,
-                       
           "multiviewchart" = "multi-view chart",  
           "heatmap" = "heatmap",         
           "pairplot" = "pairplot",        
@@ -309,18 +308,88 @@ df_telemetry <- df_raw_telemetry %>%
 
 
 ##JOINED DF OF UTTERANCE REPS W/ TELEMETRY DATA BC IXN TECHNIQUES ARE ALREADY PARSED IN THE TELEMENTRY FILE 
-
-
-#ICKY BAD GPT-3
-# result <- df_codedrep %>%
-#   rowwise() %>%
-#   left_join(df_telemetry, by = character()) %>%
-#   filter(str_detect(reps_all, fixed(rep_name))) %>%
-#   ungroup()
-
 df_coded_ixns <- 
   left_join( x = df_codedrep, y = df_telemetry, by = join_by(rep_name))
 ```
+
+```{r}
+
+##THIS WILL PROBABLY BE UNECESSARY WHEN NEW JOINED FILE COMES FROM DYLAN [ETA NEXT WEEK]
+##TEMP ONLY FOR TROUBLESHOOTING PURPOSES 
+
+
+#START with REPRESENTATIONS associated with UTTERANCES
+#ROW is unique utterance + rep combination
+#many-many relationship between utterances and representations
+df_other <- df_coded %>% 
+  dplyr::select(-data_order,-utterance, -flag_story, -flag_correction) %>% 
+  mutate(
+    #replace "data_dictionary" with dictionary
+    #rename "Multi-view Chart"          
+    reps_group  = factor(str_replace(reps_group, "data_dictionary", "dictionary")),
+    reps_group  = factor(str_replace(reps_group, "Multi-view Chart", "multiviewchart")),                         
+    reps_multi  = str_detect(reps_group,"_")) %>%  #flag multiple-representations 
+  separate_longer_delim(reps_all, delim = ", ") %>% #pivot longer based _ in reps_group
+    mutate(
+    REP = factor(reps_group),
+    #create simplified condensed detail reps
+    rep_simple = recode(REP,
+          "multiviewchart" = "multi-view chart",  
+          "heatmap" = "heatmap",         
+          "pairplot" = "pairplot",        
+          "stripplot" = "stripplot",       
+          "lineplot" = "lineplot",        
+          "scatterplot" = "scatterplot",     
+          "barplot" = "barplot",         
+          "double-profiler" = "profile", 
+          "profile" = "profile", 
+          "hist" = "histogram",            
+          "python" = "CODE",           
+          "dictionary" = "TABLE",   
+          "describe" = "TABLE",
+          "dataframe" = "TABLE",        
+          "info" = "TABLE",             
+          "columns" = "TABLE",          
+          "none"  ="NONE"     
+          
+          )) %>% 
+  # dplyr::select(-reps_group) %>%  #drop reps_group column since now separated
+  mutate(
+    rep_type = recode(REP, 
+                      "hist" = "CHART",                      
+                      "profile" = "CHART",                   
+                      "scatterplot" = "CHART",               
+                      "barplot" = "CHART",                   
+                      "stripplot" = "CHART",                 
+                      "lineplot" = "CHART",                     
+                      "heatmap" = "CHART",                    
+                      "pairplot" = "CHART",                   
+                      "multiviewchart" = "CHART",           
+                      "double-profiler" = "CHART",           
+                      "profile" = "CHART", 
+                      "python" = "CODE",                    
+                      "dictionary" = "CODE",   
+                      "describe" = "CODE",
+                      "dataframe" = "CODE",         
+                      "info" = "CODE",                      
+                      "columns" = "CODE",                  
+                      "none"  ="NONE"     
+  ),
+  #rm trailing string from reps_all, rename for future join with telemetry
+    rep_name = str_replace(reps_all, ",", "")
+  ) %>% #drop reps_all don't need it 
+  select(-reps_all)
+
+
+
+new_ixns <- 
+  left_join( x = df_other, y = df_telemetry, by = join_by(rep_name), keep=TRUE)
+
+
+```
+
+
+
 
 The following variables, some common across dataframes, are especially important to the subsequent analyses:
 
@@ -2248,6 +2317,8 @@ gf_bar( PNUM ~., fill = ~ fct_rev(rep_type), data = df_telemetry) %>%
 
 
 ```
+
+
 
 
 
