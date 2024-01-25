@@ -184,7 +184,8 @@ df_coded <- df_coded %>% mutate(
 #ROW is unique utterance + rep combination
 #many-many relationship between utterances and representations
 df_codedrep <- df_coded %>% 
-  dplyr::select(-data_order,-utterance, -flag_story, -flag_correction) %>% 
+  dplyr::select(-data_order, -flag_story, -flag_correction) %>% #NEW, DON'T DROP UTTERANCE
+  # dplyr::select(-data_order,-utterance, -flag_story, -flag_correction) %>% #OLD 
   mutate(
     #replace "data_dictionary" with dictionary
     #rename "Multi-view Chart"          
@@ -241,6 +242,10 @@ df_codedrep <- df_coded %>%
     rep_name = str_replace(reps_all, ",", "")
   ) %>% #drop reps_all don't need it 
   select(-reps_all)
+
+#EXPORT CODED-REPS FOR DYLAN
+write.csv(df_codedrep, "output/df_codedrep.csv", row.names=FALSE)
+
 
 ##PRIMARY REPRESENATION DF
 #ROW ==? 
