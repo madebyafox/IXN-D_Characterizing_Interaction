@@ -1,13 +1,23 @@
+<<<<<<< HEAD
 #large bayesian model files
 */models 
+=======
+#R history
+
+>>>>>>> refs/remotes/origin/main
 *.Rhistory
 
 # Logs
 logs
 *.log
 
+<<<<<<< HEAD
 #MAC storage files 
 *.DS_Store
 */.DS_Store
+=======
+
+#MAC storage files 
+>>>>>>> refs/remotes/origin/main
 .DS_Store
 .Rproj.user

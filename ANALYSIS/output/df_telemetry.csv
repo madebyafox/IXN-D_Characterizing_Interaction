@@ -1,0 +1,1133 @@
+"pid","PNUM","TASK","DATASET","data_order","timestamp","time_elapsed","technique","IXN","REP","rep_type","cell_content","rep_name"
+"3r2sh20ei","P9","ixn","space","happiness-first",1.69e+12,1948,"none",FALSE,"dataframe","TABLE","df","display_dataframe_3r2sh20eispace"
+"3r2sh20ei","P9","ixn","space","happiness-first",1.69e+12,198752,"none",FALSE,"profile","CHART","columns = df.columns
+ alx.profile(df,vars=columns)","profile_dataframe_3r2sh20eispace"
+"3r2sh20ei","P9","ixn","space","happiness-first",1.69e+12,343121,"none",FALSE,"describe","TABLE","df.describe()","describe_dataframe_3r2sh20eispace"
+"3r2sh20ei","P9","ixn","space","happiness-first",1.69e+12,373811,"none",FALSE,"dataframe","TABLE","df[df.isnull().any(axis=1)]","null_rows_dataframe_3r2sh20eispace"
+"3r2sh20ei","P9","ixn","space","happiness-first",1.69e+12,495897,"none",FALSE,"pairplot","CHART","alx.pairplot(df)","pairplot_dataframe_3r2sh20eispace"
+"3r2sh20ei","P9","ixn","space","happiness-first",1.69e+12,648224,"highlight_brush",TRUE,"scatterplot","CHART","alx.highlight_brush() + alx.scatterplot(df,x='ShoppingMall',y='FoodCourt')","interactive_scatterplot_shoppingmall_foodcourt_3r2sh20eispace"
+"3r2sh20ei","P9","ixn","space","happiness-first",1.69e+12,864701,"filter_slider+highlight_brush+highlight_point+tooltip_hover",TRUE,"multiviewchart","CHART","count = alx.highlight_point() + alx.countplot(df,x='survived',width=700)
+ 
+
+ scatter = alx.highlight_brush() + alx.scatterplot(df,x='ShoppingMall',y='FoodCourt')
+ 
+
+ # alx.filter_slider(field='year')
+ alx.highlight_brush() + alx.tooltip_hover() + (count & scatter)","interactive_countplot_survived_scatterplot_shoppingmall_foodcourt:2_3r2sh20eispace"
+"3r2sh20ei","P9","ixn","space","happiness-first",1.69e+12,877314,"highlight_point",TRUE,"barplot","CHART","alx.highlight_point() + alx.countplot(df,x='survived',width=700)","interactive_countplot_survived_3r2sh20eispace"
+"3r2sh20ei","P9","ixn","space","happiness-first",1.69e+12,885417,"highlight_brush",TRUE,"scatterplot","CHART","alx.highlight_brush() + alx.scatterplot(df,x='ShoppingMall',y='FoodCourt')","interactive_scatterplot_shoppingmall_foodcourt-2_3r2sh20eispace"
+"3r2sh20ei","P9","ixn","space","happiness-first",1.69e+12,895283,"filter_slider+highlight_brush+highlight_point+tooltip_hover",TRUE,"multiviewchart","CHART","count = alx.highlight_point() + alx.countplot(df,x='survived',width=700)
+ 
+
+ scatter = alx.scatterplot(df,x='ShoppingMall',y='FoodCourt')
+ 
+
+ # alx.filter_slider(field='year')
+ alx.highlight_brush() + alx.tooltip_hover() + (count & scatter)","interactive_countplot_survived_scatterplot_shoppingmall_foodcourt:3_3r2sh20eispace"
+"3r2sh20ei","P9","ixn","space","happiness-first",1.69e+12,900729,"none",FALSE,"scatterplot","CHART","alx.scatterplot(df,x='ShoppingMall',y='FoodCourt')","scatterplot_shoppingmall_foodcourt_3r2sh20eispace"
+"3r2sh20ei","P9","ixn","space","happiness-first",1.69e+12,908593,"filter_slider+highlight_point+tooltip_hover",TRUE,"multiviewchart","CHART","count = alx.highlight_point() + alx.countplot(df,x='survived',width=700)
+ 
+
+ scatter = alx.scatterplot(df,x='ShoppingMall',y='FoodCourt')
+ 
+
+ # alx.filter_slider(field='year')
+ alx.tooltip_hover() + (count & scatter)","interactive_countplot_survived_scatterplot_shoppingmall_foodcourt:4_3r2sh20eispace"
+"3r2sh20ei","P9","ixn","space","happiness-first",1.69e+12,922173,"filter_slider+highlight_point+tooltip_hover",TRUE,"multiviewchart","CHART","count = alx.highlight_point() + alx.countplot(df,x='survived',width=700)
+ 
+
+ scatter = alx.scatterplot(df,x='ShoppingMall',y='FoodCourt')
+ 
+
+ # alx.filter_slider(field='year')
+ alx.tooltip_hover() + (count & scatter)","interactive_hover_countplot_survived_scatterplot_shoppingmall_foodcourt_3r2sh20eispace"
+"3r2sh20ei","P9","ixn","space","happiness-first",1.69e+12,959495,"filter_brush+filter_slider+highlight_point+tooltip_hover",TRUE,"multiviewchart","CHART","count = alx.highlight_point() + alx.countplot(df,x='survived',width=700)
+ 
+
+ scatter = alx.scatterplot(df,x='ShoppingMall',y='FoodCourt')
+ 
+
+ # alx.filter_slider(field='year') 
+ alx.filter_brush() + alx.tooltip_hover() + (count & scatter)","interactive_filter_highlight_countplot_survived_hover_scatterplot_shoppingmall_foodcourt:2_3r2sh20eispace"
+"3r2sh20ei","P9","ixn","space","happiness-first",1.69e+12,1009886,"filter_brush+filter_slider+highlight_point+tooltip_hover",TRUE,"multiviewchart","CHART","count = alx.highlight_point() + alx.countplot(df,x='survived',width=700)
+ 
+
+ scatter = alx.filter_brush() + alx.scatterplot(df,x='ShoppingMall',y='FoodCourt')
+ 
+
+ # alx.filter_slider(field='year') 
+ alx.tooltip_hover() + (count & scatter)","interactive_highlight_countplot_survived_hover_filter_scatterplot_shoppingmall_foodcourt:4_3r2sh20eispace"
+"3r2sh20ei","P9","ixn","space","happiness-first",1.69e+12,1131224,"highlight_brush+tooltip_hover",TRUE,"multiviewchart","CHART","profile = alx.profile(df)
+ 
+
+ barplot = alx.scatterplot(df,x='ShoppingMall',y='FoodCourt',width=600) # sort descending by the height of the bars
+ 
+
+ alx.highlight_brush() + alx.tooltip_hover() + (profile & barplot)","interactive_profile_barplot_shoppingmall_foodcourt:2_3r2sh20eispace"
+"3r2sh20ei","P9","ixn","space","happiness-first",1.69e+12,1249614,"none",FALSE,"barplot","CHART","alx.countplot(df,x='survived',width=700)","countplot_survived_3r2sh20eispace"
+"3r2sh20ei","P9","ixn","space","happiness-first",1.69e+12,1289641,"none",FALSE,"dataframe","TABLE","survived = df[df.survived > 0]
+ survived","display_survived_3r2sh20eispace"
+"3r2sh20ei","P9","ixn","space","happiness-first",1.69e+12,1395980,"none",FALSE,"profile","CHART","survived = df[df.survived > 0]
+ alx.profile(survived)","profile_survived-2_3r2sh20eispace"
+"3r2sh20ei","P9","ixn","space","happiness-first",1.69e+12,1419989,"none",FALSE,"profile","CHART","deceased = df[df.survived == 0]
+ alx.profile(deceased)","profile_deceased_3r2sh20eispace"
+"3r2sh20ei","P9","static","happiness","happiness-first",1.69e+12,2119,"none",FALSE,"dataframe","TABLE","df","display_dataframe_3r2sh20eihappiness"
+"3r2sh20ei","P9","static","happiness","happiness-first",1.69e+12,196079,"none",FALSE,"profile","CHART","columns = df.columns 
+ alx.profile(df,vars=columns)","profile_dataframe_3r2sh20eihappiness"
+"3r2sh20ei","P9","static","happiness","happiness-first",1.69e+12,334816,"none",FALSE,"dataframe","TABLE","df.isnull()","isnull_dataframe_3r2sh20eihappiness"
+"3r2sh20ei","P9","static","happiness","happiness-first",1.69e+12,340480,"none",FALSE,"dataframe","TABLE","df[df.isnull()]","null_rows_dataframe_3r2sh20eihappiness"
+"3r2sh20ei","P9","static","happiness","happiness-first",1.69e+12,405354,"none",FALSE,"dataframe","TABLE","df[df.isnull().any(axis=1)]","any_null_in_rows_3r2sh20eihappiness"
+"3r2sh20ei","P9","static","happiness","happiness-first",1.69e+12,618977,"none",FALSE,"scatterplot","CHART","alx.jointplot(df,x='positiveAffect',y='negativeAffect')","jointplot_positiveAffect_negativeAffect_3r2sh20eihappiness"
+"3r2sh20ei","P9","static","happiness","happiness-first",1.69e+12,653301,"none",FALSE,"describe","TABLE","df.describe()","describe_dataframe_3r2sh20eihappiness"
+"3r2sh20ei","P9","static","happiness","happiness-first",1.69e+12,690404,"none",FALSE,"scatterplot","CHART","alx.jointplot(df,x='happinessScore',y='lifeExpectancy')","jointplot_happinessScore_lifeExpectancy_3r2sh20eihappiness"
+"3r2sh20ei","P9","static","happiness","happiness-first",1.69e+12,737474,"none",FALSE,"lineplot","CHART","alx.lineplot(df,x='year',y='average(happinessScore)', color= 'country')","lineplot_year_averageHappinessScore_3r2sh20eihappiness"
+"3r2sh20ei","P9","static","happiness","happiness-first",1.69e+12,787105,"none",FALSE,"pairplot","CHART","alx.pairplot(df)","pairplot_dataframe_3r2sh20eihappiness"
+"3r2sh20ei","P9","static","happiness","happiness-first",1.69e+12,1106438,"none",FALSE,"dataframe","TABLE","df[df.corruption < 0.5]","filter_corruption_3r2sh20eihappiness"
+"3r2sh20ei","P9","static","happiness","happiness-first",1.69e+12,1257160,"none",FALSE,"hist","CHART","alx.hist(df,x='corruption') & alx.hist(df,x='generosity')","hist_corruption_generosity_3r2sh20eihappiness"
+"3r2sh20ei","P9","static","happiness","happiness-first",1.69e+12,1354722,"none",FALSE,"dataframe","TABLE","df[df.lifeExpectancy > 50]","filter_lifeExpectancy_3r2sh20eihappiness"
+"3r2sh20ei","P9","static","happiness","happiness-first",1.69e+12,1398200,"none",FALSE,"hist","CHART","alx.hist(df,x='corruption') & alx.hist(df,x='generosity') & alx.hist(df,x='lifeExpectancy')","hist_corruption_generosity_lifeExpectancy_3r2sh20eihappiness"
+"3r2sh20ei","P9","static","happiness","happiness-first",1.69e+12,1474327,"none",FALSE,"scatterplot","CHART","alx.scatterplot(df,x='corruption',y='generosity', color='cluster:N')","scatterplot_corruption_generosity_colorCluster_3r2sh20eihappiness"
+"3r2sh20ei","P9","static","happiness","happiness-first",1.69e+12,1484665,"none",FALSE,"scatterplot","CHART","alx.scatterplot(df,x='corruption',y='generosity', color='country:N')","scatterplot_corruption_generosity_colorCountryN_3r2sh20eihappiness"
+"3r2sh20ei","P9","static","happiness","happiness-first",1.69e+12,1498526,"none",FALSE,"scatterplot","CHART","alx.scatterplot(df,x='corruption',y='generosity')","scatterplot_corruption_generosity_3r2sh20eihappiness"
+"3r2sh20ei","P9","static","happiness","happiness-first",1.69e+12,1504533,"none",FALSE,"scatterplot","CHART","alx.scatterplot(df,x='corruption',y='generosity', color='country:Q')","scatterplot_corruption_generosity_colorCountryQ_3r2sh20eihappiness"
+"3r2sh20ei","P9","static","happiness","happiness-first",1.69e+12,1509623,"none",FALSE,"scatterplot","CHART","alx.scatterplot(df,x='corruption',y='generosity')","scatterplot_corruption_generosity-2_3r2sh20eihappiness"
+"3r2sh20ei","P9","static","happiness","happiness-first",1.69e+12,1516241,"none",FALSE,"scatterplot","CHART","alx.scatterplot(df,x='corruption',y='generosity', color='country')","scatterplot_corruption_generosity_colorCountry_3r2sh20eihappiness"
+"3r2sh20ei","P9","static","happiness","happiness-first",1.69e+12,1581809,"none",FALSE,"scatterplot","CHART","alx.scatterplot(df,x='corruption',y='positiveAffect', color='country')","scatterplot_corruption_positiveAffect_colorCountry_3r2sh20eihappiness"
+"li832lin23","P8","static","space","space-first",1.68e+12,23176,"none",FALSE,"dataframe","TABLE","df.head()","display_head_dataframe_li832lin23space"
+"li832lin23","P8","static","space","space-first",1.68e+12,62293,"none",FALSE,"profile","CHART","columns = df.columns # returns list of column names [""year"",""country""...]
+ alx.profile(df,vars=columns)","profile_all_columns_li832lin23space"
+"li832lin23","P8","static","space","space-first",1.68e+12,265757,"none",FALSE,"profile","CHART","columns = df.columns # returns list of column names [""year"",""country""...]
+ alx.profile(df,vars=columns[:5])","profile_first_five_columns_li832lin23space"
+"li832lin23","P8","static","space","space-first",1.68e+12,280723,"none",FALSE,"profile","CHART","alx.profile(df,vars=columns[5:10])","profile_columns_5_to_10_li832lin23space"
+"li832lin23","P8","static","space","space-first",1.68e+12,304670,"none",FALSE,"profile","CHART","alx.profile(df,vars=columns[10:118])","profile_columns_10_to_118_li832lin23space"
+"li832lin23","P8","static","space","space-first",1.68e+12,315732,"none",FALSE,"profile","CHART","alx.profile(df,vars=columns[10:])","profile_columns_10_to_end_li832lin23space"
+"li832lin23","P8","static","space","space-first",1.68e+12,379113,"none",FALSE,"hist","CHART","import numpy as np 
+ 
+
+ df['log_age'] = np.log(df['Age'])
+ alx.hist(df, x= 'log_age')","log_transform_age_fix_hist_li832lin23space"
+"li832lin23","P8","static","space","space-first",1.68e+12,451473,"none",FALSE,"hist","CHART","import numpy as np 
+ 
+
+ df['log_room'] = np.log(df['RoomService'])
+ alx.hist(df, x= 'log_room')","log_transform_roomservice_hist_li832lin23space"
+"li832lin23","P8","static","space","space-first",1.68e+12,567878,"none",FALSE,"hist","CHART","df['log_food'] = np.log(df['FoodCourt'])
+ alx.hist(df, x= 'log_food')","log_transform_foodcourt_hist_li832lin23space"
+"li832lin23","P8","static","space","space-first",1.68e+12,699443,"none",FALSE,"barplot","CHART","alx.barplot(df,x='Survived:N',y='count(Survived:N)',color='Survived:N',column='HomePlanet')","barplot_survived_homeplanet_6_li832lin23space"
+"li832lin23","P8","static","space","space-first",1.68e+12,713271,"none",FALSE,"barplot","CHART","alx.barplot(df,x='Survived:N',y='count()',color='Survived:N',column='HomePlanet')","barplot_survived_homeplanet_7_li832lin23space"
+"li832lin23","P8","static","space","space-first",1.68e+12,747767,"none",FALSE,"barplot","CHART","alx.barplot(df,x='survived:N',y='count()',color='survived:N',column='HomePlanet')","barplot_survived_homeplanet_8_li832lin23space"
+"li832lin23","P8","static","space","space-first",1.68e+12,838491,"none",FALSE,"barplot","CHART","alx.barplot(df,x='survived:N',y='count()',color='survived:N',column='CryoSleep')","barplot_survived_cryosleep_li832lin23space"
+"li832lin23","P8","static","space","space-first",1.68e+12,868197,"none",FALSE,"barplot","CHART","alx.barplot(df,x='survived:N',y='count()',color='survived:N',column='Destination')","barplot_survived_destination_li832lin23space"
+"li832lin23","P8","static","space","space-first",1.68e+12,1036429,"none",FALSE,"stripplot","CHART","alx.stripplot(df,x='Age',row='survived',color='survived:N')
+ # NOTE: we use cluster:N to tell alx, cluster is nominal","stripplot_age_survived_1_li832lin23space"
+"li832lin23","P8","static","space","space-first",1.68e+12,1058797,"none",FALSE,"stripplot","CHART","alx.stripplot(df,x='Age',row='survived',color='survived:N')
+ # NOTE: we use cluster:N to tell alx, cluster is nominal","stripplot_age_survived_2_li832lin23space"
+"li832lin23","P8","static","space","space-first",1.68e+12,1069387,"none",FALSE,"stripplot","CHART","alx.stripplot(df,y='Age',column='survived',color='survived:N')
+ # NOTE: we use cluster:N to tell alx, cluster is nominal","stripplot_age_survived_3_li832lin23space"
+"li832lin23","P8","static","space","space-first",1.68e+12,1082407,"none",FALSE,"stripplot","CHART","alx.stripplot(df,row='Age',x='survived',color='survived:N')
+ # NOTE: we use cluster:N to tell alx, cluster is nominal","stripplot_age_survived_4_li832lin23space"
+"li832lin23","P8","static","space","space-first",1.68e+12,1097079,"none",FALSE,"stripplot","CHART","alx.stripplot(df,x='Age',row='survived',color='survived:N')
+ # NOTE: we use cluster:N to tell alx, cluster is nominal","stripplot_age_survived_5_li832lin23space"
+"li832lin23","P8","static","space","space-first",1.68e+12,1135392,"none",FALSE,"barplot","CHART","alx.barplot(df,x='survived:N',y='count()',color='survived:N',column='VIP')","barplot_survived_vip_li832lin23space"
+"li832lin23","P8","static","space","space-first",1.68e+12,1179192,"none",FALSE,"stripplot","CHART","alx.stripplot(df,x='Spa',row='survived',color='survived:N')
+ # NOTE: we use cluster:N to tell alx, cluster is nominal","stripplot_spa_survived_li832lin23space"
+"li832lin23","P8","static","space","space-first",1.68e+12,1190783,"none",FALSE,"columns","TABLE","df.columns","display_dataframe_columns_li832lin23space"
+"li832lin23","P8","static","space","space-first",1.68e+12,1206333,"none",FALSE,"stripplot","CHART","alx.stripplot(df,x='RoomService',row='survived',color='survived:N')
+ # NOTE: we use cluster:N to tell alx, cluster is nominal","stripplot_roomservice_survived_li832lin23space"
+"li832lin23","P8","static","space","space-first",1.68e+12,1227002,"none",FALSE,"stripplot","CHART","alx.stripplot(df,x='log_room',row='survived',color='survived:N')
+ # NOTE: we use cluster:N to tell alx, cluster is nominal","stripplot_logroom_survived_li832lin23space"
+"li832lin23","P8","static","space","space-first",1.68e+12,1288918,"none",FALSE,"dataframe","TABLE","correlation_matrix","display_correlation_matrix_li832lin23space"
+"li832lin23","P8","static","space","space-first",1.68e+12,1298247,"none",FALSE,"heatmap","CHART","alx.heatmap(correlation_matrix)","heatmap_correlation_matrix_li832lin23space"
+"li832lin23","P8","static","space","space-first",1.68e+12,1341402,"none",FALSE,"describe","TABLE","df.describe()","describe_dataframe_li832lin23space"
+"li832lin23","P8","static","space","space-first",1.68e+12,1355875,"none",FALSE,"dataframe","TABLE","df.isnull()","isnull_li832lin23space"
+"li832lin23","P8","static","space","space-first",1.68e+12,1431026,"none",FALSE,"hist","CHART","alx.hist(df, x= 'Age')","hist_age_li832lin23space"
+"li832lin23","P8","ixn","happiness","space-first",1.68e+12,108024,"none",FALSE,"profile","CHART","columns = df.columns # returns list of column names [""year"",""country""...]
+ alx.profile(df,vars=columns)","df_profile_all_li832lin23happiness"
+"li832lin23","P8","ixn","happiness","space-first",1.68e+12,123679,"none",FALSE,"profile","CHART","columns = df.columns # returns list of column names [""year"",""country""...]
+ alx.profile(df,vars=columns[:8])","df_profile_first8_li832lin23happiness"
+"li832lin23","P8","ixn","happiness","space-first",1.68e+12,135761,"none",FALSE,"profile","CHART","columns = df.columns # returns list of column names [""year"",""country""...]
+ alx.profile(df,vars=columns[:8])","df_profile_first8_repeat_li832lin23happiness"
+"li832lin23","P8","ixn","happiness","space-first",1.68e+12,143620,"none",FALSE,"profile","CHART","alx.profile(df,vars=columns[8:])","df_profile_remaining_li832lin23happiness"
+"li832lin23","P8","ixn","happiness","space-first",1.68e+12,267497,"none",FALSE,"heatmap","CHART","correlation_matrix = df.corr()
+ alx.heatmap(correlation_matrix)","corr_heatmap_li832lin23happiness"
+"li832lin23","P8","ixn","happiness","space-first",1.68e+12,325746,"none",FALSE,"scatterplot","CHART","alx.jointplot(df,x='happinessScore',y='lifeExpectancy')","jointplot_happ_lifeExp1_li832lin23happiness"
+"li832lin23","P8","ixn","happiness","space-first",1.68e+12,357965,"highlight_brush+tooltip_hover",TRUE,"scatterplot","CHART","alx.highlight_brush() + alx.tooltip_hover() + alx.jointplot(df,x='happinessScore',y='lifeExpectancy')","tooltip_brush_jointplot_happ_lifeExp3_li832lin23happiness"
+"li832lin23","P8","ixn","happiness","space-first",1.68e+12,491023,"highlight_brush+tooltip_hover",TRUE,"scatterplot","CHART","alx.highlight_brush() + alx.tooltip_hover() + alx.jointplot(df,x='happinessScore',y=df.columns[3])","tooltip_brush_jointplot_happ_col3_li832lin23happiness"
+"li832lin23","P8","ixn","happiness","space-first",1.68e+12,509370,"highlight_brush+tooltip_hover",TRUE,"scatterplot","CHART","alx.highlight_brush() + alx.tooltip_hover() + alx.jointplot(df,x='happinessScore',y=df.columns[4])","tooltip_brush_jointplot_happ_col4_li832lin23happiness"
+"li832lin23","P8","ixn","happiness","space-first",1.68e+12,530911,"none",FALSE,"dataframe","TABLE","haiti","display_haiti_li832lin23happiness"
+"li832lin23","P8","ixn","happiness","space-first",1.68e+12,569464,"highlight_brush+tooltip_hover",TRUE,"scatterplot","CHART","alx.highlight_brush() + alx.tooltip_hover() + alx.jointplot(df,x='happinessScore',y=df.columns[5])","tooltip_brush_jointplot_happ_col5_li832lin23happiness"
+"li832lin23","P8","ixn","happiness","space-first",1.68e+12,577770,"highlight_brush+tooltip_hover",TRUE,"scatterplot","CHART","alx.highlight_brush() + alx.tooltip_hover() + alx.jointplot(df,x='happinessScore',y=df.columns[6])","tooltip_brush_jointplot_happ_col6_li832lin23happiness"
+"li832lin23","P8","ixn","happiness","space-first",1.68e+12,592162,"highlight_brush+tooltip_hover",TRUE,"scatterplot","CHART","alx.highlight_brush() + alx.tooltip_hover() + alx.jointplot(df,x='happinessScore',y=df.columns[7])","tooltip_brush_jointplot_happ_col7_li832lin23happiness"
+"li832lin23","P8","ixn","happiness","space-first",1.68e+12,617032,"none",FALSE,"dataframe","TABLE","df.query("" (happinessScore>=3.62 and happinessScore<=6.50) and (generosity>=0.26 and generosity<=0.74) "")","query_generous_li832lin23happiness"
+"li832lin23","P8","ixn","happiness","space-first",1.68e+12,663576,"none",FALSE,"columns","TABLE","generous.columns","display_cols_li832lin23happiness"
+"li832lin23","P8","ixn","happiness","space-first",1.68e+12,672052,"highlight_brush+tooltip_hover",TRUE,"scatterplot","CHART","alx.highlight_brush() + alx.tooltip_hover() + alx.jointplot(generous,x='happinessScore',y='logGDPPerCapita')","tooltip_brush_jointplot_gen_GDP_li832lin23happiness"
+"li832lin23","P8","ixn","happiness","space-first",1.68e+12,716364,"highlight_brush+tooltip_hover",TRUE,"scatterplot","CHART","alx.highlight_brush() + alx.tooltip_hover() + alx.jointplot(df,x='happinessScore',y=df.columns[8])","tooltip_brush_jointplot_happ_col8_li832lin23happiness"
+"li832lin23","P8","ixn","happiness","space-first",1.68e+12,760440,"none",FALSE,"dataframe","TABLE","df.query("" (happinessScore>=6.52 and happinessScore<=8.27) and (corruption>=0.10 and corruption<=0.61) "")","query_corrupt_li832lin23happiness"
+"li832lin23","P8","ixn","happiness","space-first",1.68e+12,781943,"highlight_brush+tooltip_hover",TRUE,"scatterplot","CHART","alx.highlight_brush() + alx.tooltip_hover() + alx.jointplot(df,x='happinessScore',y=df.columns[9])","tooltip_brush_jointplot_happ_col9_li832lin23happiness"
+"li832lin23","P8","ixn","happiness","space-first",1.68e+12,797328,"highlight_brush+tooltip_hover",TRUE,"scatterplot","CHART","alx.highlight_brush() + alx.tooltip_hover() + alx.jointplot(df,x='happinessScore',y=df.columns[10])","tooltip_brush_jointplot_happ_col10_li832lin23happiness"
+"li832lin23","P8","ixn","happiness","space-first",1.68e+12,807615,"highlight_brush+tooltip_hover",TRUE,"scatterplot","CHART","alx.highlight_brush() + alx.tooltip_hover() + alx.jointplot(df,x='happinessScore',y=df.columns[11])","tooltip_brush_jointplot_happ_col11_li832lin23happiness"
+"li832lin23","P8","ixn","happiness","space-first",1.68e+12,938382,"none",FALSE,"columns","TABLE","df.columns","display_cols2_li832lin23happiness"
+"li832lin23","P8","ixn","happiness","space-first",1.68e+12,951197,"filter_slider+highlight_brush+tooltip_hover",TRUE,"barplot","CHART","barplot = alx.barplot(df,x='country',y='happinessScore',sort='-y',width=600) # sort descending by the height of the bars
+ 
+
+ alx.highlight_brush() + alx.tooltip_hover() + alx.filter_slider(field='year') + barplot","tooltip_brush_barplot_country_score1_li832lin23happiness"
+"li832lin23","P8","ixn","happiness","space-first",1.68e+12,962285,"filter_slider+highlight_brush+tooltip_hover",TRUE,"barplot","CHART","barplot = alx.barplot(df,x='country',y='happinessScore',width=600) # sort descending by the height of the bars
+ 
+
+ alx.highlight_brush() + alx.tooltip_hover() + alx.filter_slider(field='year') + barplot","tooltip_brush_barplot_country_score2_li832lin23happiness"
+"li832lin23","P8","ixn","happiness","space-first",1.68e+12,991248,"none",FALSE,"barplot","CHART","barplot = alx.barplot(df,x='country',y='average(happinessScore)',width=600) # sort descending by the height of the bars","barplot_avg_score_li832lin23happiness"
+"li832lin23","P8","ixn","happiness","space-first",1.68e+12,999331,"highlight_brush+tooltip_hover",TRUE,"barplot","CHART","barplot = alx.barplot(df,x='country',y='average(happinessScore)',width=600) # sort descending by the height of the bars
+ alx.highlight_brush() + alx.tooltip_hover() + barplot","tooltip_brush_barplot_avg_score2_li832lin23happiness"
+"li832lin23","P8","ixn","happiness","space-first",1.68e+12,1006284,"highlight_brush+tooltip_hover",TRUE,"barplot","CHART","barplot = alx.barplot(df,x='country',y='average(happinessScore)',width=1000) # sort descending by the height of the bars
+ alx.highlight_brush() + alx.tooltip_hover() + barplot","tooltip_brush_barplot_avg_score3_li832lin23happiness"
+"li832lin23","P8","ixn","happiness","space-first",1.68e+12,1012140,"highlight_brush+tooltip_hover",TRUE,"barplot","CHART","barplot = alx.barplot(df,x='country',y='average(happinessScore)') # sort descending by the height of the bars
+ alx.highlight_brush() + alx.tooltip_hover() + barplot","tooltip_brush_barplot_avg_score4_li832lin23happiness"
+"li832lin23","P8","ixn","happiness","space-first",1.68e+12,1018929,"highlight_brush+tooltip_hover",TRUE,"barplot","CHART","barplot = alx.barplot(df,x='country',y='average(happinessScore)', width=1500) # sort descending by the height of the bars
+ alx.highlight_brush() + alx.tooltip_hover() + barplot","tooltip_brush_barplot_avg_score5_li832lin23happiness"
+"li832lin23","P8","ixn","happiness","space-first",1.68e+12,1030570,"highlight_brush+tooltip_hover",TRUE,"barplot","CHART","barplot = alx.barplot(df,x='country',y='average(happinessScore)', sort='-y', width=1500) # sort descending by the height of the bars
+ alx.highlight_brush() + alx.tooltip_hover() + barplot","tooltip_brush_barplot_avg_score6_li832lin23happiness"
+"li832lin23","P8","ixn","happiness","space-first",1.68e+12,1050401,"highlight_brush+tooltip_hover",TRUE,"barplot","CHART","barplot = alx.barplot(df,x='country',y='average(happinessScore)',sort='-y',width=1500) # sort descending by the height of the bars
+ alx.highlight_brush() + alx.tooltip_hover() + barplot","tooltip_brush_barplot_avg_score7_li832lin23happiness"
+"li832lin23","P8","ixn","happiness","space-first",1.68e+12,1113608,"highlight_brush+tooltip_hover",TRUE,"multiviewchart","CHART","profile = alx.profile(df)
+ barplot = alx.barplot(df,x='country',y='average(happinessScore)',sort='-y',width=1500) # sort descending by the height of the bars
+ alx.highlight_brush() + alx.tooltip_hover() + (profile & barplot)","tooltip_brush_barplot_avg_happiness_profile8_li832lin23happiness"
+"li832lin23","P8","ixn","happiness","space-first",1.68e+12,1156638,"highlight_brush+tooltip_hover",TRUE,"barplot","CHART","barplot = alx.barplot(df,x='country',y='average(happinessScore)',sort='-y',width=1500)
+ alx.highlight_brush() + alx.tooltip_hover() + barplot","tooltip_brush_barplot_avg_score7_li832lin23happiness"
+"li832lin23","P8","ixn","happiness","space-first",1.68e+12,1320106,"none",FALSE,"dataframe","TABLE","df.query("" (logGDPPerCapita>=11.16 and logGDPPerCapita<=12.00 and lifeExpectancy>=73.60 and lifeExpectancy<=80.00) "")","query_gdp_lifeExp2_li832lin23happiness"
+"li832lin23","P8","ixn","happiness","space-first",1.68e+12,1348813,"none",FALSE,"dataframe","TABLE","df.query("" (logGDPPerCapita>=11.16 and logGDPPerCapita<=12.00 and lifeExpectancy>=73.60 and lifeExpectancy<=80.00) "")","query_gdp_lifeExp3_li832lin23happiness"
+"li832lin23","P8","ixn","happiness","space-first",1.68e+12,1413088,"none",FALSE,"describe","TABLE","df.describe()","df_describe_li832lin23happiness"
+"lkin27js09b","P7","static","space","space-first",1.68e+12,1673757,"none",FALSE,"columns","TABLE","print(df.columns)","df_columns_print2_lkin27js09bspace"
+"lkin27js09b","P7","ixn","happiness","space-first",1.68e+12,176218,"highlight_brush",TRUE,"profile","CHART","columns = df.columns
+ alx.highlight_brush() + alx.profile(df,vars=columns)","highlight_brush_profile_lkin27js09bhappiness"
+"lkin27js09b","P7","ixn","happiness","space-first",1.68e+12,593478,"none",FALSE,"barplot","CHART","alx.barplot(df,x='country',y='happinessScore')","barplot_country2_lkin27js09bhappiness"
+"lkin27js09b","P7","ixn","happiness","space-first",1.68e+12,848648,"none",FALSE,"barplot","CHART","alx.barplot(df,x='country',y='happinessScore', width=1000)","barplot_country3_lkin27js09bhappiness"
+"lkin27js09b","P7","ixn","happiness","space-first",1.68e+12,880232,"none",FALSE,"barplot","CHART","alx.barplot(df,x='country',y='happinessScore', sort='-y', width=1200)","barplot_country4_lkin27js09bhappiness"
+"lkin27js09b","P7","ixn","happiness","space-first",1.68e+12,934105,"highlight_brush",TRUE,"barplot","CHART","alx.highlight_brush() + alx.barplot(df,x='country',y='happinessScore', sort='-y', width=1200)","barplot_country_brush2_lkin27js09bhappiness"
+"lkin27js09b","P7","ixn","happiness","space-first",1.68e+12,1004896,"highlight_brush",TRUE,"multiviewchart","CHART","alx.profile(df,vars=df.columns) & alx.highlight_brush() + alx.barplot(df,x='country',y='average(happinessScore)', sort='-y', width=1200)","combined_profile_brush_bar1_lkin27js09bhappiness"
+"lkin27js09b","P7","ixn","happiness","space-first",1.68e+12,1035672,"highlight_brush",TRUE,"barplot","CHART","alx.highlight_brush() + alx.barplot(df,x='country',y='average(happinessScore)', sort='-y', width=1200)","barplot_avg_happi_brush1_lkin27js09bhappiness"
+"lkin27js09b","P7","ixn","happiness","space-first",1.68e+12,1081120,"highlight_brush",TRUE,"barplot","CHART","alx.highlight_brush() + alx.barplot(df,x='country',y='average(happinessScore)', sort='-y', width=1200)","barplot_avg_happi_brush4_lkin27js09bhappiness"
+"lkin27js09b","P7","ixn","happiness","space-first",1.68e+12,1095105,"highlight_brush",TRUE,"multiviewchart","CHART","alx.profile(df,vars=df.columns) & alx.highlight_brush() + alx.barplot(df,x='country',y='average(happinessScore)', sort='-y', width=1200)","combined_profile_brush_bar2_lkin27js09bhappiness"
+"lkin27js09b","P7","ixn","happiness","space-first",1.68e+12,1149158,"highlight_brush",TRUE,"multiviewchart","CHART","alx.highlight_brush() + alx.profile(df,vars=df.columns) & alx.barplot(df,x='country',y='average(happinessScore)', sort='-y', width=1200)","combined_profile_brush_bar3_lkin27js09bhappiness"
+"lkin27js09b","P7","ixn","happiness","space-first",1.68e+12,1196675,"highlight_brush",TRUE,"multiviewchart","CHART","alx.highlight_brush() + (alx.profile(df,vars=df.columns) & alx.barplot(df,x='country',y='average(happinessScore)', sort='-y', width=1200))","combined_profile_brush_bar4_lkin27js09bhappiness"
+"lkin27js09b","P7","ixn","happiness","space-first",1.68e+12,1217815,"highlight_brush",TRUE,"multiviewchart","CHART","alx.highlight_brush() + alx.profile(df,vars=df.columns) & alx.highlight_brush() + alx.barplot(df,x='country',y='average(happinessScore)', sort='-y', width=1200)","combined_profile_brush_bar5_lkin27js09bhappiness"
+"lkin27js09b","P7","ixn","happiness","space-first",1.68e+12,1235801,"highlight_brush",TRUE,"multiviewchart","CHART","alx.highlight_brush() + alx.profile(df,vars=df.columns) & alx.barplot(df,x='country',y='average(happinessScore)', sort='-y', width=1200)","combined_profile_brush_bar6_lkin27js09bhappiness"
+"lkin27js09b","P7","ixn","happiness","space-first",1.68e+12,1641859,"none",FALSE,"columns","TABLE","print(df.columns)","df_columns_print_lkin27js09bhappiness"
+"bjs827ee1u","P6","static","happiness","happiness-first",1.68e+12,37286,"none",FALSE,"dataframe","TABLE","df","df_view_bjs827ee1uhappiness"
+"bjs827ee1u","P6","static","happiness","happiness-first",1.68e+12,89658,"none",FALSE,"describe","TABLE","df.info()","df_info_bjs827ee1uhappiness"
+"bjs827ee1u","P6","static","happiness","happiness-first",1.68e+12,100502,"none",FALSE,"describe","TABLE","df.describe()","df_describe2_bjs827ee1uhappiness"
+"bjs827ee1u","P6","static","happiness","happiness-first",1.68e+12,167209,"none",FALSE,"dataframe","TABLE","df","df_view2_bjs827ee1uhappiness"
+"bjs827ee1u","P6","static","happiness","happiness-first",1.68e+12,243014,"none",FALSE,"scatterplot","CHART","alx.scatterplot(df,x='year',y='happinessScore')","alx_scatter_year_happiness_bjs827ee1uhappiness"
+"bjs827ee1u","P6","static","happiness","happiness-first",1.68e+12,305788,"none",FALSE,"scatterplot","CHART","alx.scatterplot(df,x='year',y='logGDPPerCapita')","alx_scatter_year_logGDP_bjs827ee1uhappiness"
+"bjs827ee1u","P6","static","happiness","happiness-first",1.68e+12,398017,"none",FALSE,"scatterplot","CHART","alx.jointplot(df,x='year',y='logGDPPerCapita')","alx_joint_year_logGDP_bjs827ee1uhappiness"
+"bjs827ee1u","P6","static","happiness","happiness-first",1.68e+12,435276,"none",FALSE,"scatterplot","CHART","alx.jointplot(df,x='happinessScore',y='logGDPPerCapita')","alx_joint_happiness_logGDP_bjs827ee1uhappiness"
+"bjs827ee1u","P6","static","happiness","happiness-first",1.68e+12,704204,"none",FALSE,"dataframe","TABLE","df","df_view4_bjs827ee1uhappiness"
+"bjs827ee1u","P6","static","happiness","happiness-first",1.68e+12,709208,"none",FALSE,"dataframe","TABLE","df[df['year'] == 2008]","df_filtered_2008_3_bjs827ee1uhappiness"
+"bjs827ee1u","P6","static","happiness","happiness-first",1.68e+12,724925,"none",FALSE,"scatterplot","CHART","alx.jointplot(dfx,x='happinessScore',y='logGDPPerCapita')","jointplot_2008_bjs827ee1uhappiness"
+"bjs827ee1u","P6","static","happiness","happiness-first",1.68e+12,741016,"none",FALSE,"scatterplot","CHART","dfx = df[df['year'] == 2014]
+ alx.jointplot(dfx,x='happinessScore',y='logGDPPerCapita')","jointplot_2014_bjs827ee1uhappiness"
+"bjs827ee1u","P6","static","happiness","happiness-first",1.68e+12,782953,"none",FALSE,"scatterplot","CHART","df2008 = df[df['year'] == 2008]
+ 
+
+ df2014 = df[df['year'] == 2014]
+ 
+
+ alx.jointplot(df2008,x='happinessScore',y='logGDPPerCapita')
+ alx.jointplot(df2014,x='happinessScore',y='logGDPPerCapita')","jointplot_2008_2014_bjs827ee1uhappiness"
+"bjs827ee1u","P6","static","happiness","happiness-first",1.68e+12,833911,"none",FALSE,"scatterplot","CHART","df2008 = df[df['year'] == 2008]
+ 
+
+ df2014 = df[df['year'] == 2014]
+ 
+
+ alx.jointplot(df2008,x='happinessScore',y='logGDPPerCapita') & alx.jointplot(df2014,x='happinessScore',y='logGDPPerCapita')","jointplot_combo_2008_2014_bjs827ee1uhappiness"
+"bjs827ee1u","P6","static","happiness","happiness-first",1.68e+12,867062,"none",FALSE,"scatterplot","CHART","df2008 = df[df['year'] == 2008]
+ 
+
+ df2014 = df[df['year'] == 2014]
+ alx.jointplot(df2008,x='happinessScore',y='logGDPPerCapita') & alx.jointplot(df2014,x='happinessScore',y='logGDPPerCapita')","jointplot_combo_3_2008_2014_bjs827ee1uhappiness"
+"bjs827ee1u","P6","static","happiness","happiness-first",1.68e+12,880161,"none",FALSE,"scatterplot","CHART","df2008 = df[df['year'] == 2008]
+ 
+
+ df2014 = df[df['year'] == 2014]
+ alx.jointplot(df2008,x='happinessScore',y='logGDPPerCapita') | alx.jointplot(df2014,x='happinessScore',y='logGDPPerCapita')","jointplot_combo_4_2008_2014_bjs827ee1uhappiness"
+"bjs827ee1u","P6","static","happiness","happiness-first",1.68e+12,914363,"none",FALSE,"scatterplot","CHART","df2008 = df[df['year'] == 2008]
+ 
+
+ df2014 = df[df['year'] == 2014]
+ alx.jointplot(df2008,x='happinessScore',y='logGDPPerCapita') | alx.jointplot(df2014,x='happinessScore',y='logGDPPerCapita')","jointplot_combo_5_2008_2014_bjs827ee1uhappiness"
+"bjs827ee1u","P6","static","happiness","happiness-first",1.68e+12,990058,"none",FALSE,"scatterplot","CHART","df2008 = df[df['year'] == 2008]
+ 
+
+ df2021 = df[df['year'] == 2021]
+ 
+
+ alx.jointplot(df2008,x='happinessScore',y='logGDPPerCapita') | alx.jointplot(df2021,x='happinessScore',y='logGDPPerCapita')","jointplot_combo_2008_2021_bjs827ee1uhappiness"
+"bjs827ee1u","P6","static","happiness","happiness-first",1.68e+12,1068372,"none",FALSE,"dataframe","TABLE","df","df_view5_bjs827ee1uhappiness"
+"bjs827ee1u","P6","static","happiness","happiness-first",1.68e+12,1076113,"none",FALSE,"dataframe","TABLE","df","df_view6_bjs827ee1uhappiness"
+"bjs827ee1u","P6","static","happiness","happiness-first",1.68e+12,1121432,"none",FALSE,"describe","TABLE","pd.describe_option('display')
+ 
+
+ df","pd_display_bjs827ee1uhappiness"
+"bjs827ee1u","P6","static","happiness","happiness-first",1.68e+12,1153399,"none",FALSE,"describe","TABLE","pd.describe_option('display')
+ pd.set_option('display.max_rows', len(df))","set_display_bjs827ee1uhappiness"
+"bjs827ee1u","P6","static","happiness","happiness-first",1.68e+12,1160901,"none",FALSE,"dataframe","TABLE","pd.set_option('display.max_rows', len(df))
+ df","set_display_and_view_bjs827ee1uhappiness"
+"bjs827ee1u","P6","static","happiness","happiness-first",1.68e+12,1288474,"none",FALSE,"scatterplot","CHART","df2008 = df[df['year'] == 2008]
+ 
+
+ df2021 = df[df['year'] == 2021]
+ 
+
+ alx.jointplot(df2008,x='generosity',y='corruption') | alx.jointplot(df2021,x='generosity',y='corruption')","filter_and_jointplot_3_2008_2021_bjs827ee1uhappiness"
+"bjs827ee1u","P6","static","happiness","happiness-first",1.68e+12,1333638,"none",FALSE,"scatterplot","CHART","df2008 = df[df['year'] == 2008]
+ 
+
+ df2021 = df[df['year'] == 2021]
+ 
+
+ alx.jointplot(df2008,x='generosity',y='corruption') & alx.jointplot(df2021,x='generosity',y='corruption')","filter_and_jointplot_4_2008_2021_bjs827ee1uhappiness"
+"bjs827ee1u","P6","static","happiness","happiness-first",1.68e+12,1493346,"none",FALSE,"dataframe","TABLE","df","df_view7_bjs827ee1uhappiness"
+"j2719eertu2","P5","static","space","space-first",1.68e+12,9398,"none",FALSE,"dataframe","TABLE","df.head()","titanicDataFrame_head1_j2719eertu2space"
+"j2719eertu2","P5","static","space","space-first",1.68e+12,22070,"none",FALSE,"dataframe","TABLE","df.head()","titanicDataFrame_head2_j2719eertu2space"
+"j2719eertu2","P5","static","space","space-first",1.68e+12,96268,"none",FALSE,"profile","CHART","columns = df.columns # returns list of column names [""year"",""country""...]
+ alx.profile(df,vars=columns)","df_column_profile_j2719eertu2space"
+"j2719eertu2","P5","static","space","space-first",1.68e+12,209916,"none",FALSE,"describe","TABLE","df.describe()","dataframe_describe_j2719eertu2space"
+"j2719eertu2","P5","static","space","space-first",1.68e+12,273621,"none",FALSE,"dataframe","TABLE","df.isna()","dataframe_isna_j2719eertu2space"
+"j2719eertu2","P5","static","space","space-first",1.68e+12,406732,"none",FALSE,"columns","TABLE","import numpy as np
+ df['log_roomservice'] = np.log(df['RoomService'])","RoomService_log_transform_withImport_j2719eertu2space"
+"j2719eertu2","P5","static","space","space-first",1.68e+12,537293,"none",FALSE,"profile","CHART","alx.profile(df.loc[df['survived'] == True],vars=columns) & alx.profile(df.loc[df['survived'] == False],vars=columns)","double_profile_survivors_nonSurvivors_j2719eertu2space"
+"j2719eertu2","P5","static","space","space-first",1.68e+12,931207,"none",FALSE,"pairplot","CHART","alx.pairplot(df[['RoomService', 'FoodCourt', 'ShoppingMall', 'Spa', 'VRDeck']])","pairplot_uppercaseColumns_j2719eertu2space"
+"j2719eertu2","P5","static","space","space-first",1.68e+12,1093802,"none",FALSE,"profile","CHART","alx.profile(df ,vars=cont_vars)","altair_profile_contVars_j2719eertu2space"
+"j2719eertu2","P5","static","space","space-first",1.68e+12,1202945,"none",FALSE,"heatmap","CHART","correlation_matrix = df.corr()
+ alx.heatmap(correlation_matrix)","correlation_heatmap_j2719eertu2space"
+"j2719eertu2","P5","static","space","space-first",1.68e+12,1366365,"none",FALSE,"barplot","CHART","survive_df = df[df['survived']]
+ 
+
+ 
+
+ alx.countplot(df[df['survived']],x='CryoSleep') + alx.countplot(df[~df['survived']],x='CryoSleep').mark_bar(color='orange')","survivors_cryosleep_countplot_incomplete_j2719eertu2space"
+"j2719eertu2","P5","static","space","space-first",1.68e+12,1395699,"none",FALSE,"barplot","CHART","survive_df = df[df['survived']]
+ 
+
+ 
+
+ alx.countplot(df,x='CryoSleep') + alx.countplot(df[~df['survived']],x='CryoSleep').mark_bar(color='orange')","survivors_cryosleep_countplot_correct_j2719eertu2space"
+"j2719eertu2","P5","ixn","happiness","space-first",1.68e+12,25719,"none",FALSE,"dataframe","TABLE","df.head()","dataframe_head_j2719eertu2happiness"
+"j2719eertu2","P5","ixn","happiness","space-first",1.68e+12,58421,"highlight_brush",TRUE,"profile","CHART","columns = df.columns # returns list of column names [""year"",""country""...]
+ alx.highlight_brush() + alx.profile(df,vars=columns)","highlight_brush_with_profile_j2719eertu2happiness"
+"j2719eertu2","P5","ixn","happiness","space-first",1.68e+12,261264,"none",FALSE,"describe","TABLE","df.describe()","dataframe_description_j2719eertu2happiness"
+"j2719eertu2","P5","ixn","happiness","space-first",1.68e+12,349599,"none",FALSE,"heatmap","CHART","correlation_matrix = df.corr()
+ alx.heatmap(correlation_matrix)","correlation_heatmap_j2719eertu2happiness"
+"j2719eertu2","P5","ixn","happiness","space-first",1.68e+12,408526,"none",FALSE,"dataframe","TABLE","correlation_matrix","correlation_matrix_j2719eertu2happiness"
+"j2719eertu2","P5","ixn","happiness","space-first",1.68e+12,485022,"filter_brush",TRUE,"scatterplot","CHART","alx.filter_brush()+alx.scatterplot(df,x='logGDPPerCapita',y='happinessScore')","logGDP_happiness_scatterplot_j2719eertu2happiness"
+"j2719eertu2","P5","ixn","happiness","space-first",1.68e+12,503278,"highlight_brush+tooltip_hover",TRUE,"scatterplot","CHART","alx.tooltip_hover()+alx.highlight_brush()+alx.scatterplot(df,x='logGDPPerCapita',y='happinessScore')","logGDP_happiness_hover_scatterplot_j2719eertu2happiness"
+"j2719eertu2","P5","ixn","happiness","space-first",1.68e+12,508991,"highlight_brush+tooltip_hover",TRUE,"scatterplot","CHART","alx.tooltip_hover()+alx.highlight_brush()+alx.scatterplot(df,x='logGDPPerCapita',y='happinessScore', width = 7)","logGDP_happiness_hover_scatterplot_with_width_j2719eertu2happiness"
+"j2719eertu2","P5","ixn","happiness","space-first",1.68e+12,514005,"highlight_brush+tooltip_hover",TRUE,"scatterplot","CHART","alx.tooltip_hover()+alx.highlight_brush()+alx.scatterplot(df,x='logGDPPerCapita',y='happinessScore', width = 700)","logGDP_happiness_hover_scatterplot_larger_j2719eertu2happiness"
+"j2719eertu2","P5","ixn","happiness","space-first",1.68e+12,521638,"highlight_brush+tooltip_hover",TRUE,"scatterplot","CHART","alx.tooltip_hover()+alx.highlight_brush()+alx.scatterplot(df,x='logGDPPerCapita',y='happinessScore', width = 700, height = 700)","logGDP_happiness_hover_scatterplot_square_j2719eertu2happiness"
+"j2719eertu2","P5","ixn","happiness","space-first",1.68e+12,677271,"highlight_brush+tooltip_hover",TRUE,"scatterplot","CHART","alx.tooltip_hover()+alx.highlight_brush()+alx.scatterplot(df,x='socialSupport',y='happinessScore', width = 700, height = 700)","socialSupport_happiness_hover_scatterplot_square_j2719eertu2happiness"
+"j2719eertu2","P5","ixn","happiness","space-first",1.68e+12,733128,"highlight_brush+tooltip_hover",TRUE,"scatterplot","CHART","alx.tooltip_hover()+alx.highlight_brush()+alx.scatterplot(df,x='socialSupport',y='happinessScore', width = 700, height = 700)","socialSupport_happiness_hover_scatterplot_square_duplicate_j2719eertu2happiness"
+"j2719eertu2","P5","ixn","happiness","space-first",1.68e+12,755780,"highlight_brush+tooltip_hover",TRUE,"scatterplot","CHART","alx.tooltip_hover()+alx.highlight_brush()+alx.scatterplot(df,x='logGDPPerCapita',y='happinessScore', width = 700, height = 700)","logGDP_happiness_hover_scatterplot_square_2_j2719eertu2happiness"
+"j2719eertu2","P5","ixn","happiness","space-first",1.68e+12,779712,"highlight_point+tooltip_hover",TRUE,"scatterplot","CHART","alx.tooltip_hover()+alx.highlight_point()+alx.scatterplot(df,x='logGDPPerCapita',y='happinessScore', width = 700, height = 700)","logGDP_happiness_hover_point_scatterplot_square_j2719eertu2happiness"
+"j2719eertu2","P5","ixn","happiness","space-first",1.68e+12,831973,"tooltip_hover",TRUE,"scatterplot","CHART","alx.tooltip_hover()+alx.highlight_bursh()+alx.scatterplot(df,x='logGDPPerCapita',y='happinessScore', width = 700, height = 700)","logGDP_happiness_hover_brush_scatterplot_square_j2719eertu2happiness"
+"j2719eertu2","P5","ixn","happiness","space-first",1.68e+12,836542,"highlight_brush+tooltip_hover",TRUE,"scatterplot","CHART","alx.tooltip_hover()+alx.highlight_brush()+alx.scatterplot(df,x='logGDPPerCapita',y='happinessScore', width = 700, height = 700)","logGDP_happiness_hover_brush_scatterplot_square_2_j2719eertu2happiness"
+"j2719eertu2","P5","ixn","happiness","space-first",1.68e+12,869857,"highlight_brush+tooltip_hover",TRUE,"scatterplot","CHART","alx.tooltip_hover()+alx.highlight_brush()+alx.scatterplot(df,x='socialSupport',y='happinessScore', width = 700, height = 700) + alx.scatterplot(df.query("" (logGDPPerCapita>=5.50 and logGDPPerCapita<=6.10) and (happinessScore>=4.79 and happinessScore<=5.20) "")
+  ,x='socialSupport',y='happinessScore', width = 700, height = 700).mark_circle(color='orange')","socialSupport_happiness_hover_brush_scatterplot_with_filter_duplicate_j2719eertu2happiness"
+"j2719eertu2","P5","ixn","happiness","space-first",1.68e+12,953197,"filter_slider+highlight_brush+tooltip_hover",TRUE,"scatterplot","CHART","alx.filter_slider(field='year') + alx.tooltip_hover()+alx.highlight_brush()+alx.scatterplot(df,x='logGDPPerCapita',y='happinessScore', width = 700, height = 700)","yearFilter_logGDP_happiness_hover_brush_scatterplot_j2719eertu2happiness"
+"j2719eertu2","P5","ixn","happiness","space-first",1.68e+12,959646,"filter_slider+highlight_brush+tooltip_hover",TRUE,"scatterplot","CHART","alx.filter_slider(field='year') + alx.tooltip_hover()+alx.highlight_brush()+alx.scatterplot(df,x='logGDPPerCapita',y='happinessScore', width = 500, height = 500)","yearFilter_logGDP_happiness_hover_brush_scatterplot_smaller_j2719eertu2happiness"
+"j2719eertu2","P5","ixn","happiness","space-first",1.68e+12,1013658,"filter_slider+highlight_brush+tooltip_hover",TRUE,"scatterplot","CHART","alx.filter_slider(field='year') + alx.tooltip_hover()+alx.highlight_brush()+alx.scatterplot(df,x='freedom',y='happinessScore', width = 500, height = 500)","yearFilter_freedom_happiness_hover_brush_scatterplot_j2719eertu2happiness"
+"j2719eertu2","P5","ixn","happiness","space-first",1.68e+12,1177780,"filter_slider+highlight_brush+tooltip_hover",TRUE,"multiviewchart","CHART","scatter = alx.filter_slider(field='year') + alx.tooltip_hover()+alx.highlight_brush()+alx.scatterplot(df,x='freedom',y='happinessScore', width = 500, height = 500) 
+ 
+
+ profile = alx.profile(df)
+ 
+
+ barplot = alx.barplot(df,x='country',y='happinessScore',sort='-y',width=500) # sort descending by the height of the bars
+ 
+
+ alx.highlight_brush() + alx.tooltip_hover() + alx.filter_slider(field='year') + (profile & scatter & barplot)","yearFilter_freedom_happiness_profile_barplot_combo_j2719eertu2happiness"
+"j2719eertu2","P5","ixn","happiness","space-first",1.68e+12,1189356,"filter_slider+highlight_brush+tooltip_hover",TRUE,"multiviewchart","CHART","scatter = alx.filter_slider(field='year') + alx.tooltip_hover()+alx.highlight_brush()+alx.scatterplot(df,x='freedom',y='happinessScore', width = 500, height = 200) 
+ 
+
+ profile = alx.profile(df)
+ 
+
+ barplot = alx.barplot(df,x='country',y='happinessScore',sort='-y',width=500) # sort descending by the height of the bars
+ 
+
+ alx.highlight_brush() + alx.tooltip_hover() + alx.filter_slider(field='year') + (profile & scatter & barplot)","yearFilter_freedom_happiness_profile_barplot_combo_duplicate_j2719eertu2happiness"
+"j2719eertu2","P5","ixn","happiness","space-first",1.68e+12,1230290,"filter_slider+highlight_brush+tooltip_hover",TRUE,"multiviewchart","CHART","scatter = alx.filter_slider(field='year') + alx.tooltip_hover()+alx.highlight_brush()+alx.scatterplot(df,x='freedom',y='happinessScore', width = 500, height = 200) 
+ 
+
+ profile = alx.profile(df)
+ 
+
+ barplot = alx.barplot(df,x='country',y='happinessScore',sort='-y',width=1000) # sort descending by the height of the bars
+ 
+
+ alx.highlight_brush() + alx.tooltip_hover() + alx.filter_slider(field='year') + (profile & scatter & barplot)","yearFilter_freedom_happiness_profile_barplot_combo_wider_j2719eertu2happiness"
+"j2719eertu2","P5","ixn","happiness","space-first",1.68e+12,1379423,"filter_slider+highlight_brush+tooltip_hover",TRUE,"multiviewchart","CHART","scatter = alx.filter_slider(field='year') + alx.tooltip_hover()+alx.highlight_brush()+alx.scatterplot(df,x='logGDPPerCapita',y='happinessScore', width = 500, height = 200) 
+ 
+
+ profile = alx.profile(df)
+ 
+
+ barplot = alx.barplot(df,x='country',y='happinessScore',sort='-y',width=1000) # sort descending by the height of the bars
+ 
+
+ alx.highlight_brush() + alx.tooltip_hover() + alx.filter_slider(field='year') + (profile & scatter & barplot)","yearFilter_logGDP_happiness_profile_barplot_combo_j2719eertu2happiness"
+"j2719eertu2","P5","ixn","happiness","space-first",1.68e+12,1579167,"highlight_brush+tooltip_hover",TRUE,"scatterplot","CHART","alx.tooltip_hover()+alx.highlight_brush()+alx.scatterplot(df,x='lifeExpectancy',y='happinessScore', width = 700, height = 700)","lifeExpectancy_happiness_hover_brush_scatterplot_square_j2719eertu2happiness"
+"j2719eertu2","P5","ixn","happiness","space-first",1.68e+12,1593580,"none",FALSE,"dataframe","TABLE","df.query("" (lifeExpectancy>=49.97 and lifeExpectancy<=75.00) and (happinessScore>=2.04 and happinessScore<=8.21) "")","lifeExpectancy_happiness_query_j2719eertu2happiness"
+"j2719eertu2","P5","ixn","happiness","space-first",1.68e+12,1596866,"none",FALSE,"dataframe","TABLE","df.query("" (lifeExpectancy>=50 and lifeExpectancy<=75.00) and (happinessScore>=2.04 and happinessScore<=8.21) "")","lifeExpectancy_happiness_query_rounded_j2719eertu2happiness"
+"92ghd48xe","P4","ixn","space","happiness-first",1.68e+12,14629,"none",FALSE,"dataframe","TABLE","df","df_92ghd48xespace"
+"92ghd48xe","P4","ixn","space","happiness-first",1.68e+12,20498,"none",FALSE,"dataframe","TABLE","df.head()","df_head_92ghd48xespace"
+"92ghd48xe","P4","ixn","space","happiness-first",1.68e+12,59169,"none",FALSE,"info","TABLE","df.info()","df_info_92ghd48xespace"
+"92ghd48xe","P4","ixn","space","happiness-first",1.68e+12,463287,"none",FALSE,"describe","TABLE","survived.describe()","survived_describe_92ghd48xespace"
+"92ghd48xe","P4","ixn","space","happiness-first",1.68e+12,480715,"none",FALSE,"describe","TABLE","no_survive.describe()","no_survive_describe_92ghd48xespace"
+"92ghd48xe","P4","ixn","space","happiness-first",1.68e+12,627975,"none",FALSE,"barplot","CHART","alx.countplot(survived,x='survived',width=700)","alx_countplot_survived_92ghd48xespace"
+"92ghd48xe","P4","ixn","space","happiness-first",1.68e+12,637292,"none",FALSE,"barplot","CHART","alx.countplot(df,x='survived',width=700)","alx_countplot_df_width700_92ghd48xespace"
+"92ghd48xe","P4","ixn","space","happiness-first",1.68e+12,649921,"none",FALSE,"barplot","CHART","alx.countplot(df,x='survived')","alx_countplot_df_survived_92ghd48xespace"
+"92ghd48xe","P4","ixn","space","happiness-first",1.68e+12,729532,"none",FALSE,"describe","TABLE","survived.describe()[['RoomService', 'FoodCourt', 'ShoppingMall']]","survived_describe_roomservice_foodcourt_shoppingmall_92ghd48xespace"
+"92ghd48xe","P4","ixn","space","happiness-first",1.68e+12,1041640,"none",FALSE,"barplot","CHART","alx.barplot(df,x='survived',y='average(RoomService)')
+ alx.barplot(data,x,y,color,group)","alx_barplot_df_survived_average_roomservice_92ghd48xespace"
+"92ghd48xe","P4","ixn","space","happiness-first",1.68e+12,1055120,"none",FALSE,"barplot","CHART","alx.barplot(df,x='survived',y='average(RoomService)')
+ # alx.barplot(df,x,y,color,group)","alx_barplot_df_survived_average_roomservice_2_92ghd48xespace"
+"92ghd48xe","P4","ixn","space","happiness-first",1.68e+12,1075861,"none",FALSE,"barplot","CHART","alx.barplot(df,x='survived',y='average(FoodCourt)')","alx_barplot_df_survived_average_foodcourt_92ghd48xespace"
+"92ghd48xe","P4","ixn","space","happiness-first",1.68e+12,1129348,"none",FALSE,"barplot","CHART","alx.barplot(df,x='HomePlanet',y='average(FoodCourt)')","alx_barplot_df_homeplanet_average_foodcourt_92ghd48xespace"
+"92ghd48xe","P4","ixn","space","happiness-first",1.68e+12,1160139,"none",FALSE,"barplot","CHART","alx.barplot(df,x='HomePlanet',y='average(RoomService)')","alx_barplot_df_homeplanet_average_roomservice_92ghd48xespace"
+"92ghd48xe","P4","static","happiness","happiness-first",1.68e+12,5055,"none",FALSE,"dataframe","TABLE","df","df_92ghd48xehappiness"
+"92ghd48xe","P4","static","happiness","happiness-first",1.68e+12,11094,"none",FALSE,"dataframe","TABLE","df.head()","df_head_92ghd48xehappiness"
+"92ghd48xe","P4","static","happiness","happiness-first",1.68e+12,25862,"none",FALSE,"info","TABLE","df.info()","df_info_1_92ghd48xehappiness"
+"92ghd48xe","P4","static","happiness","happiness-first",1.68e+12,83237,"none",FALSE,"profile","CHART","alx.profile(df,vars=df.columns)","alx_profile_df_columns_92ghd48xehappiness"
+"92ghd48xe","P4","static","happiness","happiness-first",1.68e+12,108949,"none",FALSE,"describe","TABLE","df.describe()","df_describe_1_92ghd48xehappiness"
+"92ghd48xe","P4","static","happiness","happiness-first",1.68e+12,314947,"none",FALSE,"lineplot","CHART","# df.groupby('year').mean()['happinessScore']
+ alx.lineplot(df,x='year',y='average(happinessScore)')","alx_lineplot_year_average_happinessscore_92ghd48xehappiness"
+"92ghd48xe","P4","static","happiness","happiness-first",1.68e+12,393583,"none",FALSE,"describe","TABLE","df.describe()","df_describe_2_92ghd48xehappiness"
+"92ghd48xe","P4","static","happiness","happiness-first",1.68e+12,592915,"none",FALSE,"info","TABLE","df.info()","df_info_2_92ghd48xehappiness"
+"92ghd48xe","P4","static","happiness","happiness-first",1.68e+12,669444,"none",FALSE,"scatterplot","CHART","alx.jointplot(df,x='happinessScore',y='corruption')","alx_jointplot_happinessscore_corruption_1_92ghd48xehappiness"
+"92ghd48xe","P4","static","happiness","happiness-first",1.68e+12,702639,"none",FALSE,"scatterplot","CHART","alx.jointplot(df,x='corruption',y='happinessScore')","alx_jointplot_corruption_happinessscore_1_92ghd48xehappiness"
+"92ghd48xe","P4","static","happiness","happiness-first",1.68e+12,754366,"none",FALSE,"scatterplot","CHART","alx.jointplot(df,x='corruption',y='happinessScore')","alx_jointplot_corruption_happinessscore_2_92ghd48xehappiness"
+"92ghd48xe","P4","static","happiness","happiness-first",1.68e+12,809936,"none",FALSE,"scatterplot","CHART","alx.jointplot(df,x='logGDPPerCapita',y='happinessScore')","alx_jointplot_logGDPPerCapita_happinessscore_1_92ghd48xehappiness"
+"92ghd48xe","P4","static","happiness","happiness-first",1.68e+12,1071664,"none",FALSE,"scatterplot","CHART","alx.jointplot(df,x='logGDPPerCapita',y='happinessScore')","alx_jointplot_logGDPPerCapita_happinessscore_2_92ghd48xehappiness"
+"92ghd48xe","P4","static","happiness","happiness-first",1.68e+12,1172473,"none",FALSE,"dataframe","TABLE","df.corr()","df_corr_92ghd48xehappiness"
+"92ghd48xe","P4","static","happiness","happiness-first",1.68e+12,1457935,"none",FALSE,"dataframe","TABLE","df[['country', 'lifeExpectancy']]","df_country_lifeExpectancy_92ghd48xehappiness"
+"92ghd48xe","P4","static","happiness","happiness-first",1.68e+12,1501803,"none",FALSE,"dataframe","TABLE","df[df['lifeExpectancy'] > 50][['country', 'lifeExpectancy']]","df_filter_lifeExpectancy_gt_50_country_lifeExpectancy_1_92ghd48xehappiness"
+"92ghd48xe","P4","static","happiness","happiness-first",1.68e+12,1513332,"none",FALSE,"dataframe","TABLE","df[df['lifeExpectancy'] > 50][['country', 'lifeExpectancy']]","df_filter_lifeExpectancy_gt_50_country_lifeExpectancy_2_92ghd48xehappiness"
+"7382kwtue","P3","static","space","space-first",1.68e+12,44628,"none",FALSE,"profile","CHART","alx.profile(df,vars = df.columns)","profiler_7382kwtuespace"
+"7382kwtue","P3","static","space","space-first",1.68e+12,95746,"none",FALSE,"columns","TABLE","temp_chart = alx.profile(df,vars = df.columns)","store_profiler_7382kwtuespace"
+"7382kwtue","P3","static","space","space-first",1.68e+12,168017,"none",FALSE,"profile","CHART","alx.profile(df,vars = df.columns)","profiler_2_7382kwtuespace"
+"7382kwtue","P3","static","space","space-first",1.68e+12,184802,"none",FALSE,"profile","CHART","alx.profile(df,vars = df.columns)","profiler_3_7382kwtuespace"
+"7382kwtue","P3","static","space","space-first",1.68e+12,260064,"none",FALSE,"scatterplot","CHART","alx.scatterplot(df,x='VIP',y='CryoSleep')","VIP_Cryosleep_scatter_7382kwtuespace"
+"7382kwtue","P3","static","space","space-first",1.68e+12,296642,"none",FALSE,"scatterplot","CHART","alx.scatterplot(df,x='VIP',y='CryoSleep',size = 'count()')","VIP_Cryosleep_sizeCount_scatter_7382kwtuespace"
+"7382kwtue","P3","static","space","space-first",1.68e+12,310825,"none",FALSE,"scatterplot","CHART","alx.scatterplot(df,x='VIP',y='CryoSleep',size = 'count()').properties(height = 400)","VIP_Cryosleep_sizeCount_scatter_tall_7382kwtuespace"
+"7382kwtue","P3","static","space","space-first",1.68e+12,317114,"none",FALSE,"scatterplot","CHART","alx.scatterplot(df,x='VIP',y='CryoSleep',size = 'count()').properties(height = 400,width = 400)","VIP_Cryosleep_sizeCount_scatter_big_7382kwtuespace"
+"7382kwtue","P3","static","space","space-first",1.68e+12,458539,"none",FALSE,"stripplot","CHART","alx.stripplot(df[df['VIP']==True],x='Age',row='survived',color='HomePlanet')","vip_age_homeplanet_stripplot_7382kwtuespace"
+"7382kwtue","P3","static","space","space-first",1.68e+12,473393,"none",FALSE,"stripplot","CHART","alx.stripplot(df[df['VIP']==True],x='Age',row='survived',color='HomePlanet')#.properties(height = 800,width = 400)","vip_age_homeplanet_stripplot_2_7382kwtuespace"
+"7382kwtue","P3","static","space","space-first",1.68e+12,487071,"none",FALSE,"stripplot","CHART","alx.stripplot(df[df['VIP']==True],x='Age',row='survived',color='HomePlanet',
+  height = 800)#.properties(height = 800,width = 400)","vip_age_homeplanet_stripplot_2_7382kwtuespace"
+"7382kwtue","P3","static","space","space-first",1.68e+12,492151,"none",FALSE,"stripplot","CHART","alx.stripplot(df[df['VIP']==True],x='Age',row='survived',color='HomePlanet',
+  height = 800,
+  width = 400)#.properties(height = 800,width = 400)","vip_age_homeplanet_stripplot_big_7382kwtuespace"
+"7382kwtue","P3","static","space","space-first",1.68e+12,497047,"none",FALSE,"stripplot","CHART","alx.stripplot(df[df['VIP']==True],x='Age',row='survived',color='HomePlanet',
+  height = 100,
+  width = 400)#.properties(height = 800,width = 400)","vip_age_homeplanet_stripplot_medium_7382kwtuespace"
+"7382kwtue","P3","static","space","space-first",1.68e+12,5e+05,"none",FALSE,"stripplot","CHART","alx.stripplot(df[df['VIP']==True],x='Age',row='survived',color='HomePlanet',
+  height = 200,
+  width = 400)#.properties(height = 800,width = 400)","vip_age_homeplanet_stripplot_medium_tall_7382kwtuespace"
+"7382kwtue","P3","static","space","space-first",1.68e+12,559791,"none",FALSE,"stripplot","CHART","alx.stripplot(df,x='Age',row='survived',color='VIP',
+  height = 200,
+  width = 400)#.properties(height = 800,width = 400)","survived_age_VIP_stripplot_medium_tall_7382kwtuespace"
+"7382kwtue","P3","static","space","space-first",1.68e+12,617316,"none",FALSE,"hist","CHART","alx.hist(x = 'age')","age_hist_error_7382kwtuespace"
+"7382kwtue","P3","static","space","space-first",1.68e+12,629315,"none",FALSE,"hist","CHART","alx.hist(df,x = 'age')","age_hist_mispelled_column_7382kwtuespace"
+"7382kwtue","P3","static","space","space-first",1.68e+12,643639,"none",FALSE,"hist","CHART","alx.hist(df,x = 'Age')","age_hist_7382kwtuespace"
+"7382kwtue","P3","static","space","space-first",1.68e+12,654179,"none",FALSE,"hist","CHART","alx.hist(df,x = 'Age',color = 'VIP')","colored_hist_7382kwtuespace"
+"7382kwtue","P3","static","space","space-first",1.68e+12,664282,"none",FALSE,"hist","CHART","alx.hist(df,x = 'Age',color = 'VIP',height = 400,width = 400)","colored_hist_big_7382kwtuespace"
+"7382kwtue","P3","static","space","space-first",1.68e+12,843578,"none",FALSE,"columns","TABLE","for col in df.columns:
+  all_val_count = df[col].nunique()
+  null_val_count = df[col][df[col].isna()].nunique()
+  print(f'{col}: {null_val_count} of {all_val_count} are nulls')","col_null_check2_7382kwtuespace"
+"7382kwtue","P3","static","space","space-first",1.68e+12,854547,"none",FALSE,"columns","TABLE","for col in df.columns:
+  all_val_count = df[col].nunique()
+  null_val_count = df[col][df[col].isna()].shape[0]
+  print(f'{col}: {null_val_count} of {all_val_count} are nulls')","col_null_check3_7382kwtuespace"
+"7382kwtue","P3","static","space","space-first",1.68e+12,858636,"none",FALSE,"columns","TABLE","for col in df.columns:
+  all_val_count = df[col].nunique()
+  null_val_count = df[col][df[col].isna()].shape[0]
+  print(f'{col}: {null_val_count} of {all_val_count} are nulls\n')","col_null_check4_7382kwtuespace"
+"7382kwtue","P3","static","space","space-first",1.68e+12,867465,"none",FALSE,"columns","TABLE","for col in df.columns:
+  all_val_count = df[col].shape[0]
+  null_val_count = df[col][df[col].isna()].shape[0]
+  print(f'{col}: {null_val_count} of {all_val_count} are nulls\n')","col_null_check5_7382kwtuespace"
+"7382kwtue","P3","static","space","space-first",1.68e+12,890083,"none",FALSE,"columns","TABLE","for col in df.columns:
+  all_val_count = df[col].shape[0]
+  null_val_count = df[col][df[col].isna()].shape[0]
+  print(f'{col}: {null_val_count} of {all_val_count} are nulls\n')
+  print(f'o\tr {100*null_val_count/all_val_count}%\n')","null_percent_printouts_7382kwtuespace"
+"7382kwtue","P3","static","space","space-first",1.68e+12,893382,"none",FALSE,"columns","TABLE","for col in df.columns:
+  all_val_count = df[col].shape[0]
+  null_val_count = df[col][df[col].isna()].shape[0]
+  print(f'{col}: {null_val_count} of {all_val_count} are nulls\n')
+  print(f'\tor {100*null_val_count/all_val_count}%\n')","col_null_check_percent2_7382kwtuespace"
+"7382kwtue","P3","static","space","space-first",1.68e+12,939628,"none",FALSE,"columns","TABLE","# for col in df.columns:
+ #  all_val_count = df[col].shape[0]
+ #  null_val_count = df[col][df[col].isna()].shape[0]
+ #  print(f'{col}: {null_val_count} of {all_val_count} are nulls\n')
+ #  print(f'\tor {100*null_val_count/all_val_count}%\n')","col_null_check_commented_7382kwtuespace"
+"7382kwtue","P3","static","space","space-first",1.68e+12,1028991,"none",FALSE,"columns","TABLE","df.columns","df_columns1_7382kwtuespace"
+"7382kwtue","P3","static","space","space-first",1.68e+12,1189740,"none",FALSE,"multiviewchart","CHART","alx.scatterplot(df,x='Age',y='Name',color = 'Last Name')# | alx.hist(df,y='temp_max',height=200,width=50)","age_name_scatterplot_small_width_7382kwtuespace"
+"7382kwtue","P3","static","space","space-first",1.68e+12,1197344,"none",FALSE,"multiviewchart","CHART","alx.scatterplot(df,x='Age',y='Name',color = 'Last Name',
+  height = 1000)# | alx.hist(df,y='temp_max',height=200,width=50)","color_lastName_scatterplot_7382kwtuespace"
+"7382kwtue","P3","static","space","space-first",1.68e+12,1205564,"none",FALSE,"multiviewchart","CHART","alx.scatterplot(df[df.VIP == True],x='Age',y='Name',color = 'Last Name',
+  height = 1000)# | alx.hist(df,y='temp_max',height=200,width=50)","age_room_last_name_pre_removed hist_7382kwtuespace"
+"7382kwtue","P3","static","space","space-first",1.68e+12,1277674,"none",FALSE,"scatterplot","CHART","alx.scatterplot(df,x='Age',y='RoomService',color = 'Last Name',
+  height = 1000)","age_roomservice_scatterplot_7382kwtuespace"
+"7382kwtue","P3","static","space","space-first",1.68e+12,1305253,"none",FALSE,"scatterplot","CHART","alx.scatterplot(df,x='FoodCourt',y='RoomService',color = 'Last Name',
+  height = 1000)","foodcourt_roomservice_scatterplot_7382kwtuespace"
+"7382kwtue","P3","static","space","space-first",1.68e+12,1329890,"none",FALSE,"scatterplot","CHART","alx.scatterplot(df,x='FoodCourt',y='ShoppingMall',color = 'Last Name',
+  height = 1000)","foodcourt_shoppingmall_scatterplot_7382kwtuespace"
+"7382kwtue","P3","static","space","space-first",1.68e+12,1383769,"none",FALSE,"dataframe","TABLE","(df[df.Age < 10]).query(""survived == False"")","age_survived_query1_7382kwtuespace"
+"7382kwtue","P3","static","space","space-first",1.68e+12,1423036,"none",FALSE,"hist","CHART","alx.hist((df[df.Age < 10]).query(""survived == False""),
+  x = 'Cabin')","age_Cabin_hist_query_fix1_7382kwtuespace"
+"7382kwtue","P3","static","space","space-first",1.68e+12,1486772,"none",FALSE,"dataframe","TABLE","df[['Cabin','Last Name']]","Cabin_LastName_extract1_7382kwtuespace"
+"7382kwtue","P3","static","space","space-first",1.68e+12,1495149,"none",FALSE,"dataframe","TABLE","df[['Cabin','Last Name']].sort_values('Cabin')","Cabin_LastName_sort1_7382kwtuespace"
+"7382kwtue","P3","static","space","space-first",1.68e+12,1535387,"none",FALSE,"hist","CHART","alx.hist((df[df.Age < 10]).query(""survived == False""),
+  x = 'FoodCourt')","young_foodcourt_hist_7382kwtuespace"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,67963,"highlight_brush",TRUE,"profile","CHART","columns = df.columns # returns list of column names [""year"",""country""...]
+ alx.highlight_brush() + alx.profile(df,vars=columns)","profile_df_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,203583,"none",FALSE,"columns","TABLE","df.columns","display_columns_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,243867,"filter_brush",TRUE,"scatterplot","CHART","alx.filter_brush()+alx.scatterplot(df,x='logGDPPerCapita',y='socialSupport')","GDP_social_scatter_brush_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,254890,"filter_brush",TRUE,"scatterplot","CHART","alx.filter_brush()+alx.scatterplot(df,x='logGDPPerCapita',y='socialSupport',height = 400,width = 400)","GDP_social_scatter_brush_sized_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,273946,"filter_brush",TRUE,"scatterplot","CHART","alx.filter_brush()+alx.scatterplot(df,x='corruption',y='confidenceInGovernment',height = 400,width = 400,
+  )","corruption_confidence_scatter_brush_sized_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,316197,"none",FALSE,"dataframe","TABLE","corruption_df","display_corruption_df_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,361227,"tooltip_hover",TRUE,"scatterplot","CHART","alx.tooltip_hover()+alx.scatterplot(df,x='corruption',y='confidenceInGovernment',height = 400,width = 400,
+  )","corruption_confidence_hover_scatter_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,386343,"pan_zoom",TRUE,"scatterplot","CHART","alx.pan_zoom()+alx.scatterplot(df,x='corruption',y='confidenceInGovernment',height = 400,width = 400,
+  )","corruption_confidence_pan_zoom_scatter_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,419590,"pan_zoom+tooltip_hover",TRUE,"scatterplot","CHART","alx.tooltip_hover() + alx.pan_zoom() + alx.scatterplot(df,x='corruption',y='confidenceInGovernment',height = 400,width = 400,
+  )","corruption_confidence_hover_pan_zoom_scatter_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,445671,"pan_zoom+tooltip_hover",TRUE,"scatterplot","CHART","alx.tooltip_hover() + alx.pan_zoom() + alx.scatterplot(df,x='corruption',y='confidenceInGovernment',
+  color = 'freedom',
+  height = 400,width = 400,
+  )","corruption_confidence_hover_pan_zoom_color_freedom_scatter_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,462144,"pan_zoom+tooltip_hover",TRUE,"scatterplot","CHART","alx.tooltip_hover() + alx.pan_zoom() + alx.scatterplot(df,x='corruption',y='confidenceInGovernment',
+  color = 'freedom:Q',
+  height = 400,width = 400,
+  )","corruption_confidence_hover_pan_zoom_color_freedomQ_scatter _7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,465982,"pan_zoom+tooltip_hover",TRUE,"scatterplot","CHART","alx.tooltip_hover() + alx.pan_zoom() + alx.scatterplot(df,x='corruption',y='confidenceInGovernment',
+  color = 'freedom',
+  height = 400,width = 400,
+  )","corruption_confidence_hover_pan_zoom_color_freedom_scatter_2_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,484954,"pan_zoom+tooltip_hover",TRUE,"scatterplot","CHART","alx.tooltip_hover() + alx.pan_zoom() + alx.scatterplot(df,x='corruption',y='confidenceInGovernment',
+  color = 'freedom:Q',
+  height = 400,width = 400,
+  )","corruption_confidence_hover_pan_zoom_color_freedomQ_scatter_2_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,508050,"pan_zoom+tooltip_hover",TRUE,"scatterplot","CHART","alx.tooltip_hover() + alx.pan_zoom() + alx.scatterplot(df,x='corruption',y='confidenceInGovernment',
+  # color = 'freedom:Q',
+  height = 400,width = 400,
+  ).encode(color = 'color:Q')","corruption_confidence_hover_pan_zoom_color_freedomQ_separate_encoding_scatter_typo_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,517649,"pan_zoom+tooltip_hover",TRUE,"scatterplot","CHART","alx.tooltip_hover() + alx.pan_zoom() + alx.scatterplot(df,x='corruption',y='confidenceInGovernment',
+  # color = 'freedom:Q',
+  height = 400,width = 400,
+  ).encode(color = 'freedom:Q')","corruption_confidence_hover_pan_zoom_color_freedomQ_separate_encoding_scatter _7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,525320,"pan_zoom+tooltip_hover",TRUE,"scatterplot","CHART","alx.tooltip_hover() + alx.pan_zoom() + alx.scatterplot(df,x='corruption',y='confidenceInGovernment',
+  # color = 'freedom:Q',
+  height = 600,width = 600,
+  ).encode(color = 'freedom:Q')","corruption_confidence_hover_pan_zoom_color_freedomQ_separate_encoding_scatter_bigger_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,543571,"pan_zoom+tooltip_hover",TRUE,"scatterplot","CHART","alx.tooltip_hover() + alx.pan_zoom() + alx.scatterplot(df,x='corruption',y='confidenceInGovernment',
+  # color = 'freedom:Q',
+  height = 600,width = 600,
+  ).encode(color = 'generosity:Q')","corruption_confidence_hover_pan_zoom_color_generosityQ_separate_encoding_scatter_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,564382,"pan_zoom+tooltip_hover",TRUE,"scatterplot","CHART","alx.tooltip_hover() + alx.pan_zoom() + alx.scatterplot(df,x='corruption',y='confidenceInGovernment',
+  # color = 'freedom:Q',
+  height = 600,width = 600,
+  ).encode(color = 'positive_affect:Q')","corruption_confidence_hover_pan_zoom_color_positive_affectQ_separate_encoding_scatter_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,575502,"pan_zoom+tooltip_hover",TRUE,"scatterplot","CHART","alx.tooltip_hover() + alx.pan_zoom() + alx.scatterplot(df,x='corruption',y='confidenceInGovernment',
+  # color = 'freedom:Q',
+  height = 600,width = 600,
+  ).encode(color = 'positiveAffect:Q')","corruption_confidence_hover_pan_zoom_color_positive_affectQ_separate_encoding_scatter_2_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,592412,"pan_zoom+tooltip_hover",TRUE,"scatterplot","CHART","alx.tooltip_hover() + alx.pan_zoom() + alx.scatterplot(df,x='positiveAffect',y='confidenceInGovernment',
+  # color = 'freedom:Q',
+  height = 600,width = 600,
+  ).encode(color = 'positiveAffect:Q')","corruption_confidence_hover_pan_zoom_color_positive_affectQ_separate_encoding_scatter_3_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,616672,"pan_zoom+tooltip_hover",TRUE,"scatterplot","CHART","alx.tooltip_hover() + alx.pan_zoom() + alx.scatterplot(df,x='positiveAffect',y='corruption',
+  # color = 'freedom:Q',
+  height = 600,width = 600,
+  ).encode(color = 'positiveAffect:Q')","positiveAffect_corruption_hover_pan_zoom_encode_scatter_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,640116,"pan_zoom+tooltip_hover",TRUE,"scatterplot","CHART","alx.tooltip_hover() + alx.pan_zoom() + alx.scatterplot(df,x='positiveAffect',y='corruption',
+  # color = 'freedom:Q',
+  height = 600,width = 600,
+  ).encode(color = 'country:N')","positiveAffect_corruption_hover_pan_zoom_encode_color_countryN_scatter_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,648738,"pan_zoom+tooltip_hover",TRUE,"scatterplot","CHART","alx.tooltip_hover() + alx.pan_zoom() + alx.scatterplot(df,x='positiveAffect',y='corruption',
+  # color = 'freedom:Q',
+  height = 600,width = 600,
+  ).encode(color = 'logGDPPerCapita:Q')","positiveAffect_corruption_hover_pan_zoom_encode_logGDP_color_scatter_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,658444,"pan_zoom+tooltip_hover",TRUE,"scatterplot","CHART","alx.tooltip_hover() + alx.pan_zoom() + alx.scatterplot(df,x='positiveAffect',y='corruption',
+  # color = 'freedom:Q',
+  height = 600,width = 600,
+  ).encode(size = 'logGDPPerCapita:Q')","positiveAffect_corruption_hover_pan_zoom_encode_logGDP_size_scatter_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,700741,"pan_zoom+tooltip_hover",TRUE,"scatterplot","CHART","import altair as alt
+ alx.tooltip_hover() + alx.pan_zoom() + alx.scatterplot(df,x='positiveAffect',y='corruption',
+  # color = 'freedom:Q',
+  height = 600,width = 600,
+  ).encode(size = alt.Size('logGDPPerCapita:Q',
+  scale = alt.Scale(range = [0,10])
+  
+  ))","positiveAffect_corruption_hover_pan_zoom_encode_size_alt_Scale_scatter_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,706375,"pan_zoom+tooltip_hover",TRUE,"scatterplot","CHART","import altair as alt
+ alx.tooltip_hover() + alx.pan_zoom() + alx.scatterplot(df,x='positiveAffect',y='corruption',
+  # color = 'freedom:Q',
+  height = 600,width = 600,
+  ).encode(size = alt.Size('logGDPPerCapita:Q',
+  scale = alt.Scale(range = [1,100])
+  
+  ))","positiveAffect_corruption_hover_pan_zoom_encode_size_range_1_100_scatter_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,711721,"pan_zoom+tooltip_hover",TRUE,"scatterplot","CHART","import altair as alt
+ alx.tooltip_hover() + alx.pan_zoom() + alx.scatterplot(df,x='positiveAffect',y='corruption',
+  # color = 'freedom:Q',
+  height = 600,width = 600,
+  ).encode(size = alt.Size('logGDPPerCapita:Q',
+  scale = alt.Scale(range = [1,200])
+  
+  ))","positiveAffect_corruption_hover_pan_zoom_encode_size_range_1_200_scatter_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,734632,"pan_zoom+tooltip_hover",TRUE,"scatterplot","CHART","import altair as alt
+ alx.tooltip_hover() + alx.pan_zoom() + alx.scatterplot(df,x='positiveAffect',y='corruption',
+  # color = 'freedom:Q',
+  height = 600,width = 600,
+  ).encode(size = alt.Size('logGDPPerCapita:Q',
+  scale = alt.Scale(range = [1,1000])
+  
+  ))","positiveAffect_corruption_hover_pan_zoom_scatter_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,744585,"pan_zoom+tooltip_hover",TRUE,"scatterplot","CHART","import altair as alt
+ alx.tooltip_hover() + alx.pan_zoom() + alx.scatterplot(df,x='positiveAffect',y='corruption',
+  # color = 'freedom:Q',
+  height = 600,width = 600,
+  ).encode(size = alt.Size('logGDPPerCapita:Q',
+  scale = alt.Scale(range = [1,10])
+  
+  ))","positiveAffect_corruption_hover_pan_zoom_no_encode_scatter_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,766594,"pan_zoom+tooltip_hover",TRUE,"scatterplot","CHART","import altair as alt
+ alx.tooltip_hover() + alx.pan_zoom() + alx.scatterplot(df,x='positiveAffect',y='corruption',
+  # color = 'freedom:Q',
+  height = 600,width = 600,
+  ).encode(size = alt.Size('logGDPPerCapita:Q',
+  # scale = alt.Scale(range = [1,10])
+  
+  ))","positiveAffect_corruption_hover_pan_zoom_encode_color_logGDP_scatter_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,771882,"pan_zoom+tooltip_hover",TRUE,"scatterplot","CHART","import altair as alt
+ alx.tooltip_hover() + alx.pan_zoom() + alx.scatterplot(df,x='positiveAffect',y='corruption',
+  # color = 'freedom:Q',
+  height = 600,width = 600,
+  )
+ # .encode(size = alt.Size('logGDPPerCapita:Q',
+ # # scale = alt.Scale(range = [1,10])
+  
+ #  ))","positiveAffect_corruption_hover_pan_zoom_encode_color_alt_logGDP_scatter_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,839140,"pan_zoom+tooltip_hover",TRUE,"scatterplot","CHART","import altair as alt
+ alx.tooltip_hover() + alx.pan_zoom() + alx.scatterplot(df,x='positiveAffect',y='corruption',
+  # color = 'freedom:Q',
+  height = 600,width = 600,
+  ).encode(size = alt.Color('logGDPPerCapita:Q',
+  # scale = alt.Scale(range = [1,10])
+  
+  ))","positiveAffect_corruption_hover_pan_zoom_encode_color_alt_logGDP_red_scale_scatter_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,841386,"pan_zoom+tooltip_hover",TRUE,"scatterplot","CHART","import altair as alt
+ alx.tooltip_hover() + alx.pan_zoom() + alx.scatterplot(df,x='positiveAffect',y='corruption',
+  # color = 'freedom:Q',
+  height = 600,width = 600,
+  ).encode(color = alt.Color('logGDPPerCapita:Q',
+  # scale = alt.Scale(range = [1,10])
+  
+  ))","positiveAffect_corruption_hover_pan_zoom_encode_color_alt_logGDP_red_scale_scatter_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,853611,"pan_zoom+tooltip_hover",TRUE,"scatterplot","CHART","import altair as alt
+ alx.tooltip_hover() + alx.pan_zoom() + alx.scatterplot(df,x='positiveAffect',y='corruption',
+  # color = 'freedom:Q',
+  height = 600,width = 600,
+  ).encode(color = alt.Color('logGDPPerCapita:Q',
+  scale = alt.Scale(scheme = 'red')
+  
+  ))","positiveAffect_corruption_hover_pan_zoom_encode_color_alt_logGDP_scatter_2_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,868631,"pan_zoom+tooltip_hover",TRUE,"scatterplot","CHART","import altair as alt
+ alx.tooltip_hover() + alx.pan_zoom() + alx.scatterplot(df,x='positiveAffect',y='corruption',
+  # color = 'freedom:Q',
+  height = 600,width = 600,
+  ).encode(color = alt.Color('logGDPPerCapita:Q',
+  # scale = alt.Scale(scheme = 'red')
+  
+  ))","positiveAffect_corruption_hover_pan_zoom_encode_color_alt_logGDP_scatter_3_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,1027381,"pan_zoom+tooltip_hover",TRUE,"scatterplot","CHART","import altair as alt
+ alx.tooltip_hover() + alx.pan_zoom() + alx.scatterplot(df,x='positiveAffect',y='corruption',
+  # color = 'freedom:Q',
+  height = 600,width = 600,
+  ).encode(color = alt.Color('year:Q',
+  # scale = alt.Scale(scheme = 'red')
+  
+  ))","positiveAffect_corruption_hover_pan_zoom_encode_color_year_scatter_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,1055637,"filter_slider+pan_zoom+tooltip_hover",TRUE,"scatterplot","CHART","import altair as alt
+ alx.filter_slider(field='year') + alx.tooltip_hover() + alx.pan_zoom() + alx.scatterplot(df,x='positiveAffect',y='corruption',
+  # color = 'freedom:Q',
+  height = 600,width = 600,
+  ).encode(color = alt.Color('logGDPPerCapita:Q',
+  # scale = alt.Scale(scheme = 'red')
+  
+  ))","affect_corruption_year_slider_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,1139229,"filter_slider+pan_zoom+tooltip_hover",TRUE,"scatterplot","CHART","import altair as alt
+ alx.filter_slider(field='logGDPPerCapita') + alx.tooltip_hover() + alx.pan_zoom() + alx.scatterplot(df,x='positiveAffect',y='corruption',
+  # color = 'freedom:Q',
+  height = 600,width = 600,
+  ).encode(color = alt.Color('country:N',
+  # scale = alt.Scale(scheme = 'red')
+  
+  ))","affect_corruption_gdp_slider_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,1155565,"filter_slider+pan_zoom+tooltip_hover",TRUE,"scatterplot","CHART","import altair as alt
+ alx.filter_slider(field='logGDPPerCapita') + alx.tooltip_hover() + alx.pan_zoom() + alx.scatterplot(df,x='positiveAffect',y='corruption',
+  # color = 'freedom:Q',
+  height = 600,width = 600,
+  ).encode(color = alt.Color('country:N',
+  # scale = alt.Scale(scheme = 'red')
+  
+  ))","affect_corruption_gdp_slider_2_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,1165067,"filter_slider+pan_zoom+tooltip_hover",TRUE,"scatterplot","CHART","import altair as alt
+ # alx.filter_slider(field='year') + 
+ alx.tooltip_hover() + alx.pan_zoom() + alx.scatterplot(df,x='positiveAffect',y='corruption',
+  # color = 'freedom:Q',
+  height = 600,width = 600,
+  ).encode(color = alt.Color('country:N',
+  # scale = alt.Scale(scheme = 'red')
+  
+  ))","affect_corruption_hover_pan_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,1189467,"filter_brush+filter_slider+pan_zoom",TRUE,"scatterplot","CHART","import altair as alt
+ # alx.filter_slider(field='year') + 
+ alx.filter_brush() + alx.pan_zoom() + alx.scatterplot(df,x='positiveAffect',y='corruption',
+  # color = 'freedom:Q',
+  height = 600,width = 600,
+  ).encode(color = alt.Color('country:N',
+  # scale = alt.Scale(scheme = 'red')
+  
+  ))","affect_corruption_brush_pan_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,1198126,"filter_brush+filter_slider",TRUE,"scatterplot","CHART","import altair as alt
+ # alx.filter_slider(field='year') + 
+ alx.filter_brush() + alx.scatterplot(df,x='positiveAffect',y='corruption',
+  # color = 'freedom:Q',
+  height = 600,width = 600,
+  ).encode(color = alt.Color('country:N',
+  # scale = alt.Scale(scheme = 'red')
+  
+  ))","affect_corruption_brush_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,1212341,"none",FALSE,"dataframe","TABLE","temp_df","print_affect_corruption_cluster_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,1225494,"none",FALSE,"barplot","CHART","alx.countplot(temp_df,x = 'country')","country_count_affect_corruption_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,1233191,"none",FALSE,"barplot","CHART","alx.countplot(temp_df,x = 'country',height = 400,width = 400)","country_count_plot_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,1299398,"none",FALSE,"scatterplot","CHART","alx.scatterplot(df,x = 'socialSupport',y = 'freedom')","socialSupport_freedom_scatter_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,1315471,"pan_zoom+tooltip_hover",TRUE,"scatterplot","CHART","alx.tooltip_hover() + alx.pan_zoom() + alx.scatterplot(df,x='socialSupport',y='freedom',
+  # color = 'freedom:Q',
+  height = 600,width = 600,
+  ).encode(color = 'positiveAffect:Q')","socialSupport_freedom_posAffect_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,1327679,"none",FALSE,"columns","TABLE","df.columns","show_df_columns_2_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,1350850,"none",FALSE,"columns","TABLE","df.columns","show_df_columns_3_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,1409787,"pan_zoom+tooltip_hover",TRUE,"scatterplot","CHART","alx.tooltip_hover() + alx.pan_zoom() + alx.scatterplot(df,x='socialSupport',y='freedom',
+  # color = 'freedom:Q',
+  height = 600,width = 600,
+  ).encode(color = 'aretheypostitive:Q')","socialSupport_freedom_aretheypositive_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,1412410,"pan_zoom+tooltip_hover",TRUE,"scatterplot","CHART","alx.tooltip_hover() + alx.pan_zoom() + alx.scatterplot(df,x='socialSupport',y='freedom',
+  # color = 'freedom:Q',
+  height = 600,width = 600,
+  ).encode(color = 'aretheypostitive:N')","socialSupport_freedom_aretheypositive_2_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,1468983,"pan_zoom+tooltip_hover",TRUE,"scatterplot","CHART","alx.tooltip_hover() + alx.pan_zoom() + alx.scatterplot(df,x='corruption',y='confidenceInGovernment',
+  # color = 'freedom:Q',
+  height = 600,width = 600,
+  ).encode(color = 'aretheypostitive:N')","corruption_govConfidence_aretheypositive_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,1498476,"pan_zoom+tooltip_hover",TRUE,"scatterplot","CHART","alx.tooltip_hover() + alx.pan_zoom() + alx.scatterplot(df,x='positiveAffect',y='negativeAffect',
+  # color = 'freedom:Q',
+  height = 600,width = 600,
+  )#.encode(color = 'aretheypostitive:N')","posAffect_negAffect_scatter_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,1564026,"filter_type",TRUE,"lineplot","CHART","alx.filter_type(target='country') + alx.lineplot(df,x='year',y='positiveAffect',color='country',width=700)","country_line_posAffect_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,1581896,"filter_type",TRUE,"lineplot","CHART","alx.filter_type(target='country') + alx.lineplot(df,x='year',y='positiveAffect',color='country',width=700,
+  height = 500)","country_line_posAffect_height_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,1625311,"filter_type",TRUE,"lineplot","CHART","alx.filter_type(target='logGDPPerCapita') + alx.lineplot(df,x='year',y='positiveAffect',color='country',width=700,
+  height = 500)","logGDPPerCapita_line_posAffect_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,1637976,"filter_type",TRUE,"lineplot","CHART","alx.filter_type(target='country') + alx.lineplot(df,x='year',y='positiveAffect',color='country',width=700,
+  height = 500)","country_line_posAffect_2_7382kwtuehappiness"
+"7382kwtue","P3","ixn","happiness","space-first",1.68e+12,1669986,"filter_type",TRUE,"lineplot","CHART","alx.filter_type(target='country') + alx.lineplot(df,x='year',y='positiveAffect',width=700,
+  height = 500)","country_line_posAffect_no_color_7382kwtuehappiness"
+"7ACC0B75","P2","ixn","space","happiness-first",1.68e+12,15590,"none",FALSE,"dataframe","TABLE","df.head()","df_head6_7ACC0B75space"
+"7ACC0B75","P2","ixn","space","happiness-first",1.68e+12,85492,"highlight_brush",TRUE,"profile","CHART","columns = df.columns # returns list of column names [""year"",""country""...]
+ alx.highlight_brush() + alx.profile(df,vars=columns)","profile_all_columns8_7ACC0B75space"
+"7ACC0B75","P2","ixn","space","happiness-first",1.68e+12,166146,"none",FALSE,"dataframe","TABLE","df[df[""FoodCourt""]==29813.0]","filter_FoodCourt_max1_7ACC0B75space"
+"7ACC0B75","P2","ixn","space","happiness-first",1.68e+12,403445,"filter_slider",TRUE,"scatterplot","CHART","alx.filter_slider(field='Age') + alx.scatterplot(df,x='HomePlanet',y='CryoSleep')","age_CryoSleep_vs_HomePlanet1_7ACC0B75space"
+"7ACC0B75","P2","ixn","space","happiness-first",1.68e+12,452828,"filter_slider",TRUE,"scatterplot","CHART","alx.filter_slider(field='Age') + alx.scatterplot(df,x='HomePlanet',y='CryoSleep') | alx.scatterplot(df,x='HomePlanet',y='ShoppingMall')","age_CryoSleep_ShoppingMall_vs_HomePlanet1_7ACC0B75space"
+"7ACC0B75","P2","ixn","space","happiness-first",1.68e+12,466145,"filter_slider",TRUE,"scatterplot","CHART","alx.filter_slider(field='Age') + (alx.scatterplot(df,x='HomePlanet',y='CryoSleep') | alx.scatterplot(df,x='HomePlanet',y='ShoppingMall'))","age_CryoSleep_ShoppingMall_vs_HomePlanet_composed1_7ACC0B75space"
+"7ACC0B75","P2","ixn","space","happiness-first",1.68e+12,690988,"filter_slider",TRUE,"scatterplot","CHART","alx.filter_slider(field='Spa') + alx.scatterplot(df,x='HomePlanet',y='CryoSleep')","spa_CryoSleep_vs_HomePlanet1_7ACC0B75space"
+"7ACC0B75","P2","ixn","space","happiness-first",1.68e+12,707904,"filter_slider",TRUE,"scatterplot","CHART","alx.filter_slider(field='Spa') + alx.scatterplot(df,x='HomePlanet',y='Perished:N')","spa_perished_N_vs_HomePlanet1_7ACC0B75space"
+"7ACC0B75","P2","static","happiness","happiness-first",1.68e+12,20704,"none",FALSE,"dataframe","TABLE","df.head()","df_head_7ACC0B75happiness"
+"7ACC0B75","P2","static","happiness","happiness-first",1.68e+12,57668,"none",FALSE,"columns","TABLE","df.columns","df_columns1_7ACC0B75happiness"
+"7ACC0B75","P2","static","happiness","happiness-first",1.68e+12,155358,"none",FALSE,"columns","TABLE","columns = df.columns
+ columns","assign_columns1_7ACC0B75happiness"
+"7ACC0B75","P2","static","happiness","happiness-first",1.68e+12,160588,"none",FALSE,"profile","CHART","alx.profile(df,vars=columns)","profile_all_columns7_7ACC0B75happiness"
+"7ACC0B75","P2","static","happiness","happiness-first",1.68e+12,476455,"none",FALSE,"dataframe","TABLE","df.groupby(""Country name"").count()","group_by_country1_7ACC0B75happiness"
+"7ACC0B75","P2","static","happiness","happiness-first",1.68e+12,597819,"none",FALSE,"hist","CHART","# looks like population is a bit unevenly distributed, let do a log calculation to view it
+ df['logLifeLadder'] = np.log(df['Life Ladder'])
+ alx.hist(df, x= 'logLifeLadder')","log_lifeLadder_hist1_7ACC0B75happiness"
+"7ACC0B75","P2","static","happiness","happiness-first",1.68e+12,951070,"none",FALSE,"dataframe","TABLE","df.isna()","check_na1_7ACC0B75happiness"
+"7ACC0B75","P2","static","happiness","happiness-first",1.68e+12,963388,"none",FALSE,"dataframe","TABLE","df.isna()","check_na2_7ACC0B75happiness"
+"7ACC0B75","P2","static","happiness","happiness-first",1.68e+12,1096573,"none",FALSE,"dataframe","TABLE","df.head()","df_head5_7ACC0B75happiness"
+"7ACC0B75","P2","static","happiness","happiness-first",1.68e+12,1109321,"none",FALSE,"dataframe","TABLE","df.isna()","check_na3_7ACC0B75happiness"
+"7ACC0B75","P2","static","happiness","happiness-first",1.68e+12,1290516,"none",FALSE,"hist","CHART","# looks like population is a bit unevenly distributed, let do a log calculation to view it
+ alx.hist(df, x= 'Log GDP per capita')","log_GDP_hist1_7ACC0B75happiness"
+"E1D39056","P1","static","space","space-first",1.68e+12,16443,"none",FALSE,"dataframe","TABLE","df.head()","df_head_E1D39056space"
+"E1D39056","P1","static","space","space-first",1.68e+12,25550,"none",FALSE,"columns","TABLE","df.columns","df_columns_E1D39056space"
+"E1D39056","P1","static","space","space-first",1.68e+12,173652,"none",FALSE,"profile","CHART","alx.profile(data = df, vars = ['Unnamed: 0', 'PassengerId', 'HomePlanet', 'CryoSleep', 'Cabin',
+  'Destination', 'Age', 'VIP', 'RoomService', 'FoodCourt', 'ShoppingMall',
+  'Spa', 'VRDeck', 'Name'])","alx_profile_E1D39056space"
+"E1D39056","P1","static","space","space-first",1.68e+12,276478,"none",FALSE,"profile","CHART","alx.profile(data = df[df.Transported], vars = ['Unnamed: 0', 'PassengerId', 'HomePlanet', 'CryoSleep', 'Cabin',
+  'Destination', 'Age', 'VIP', 'RoomService', 'FoodCourt', 'ShoppingMall',
+  'Spa', 'VRDeck', 'Name'])","alx_profile_transported_E1D39056space"
+"E1D39056","P1","static","space","space-first",1.68e+12,295306,"none",FALSE,"profile","CHART","alx.profile(data = df[~df.Transported], vars = ['Unnamed: 0', 'PassengerId', 'HomePlanet', 'CryoSleep', 'Cabin',
+  'Destination', 'Age', 'VIP', 'RoomService', 'FoodCourt', 'ShoppingMall',
+  'Spa', 'VRDeck', 'Name'])","alx_profile_not_transported_E1D39056space"
+"E1D39056","P1","static","space","space-first",1.68e+12,328241,"none",FALSE,"scatterplot","CHART","alx.jointplot(data=df, x = ""VIP"", y = ""Transported"")","VIP_transported_jointplot_E1D39056space"
+"E1D39056","P1","static","space","space-first",1.68e+12,585647,"none",FALSE,"dataframe","TABLE","pd.crosstab(df.HomePlanet, df.Transported)","homePlanet_transported_crosstab_E1D39056space"
+"E1D39056","P1","static","space","space-first",1.68e+12,721266,"none",FALSE,"dataframe","TABLE","pd.crosstab(df.Destination, df.Transported)","destination_transported_crosstab_E1D39056space"
+"E1D39056","P1","static","space","space-first",1.68e+12,742859,"none",FALSE,"dataframe","TABLE","pd.crosstab(df.CryoSleep, df.Transported)","cryoSleep_transported_crosstab_E1D39056space"
+"E1D39056","P1","static","space","space-first",1.68e+12,783069,"none",FALSE,"dataframe","TABLE","pd.crosstab(df.Age, df.Transported)","age_transported_crosstab_E1D39056space"
+"E1D39056","P1","static","space","space-first",1.68e+12,787986,"none",FALSE,"dataframe","TABLE","pd.crosstab(df.CryoSleep, df.Transported)","cryoSleep_transported_crosstab_repeat_E1D39056space"
+"E1D39056","P1","static","space","space-first",1.68e+12,980033,"none",FALSE,"dataframe","TABLE","pd.crosstab(df[""spent_any""], df[""Transported""])","spent_any_transported_crosstab_E1D39056space"
+"E1D39056","P1","static","space","space-first",1.68e+12,1065165,"none",FALSE,"hist","CHART","alx.hist(df[df.spent_any], x = ""Transported"")","spent_any_transported_hist_E1D39056space"
+"E1D39056","P1","static","space","space-first",1.68e+12,1079733,"none",FALSE,"hist","CHART","alx.hist(df[df.spent_any], x = ""Transported"") | alx.hist(df[~df.spent_any], x = ""Transported"")","spent_any_not_spent_any_transported_hist_E1D39056space"
+"E1D39056","P1","static","space","space-first",1.68e+12,1241714,"none",FALSE,"hist","CHART","alx.hist(df[df.S], x = ""Transported"") | alx.hist(df[df.P], x = ""Transported"")","S_P_transported_hist_repeat_E1D39056space"
+"E1D39056","P1","ixn","happiness","space-first",1.68e+12,13687,"none",FALSE,"dataframe","TABLE","df.head()","data_head_E1D39056happiness"
+"E1D39056","P1","ixn","happiness","space-first",1.68e+12,54344,"none",FALSE,"profile","CHART","alx.profile(df)","profile_df_E1D39056happiness"
+"E1D39056","P1","ixn","happiness","space-first",1.68e+12,73342,"none",FALSE,"profile","CHART","alx.profile(df[df.isna()])","profile_df_rows_na_E1D39056happiness"
+"E1D39056","P1","ixn","happiness","space-first",1.68e+12,96417,"none",FALSE,"dataframe","TABLE","df[df.isna()]","print_df_rows_na_E1D39056happiness"
+"E1D39056","P1","ixn","happiness","space-first",1.68e+12,121642,"none",FALSE,"dataframe","TABLE","df[df[""Country name""].isna()]","country_na_query_final_E1D39056happiness"
+"E1D39056","P1","ixn","happiness","space-first",1.68e+12,129290,"none",FALSE,"profile","CHART","alx.profile(df[df.isna()])","profile_df_rows_na_repeat_E1D39056happiness"
+"E1D39056","P1","ixn","happiness","space-first",1.68e+12,148411,"none",FALSE,"dataframe","TABLE","df[df[""Country name""].isna()]","country_na_query_repeat_E1D39056happiness"
+"E1D39056","P1","ixn","happiness","space-first",1.68e+12,161545,"none",FALSE,"dataframe","TABLE","df[df.isna()]","print_df_rows_na_repeat_E1D39056happiness"
+"E1D39056","P1","ixn","happiness","space-first",1.68e+12,165477,"none",FALSE,"dataframe","TABLE","df.isna()","df_na_E1D39056happiness"
+"E1D39056","P1","ixn","happiness","space-first",1.68e+12,219671,"none",FALSE,"profile","CHART","alx.profile(df[df.isna()])","profile_df_na_repeat_E1D39056happiness"
+"E1D39056","P1","ixn","happiness","space-first",1.68e+12,294935,"none",FALSE,"barplot","CHART","alx.countplot(df[df.isna()], x = ""Country name"")","na_countplot_country_E1D39056happiness"
+"E1D39056","P1","ixn","happiness","space-first",1.68e+12,358809,"none",FALSE,"scatterplot","CHART","alx.jointplot(data = df, x = ""Confidence in national government"", y = ""Perceptions of corruption"")","gov_confidence_corruption_jointplot_E1D39056happiness"
+"E1D39056","P1","ixn","happiness","space-first",1.68e+12,415619,"none",FALSE,"scatterplot","CHART","alx.jointplot(data = df, x = ""Confidence in national government"", y = ""Log GDP per capita"")","gov_confidence_gdp_jointplot_E1D39056happiness"
+"E1D39056","P1","ixn","happiness","space-first",1.68e+12,465735,"tooltip_hover",TRUE,"scatterplot","CHART","alx.tooltip_hover() + alx.jointplot(data = df, x = ""Confidence in national government"", y = ""Log GDP per capita"")","tooltip_gov_confidence_gdp_jointplot_E1D39056happiness"
+"E1D39056","P1","ixn","happiness","space-first",1.68e+12,481782,"tooltip_hover",TRUE,"scatterplot","CHART","alx.tooltip_hover() + alx.jointplot(data = df, x = ""Confidence in national government"", y = ""Social support"")","tooltip_gov_confidence_support_jointplot_E1D39056happiness"
+"E1D39056","P1","ixn","happiness","space-first",1.68e+12,515917,"tooltip_hover",TRUE,"scatterplot","CHART","alx.tooltip_hover() + alx.jointplot(data = df, x = ""Positive affect"", y = ""Social support"")","tooltip_positive_support_jointplot_E1D39056happiness"
+"E1D39056","P1","ixn","happiness","space-first",1.68e+12,525619,"tooltip_hover",TRUE,"scatterplot","CHART","alx.tooltip_hover() + alx.jointplot(data = df, x = ""Positive affect"", y = ""Negative affect"")","tooltip_positive_negative_jointplot_E1D39056happiness"
+"E1D39056","P1","ixn","happiness","space-first",1.68e+12,633494,"none",FALSE,"pairplot","CHART","alx.pairplot(data =df)","pairplot_df_E1D39056happiness"
+"E1D39056","P1","ixn","happiness","space-first",1.68e+12,656161,"none",FALSE,"columns","TABLE","df.columns
+ # alx.pairplot(data = df)","df_columns_pairplot_commented_E1D39056happiness"
+"E1D39056","P1","ixn","happiness","space-first",1.68e+12,748202,"none",FALSE,"pairplot","CHART","df = df.loc[:, ['Positive affect', 'Country name', 'year', 'Life Ladder', 'Log GDP per capita',
+  'Social support', 'Healthy life expectancy at birth',
+  'Freedom to make life choices', 'Generosity',
+  'Perceptions of corruption', 'Negative affect',
+  'Confidence in national government']]
+ alx.pairplot(data = df)","subset_columns_assignment_pairplot_E1D39056happiness"
+"E1D39056","P1","ixn","happiness","space-first",1.68e+12,879783,"filter_slider",TRUE,"pairplot","CHART","df = df.loc[:, ['Positive affect', 'Country name', 'year', 'Life Ladder', 'Log GDP per capita',
+  'Social support', 'Healthy life expectancy at birth',
+  'Freedom to make life choices', 'Generosity',
+  'Perceptions of corruption', 'Negative affect',
+  'Confidence in national government']]
+ alx.filter_slider(field='year') + alx.pairplot(data = df)","subset_columns_assignment_yearfilter_pairplot_E1D39056happiness"
+"E1D39056","P1","ixn","happiness","space-first",1.68e+12,1167960,"none",FALSE,"columns","TABLE","df.columns","df_col_check_attr_E1D39056happiness"
+"E1D39056","P1","ixn","happiness","space-first",1.68e+12,1183117,"filter_slider",TRUE,"multiviewchart","CHART","df = df.loc[:, ['Positive affect', 'Country name', 'year', 'Life Ladder', 'Log GDP per capita',
+  'Social support', 'Healthy life expectancy at birth',
+  'Freedom to make life choices', 'Generosity',
+  'Perceptions of corruption', 'Negative affect',
+  'Confidence in national government']]
+ year_filter = alx.filter_slider(field='year')
+ alx.barplot(df,x='Country name',y='Positive affect',sort='-y')
+ # alx.pairplot(data = df)","df_year_filter_barplot_posAff_E1D39056happiness"
+"E1D39056","P1","ixn","happiness","space-first",1.68e+12,1229533,"filter_slider",TRUE,"multiviewchart","CHART","df = df.loc[:, ['Positive affect', 'Country name', 'year', 'Life Ladder', 'Log GDP per capita',
+  'Social support', 'Healthy life expectancy at birth',
+  'Freedom to make life choices', 'Generosity',
+  'Perceptions of corruption', 'Negative affect',
+  'Confidence in national government']]
+ year_filter = alx.filter_slider(field='year')
+ year_filter + alx.barplot(df,x='Country name',y='Positive affect',sort='-y')
+ # alx.pairplot(data = df)","df_year_filter_add_barplot_posAff_E1D39056happiness"
+"E1D39056","P1","ixn","happiness","space-first",1.68e+12,1260495,"filter_slider",TRUE,"multiviewchart","CHART","df = df.loc[:, ['Positive affect', 'Country name', 'year', 'Life Ladder', 'Log GDP per capita',
+  'Social support', 'Healthy life expectancy at birth',
+  'Freedom to make life choices', 'Generosity',
+  'Perceptions of corruption', 'Negative affect',
+  'Confidence in national government']]
+ year_filter = alx.filter_slider(field='year')
+ year_filter + alx.barplot(df,x='Country name',y='Positive affect',sort='-y', width = 1000)
+ # alx.pairplot(data = df)","df_year_filter_add_barplot_posAff_width_E1D39056happiness"
+"E1D39056","P1","ixn","happiness","space-first",1.68e+12,1268993,"filter_slider",TRUE,"multiviewchart","CHART","df = df.loc[:, ['Positive affect', 'Country name', 'year', 'Life Ladder', 'Log GDP per capita',
+  'Social support', 'Healthy life expectancy at birth',
+  'Freedom to make life choices', 'Generosity',
+  'Perceptions of corruption', 'Negative affect',
+  'Confidence in national government']]
+ year_filter = alx.filter_slider(field='year')
+ year_filter + alx.barplot(df,x='Country name',y='Positive affect', width = 1000)
+ # alx.pairplot(data = df)","df_year_filter_add_barplot_posAff_noSort_E1D39056happiness"
+"E1D39056","P1","ixn","happiness","space-first",1.68e+12,1284734,"filter_slider",TRUE,"multiviewchart","CHART","df = df.loc[:, ['Positive affect', 'Country name', 'year', 'Life Ladder', 'Log GDP per capita',
+  'Social support', 'Healthy life expectancy at birth',
+  'Freedom to make life choices', 'Generosity',
+  'Perceptions of corruption', 'Negative affect',
+  'Confidence in national government']]
+ year_filter = alx.filter_slider(field='year')
+ year_filter + alx.barplot(df,x='Country name',y='Positive affect',sort='-y', width = 1000)
+ # alx.pairplot(data = df)","df_year_filter_add_barplot_posAff_repeat_E1D39056happiness"
+"E1D39056","P1","ixn","happiness","space-first",1.68e+12,1409274,"filter_brush+filter_slider",TRUE,"multiviewchart","CHART","df = df.loc[:, ['Positive affect', 'Country name', 'year', 'Life Ladder', 'Log GDP per capita',
+  'Social support', 'Healthy life expectancy at birth',
+  'Freedom to make life choices', 'Generosity',
+  'Perceptions of corruption', 'Negative affect',
+  'Confidence in national government']]
+ # year_filter = alx.filter_slider(field='year')
+ # year_filter + alx.barplot(df,x='Country name',y='Positive affect',sort='-y', width = 1000)
+ # alx.pairplot(data = df)
+ alx.filter_brush() + alx.hist(df, ""year"")","df_select_cols_filterBrush_hist_corrected_E1D39056happiness"
+"E1D39056","P1","ixn","happiness","space-first",1.68e+12,1423296,"filter_slider+highlight_brush",TRUE,"multiviewchart","CHART","df = df.loc[:, ['Positive affect', 'Country name', 'year', 'Life Ladder', 'Log GDP per capita',
+  'Social support', 'Healthy life expectancy at birth',
+  'Freedom to make life choices', 'Generosity',
+  'Perceptions of corruption', 'Negative affect',
+  'Confidence in national government']]
+ # year_filter = alx.filter_slider(field='year')
+ # year_filter + alx.barplot(df,x='Country name',y='Positive affect',sort='-y', width = 1000)
+ # alx.pairplot(data = df)
+ alx.highlight_brush() + alx.hist(df, ""year"")","df_select_cols_highlightBrush_hist_E1D39056happiness"
+"E1D39056","P1","ixn","happiness","space-first",1.68e+12,1441926,"filter_slider+highlight_brush",TRUE,"multiviewchart","CHART","df = df.loc[:, ['Positive affect', 'Country name', 'year', 'Life Ladder', 'Log GDP per capita',
+  'Social support', 'Healthy life expectancy at birth',
+  'Freedom to make life choices', 'Generosity',
+  'Perceptions of corruption', 'Negative affect',
+  'Confidence in national government']]
+ # year_filter = alx.filter_slider(field='year')
+ # year_filter + alx.barplot(df,x='Country name',y='Positive affect',sort='-y', width = 1000)
+ # alx.pairplot(data = df)
+ brush = alx.highlight_brush()
+ brush + alx.hist(df, ""year"")","df_select_cols_highlightBrush_assigned_hist_E1D39056happiness"
+"E1D39056","P1","ixn","happiness","space-first",1.68e+12,1474117,"filter_slider+highlight_brush",TRUE,"multiviewchart","CHART","df = df.loc[:, ['Positive affect', 'Country name', 'year', 'Life Ladder', 'Log GDP per capita',
+  'Social support', 'Healthy life expectancy at birth',
+  'Freedom to make life choices', 'Generosity',
+  'Perceptions of corruption', 'Negative affect',
+  'Confidence in national government']]
+ # year_filter = alx.filter_slider(field='year')
+ # year_filter + alx.barplot(df,x='Country name',y='Positive affect',sort='-y', width = 1000)
+ # alx.pairplot(data = df)
+ brush = alx.highlight_brush()
+ (brush + alx.hist(df, ""year"")) & alx.barplot(df,x='Country name',y='Positive affect',sort='-y', width = 1000, effects = {""filter"": [brush]})","df_select_cols_highlightBrush_assigned_hist_barplot_posAff_E1D39056happiness"
+"E1D39056","P1","ixn","happiness","space-first",1.68e+12,1534469,"filter_slider+highlight_brush",TRUE,"multiviewchart","CHART","df = df.loc[:, ['Positive affect', 'Country name', 'year', 'Life Ladder', 'Log GDP per capita',
+  'Social support', 'Healthy life expectancy at birth',
+  'Freedom to make life choices', 'Generosity',
+  'Perceptions of corruption', 'Negative affect',
+  'Confidence in national government']]
+ # year_filter = alx.filter_slider(field='year')
+ # year_filter + alx.barplot(df,x='Country name',y='Positive affect',sort='-y', width = 1000)
+ # alx.pairplot(data = df)
+ brush = alx.highlight_brush()
+ brush + alx.pairplot(data = df)","df_select_cols_highlightBrush_assigned_pairplot_E1D39056happiness"
+"E1D39056","P1","ixn","happiness","space-first",1.68e+12,1604516,"filter_slider+highlight_brush",TRUE,"multiviewchart","CHART","df = df.loc[:, ['Positive affect', 'Country name', 'year', 'Life Ladder', 'Log GDP per capita',
+  'Social support', 'Healthy life expectancy at birth',
+  'Freedom to make life choices', 'Generosity',
+  'Perceptions of corruption', 'Negative affect',
+  'Confidence in national government']]
+ # year_filter = alx.filter_slider(field='year')
+ # year_filter + alx.barplot(df,x='Country name',y='Positive affect',sort='-y', width = 1000)
+ # alx.pairplot(data = df)
+ # brush = alx.highlight_brush()
+ alx.filter_slider(field='year') + alx.pairplot(data = df)","df_select_cols_filterSlider_pairplot_E1D39056happiness"
+"bjs827ee1u","P6","ixn","space","happiness-first",NA,2624,"none",FALSE,"dataframe","TABLE","df","display_df_bjs827ee1uspace"
+"bjs827ee1u","P6","ixn","space","happiness-first",NA,13912,"filter_brush",TRUE,"scatterplot","CHART","alx.filter_brush()+alx.scatterplot(df,x='HomePlanet',y='CryoSleep')","HomePlanet_CryoSleep_scatterplot_bjs827ee1uspace"
+"bjs827ee1u","P6","ixn","space","happiness-first",NA,18190,"filter_brush",TRUE,"scatterplot","CHART","alx.filter_brush()+alx.scatterplot(df,x='Age',y='CryoSleep')","Age_CryoSleep_scatterplot_bjs827ee1uspace"
+"bjs827ee1u","P6","ixn","space","happiness-first",NA,28091,"filter_brush",TRUE,"scatterplot","CHART","alx.filter_brush()+alx.scatterplot(df,x='Age',y='VIP')","Age_VIP_scatterplot_bjs827ee1uspace"
+"bjs827ee1u","P6","ixn","space","happiness-first",NA,16264,"filter_brush",TRUE,"barplot","CHART","alx.filter_brush()+alx.countplot(df,x='Age')","Age_countplot_bjs827ee1uspace"
+"bjs827ee1u","P6","ixn","space","happiness-first",NA,7998,"none",FALSE,"info","TABLE","df.info()","df_info_bjs827ee1uspace"
+"bjs827ee1u","P6","ixn","space","happiness-first",NA,3974,"filter_brush",TRUE,"scatterplot","CHART","alx.filter_brush()+alx.scatterplot(df,x='VIP', y = ""survived"")","VIP_survived_scatterplot_4_bjs827ee1uspace"
+"bjs827ee1u","P6","ixn","space","happiness-first",NA,28244,"filter_brush",TRUE,"hist","CHART","alx.filter_brush()+alx.hist(df,x='VIP', y = ""survived"")","VIP_survived_histogram_bjs827ee1uspace"
+"bjs827ee1u","P6","ixn","space","happiness-first",NA,3650,"none",FALSE,"dataframe","TABLE","filtered_df","display_filtered_df1_bjs827ee1uspace"
+"bjs827ee1u","P6","ixn","space","happiness-first",NA,9008,"none",FALSE,"scatterplot","CHART","alx.scatterplot(df, x = ""Age"" , y =""RoomService"" )","Age_RoomService_scatterplot_2_bjs827ee1uspace"
+"bjs827ee1u","P6","ixn","space","happiness-first",NA,43162,"pan_zoom",TRUE,"scatterplot","CHART","alx.pan_zoom() + alx.scatterplot(df, x = ""Age"" , y =""RoomService"" )","Age_RoomService_scatterplot_with_pan_bjs827ee1uspace"
+"bjs827ee1u","P6","ixn","space","happiness-first",NA,4972,"pan_zoom",TRUE,"scatterplot","CHART","alx.pan_zoom() + alx.scatterplot(df, x = ""Age"" , y =""RoomService"")","Age_RoomService_scatterplot_with_pan_repeat_bjs827ee1uspace"
+"bjs827ee1u","P6","ixn","space","happiness-first",NA,46934,"pan_zoom",TRUE,"scatterplot","CHART","alx.pan_zoom() + alx.scatterplot(df, x = ""Age"" , y =""ShoppingMall"")","Age_ShoppingMall_scatterplot_bjs827ee1uspace"
+"bjs827ee1u","P6","ixn","space","happiness-first",NA,26995,"pan_zoom+tooltip_hover",TRUE,"scatterplot","CHART","alx.pan_zoom() + alx.tooltip_hover() + alx.scatterplot(df, x = ""Age"" , y =""ShoppingMall"")","Age_ShoppingMall_scatterplot_with_tooltip_bjs827ee1uspace"
+"bjs827ee1u","P6","ixn","space","happiness-first",NA,52439,"highlight_brush+pan_zoom+tooltip_hover",TRUE,"scatterplot","CHART","alx.pan_zoom() + alx.tooltip_hover() + alx.highlight_brush() + alx.scatterplot(df, x = ""Age"" , y =""ShoppingMall"")","Age_ShoppingMall_scatterplot_with_highlight_bjs827ee1uspace"
+"bjs827ee1u","P6","ixn","space","happiness-first",NA,4361,"highlight_brush+tooltip_hover",TRUE,"scatterplot","CHART","alx.tooltip_hover() + alx.highlight_brush() + alx.scatterplot(df, x = ""Age"" , y =""ShoppingMall"")","Age_ShoppingMall_scatterplot_with_highlight_fix_bjs827ee1uspace"
+"bjs827ee1u","P6","ixn","space","happiness-first",NA,9988,"none",FALSE,"dataframe","TABLE","df.query("" (Age>=3.77 and Age<=56.57) and (ShoppingMall>=4106.25 and ShoppingMall<=24000.00) "")","df_query_Age_ShoppingMall_bjs827ee1uspace"
+"4728sjuiz","P10","ixn","space","happiness-first",1.69e+12,NA,"none",FALSE,"dataframe","TABLE","df","df_display1_4728sjuizspace"
+"4728sjuiz","P10","ixn","space","happiness-first",1.69e+12,NA,"none",FALSE,"dataframe","TABLE","df","df_display2_4728sjuizspace"
+"4728sjuiz","P10","ixn","space","happiness-first",1.69e+12,NA,"none",FALSE,"scatterplot","CHART","isnull_df = pd.DataFrame(df.isnull().sum(axis=1)).reset_index()
+isnull_df['NullCount'] = isnull_df[0]
+isnull_df.drop(columns=0, inplace=True)
+alx.scatterplot(data=isnull_df, x='index', y='NullCount', width=1000, height=500)","null_count_plot_4728sjuizspace"
+"4728sjuiz","P10","ixn","space","happiness-first",1.69e+12,NA,"none",FALSE,"dataframe","TABLE","df.isnull()","full_null_check_4728sjuizspace"
+"4728sjuiz","P10","ixn","space","happiness-first",1.69e+12,NA,"none",FALSE,"pairplot","CHART","alx.pairplot(df)","pairplot_df_4728sjuizspace"
+"4728sjuiz","P10","ixn","space","happiness-first",1.69e+12,NA,"none",FALSE,"scatterplot","CHART","alx.jointplot(df, x='RoomService', y='FoodCourt')","jointplot_room_foodcourt_4728sjuizspace"
+"4728sjuiz","P10","ixn","space","happiness-first",1.69e+12,NA,"none",FALSE,"dataframe","TABLE","df","df_display3_4728sjuizspace"
+"4728sjuiz","P10","ixn","space","happiness-first",1.69e+12,NA,"none",FALSE,"dataframe","TABLE","df","df_display4_4728sjuizspace"
+"4728sjuiz","P10","ixn","space","happiness-first",1.69e+12,NA,"none",FALSE,"dataframe","TABLE","df","df_display5_4728sjuizspace"
+"4728sjuiz","P10","ixn","space","happiness-first",1.69e+12,NA,"none",FALSE,"dataframe","TABLE","df","df_display6_4728sjuizspace"
+"4728sjuiz","P10","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"dataframe","TABLE","df.head()","df_head_4728sjuizhappiness"
+"4728sjuiz","P10","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"columns","TABLE","df.columns","df_columns_4728sjuizhappiness"
+"4728sjuiz","P10","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"dataframe","TABLE","df.isnull()","df_isnull_4728sjuizhappiness"
+"4728sjuiz","P10","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"columns","TABLE","isnull_df.columns","isnull_df_columns2_4728sjuizhappiness"
+"4728sjuiz","P10","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"columns","TABLE","isnull_df = pd.DataFrame(df.isnull().sum(axis=1))
+# isnull_df.columns = ['NullCount']","isnull_df_rename_attempt_4728sjuizhappiness"
+"4728sjuiz","P10","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"dataframe","TABLE","isnull_df","display_isnull_df2_4728sjuizhappiness"
+"4728sjuiz","P10","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"dataframe","TABLE","isnull_df.reset_index()","reset_index_isnull_4728sjuizhappiness"
+"4728sjuiz","P10","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"columns","TABLE","isnull_df = pd.DataFrame(df.isnull().sum(axis=1)).reset_index()
+# isnull_df.columns = ['NullCount']","rename_index_isnull_4728sjuizhappiness"
+"4728sjuiz","P10","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"columns","TABLE","isnull_df.columns","isnull_df_colnames_4728sjuizhappiness"
+"4728sjuiz","P10","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"dataframe","TABLE","isnull_df","display_isnull_df3_4728sjuizhappiness"
+"4728sjuiz","P10","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"dataframe","TABLE","isnull_df = pd.DataFrame(df.isnull().sum(axis=1)).reset_index()
+isnull_df['NullCount'] = isnull_df[0]
+isnull_df.drop(columns=0)","drop_column_isnull_df_4728sjuizhappiness"
+"4728sjuiz","P10","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"columns","TABLE","isnull_df = pd.DataFrame(df.isnull().sum(axis=1)).reset_index()
+isnull_df['NullCount'] = isnull_df[0]
+isnull_df.drop(columns=0, inplace=True)","drop_inplace_isnull_df_4728sjuizhappiness"
+"4728sjuiz","P10","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"scatterplot","CHART","alx.scatterplot(data=isnull_df, x='index', y='NullCount')","scatter_index_nullcount3_4728sjuizhappiness"
+"4728sjuiz","P10","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"scatterplot","CHART","alx.scatterplot(data=isnull_df, x='index', y='NullCount', width=1000)","scatter_resize_width_4728sjuizhappiness"
+"4728sjuiz","P10","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"scatterplot","CHART","alx.scatterplot(data=isnull_df, x='index', y='NullCount', width=1000, height=500)","scatter_resize_full_4728sjuizhappiness"
+"4728sjuiz","P10","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"dataframe","TABLE","df.dropna()","df_dropna_4728sjuizhappiness"
+"4728sjuiz","P10","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"pairplot","CHART","alx.pairplot(df)","pairplot_df_4728sjuizhappiness"
+"4728sjuiz","P10","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"dataframe","TABLE","df.corr(method='pearson')","df_corr_pearson_all_4728sjuizhappiness"
+"4728sjuiz","P10","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"dataframe","TABLE","df.isnull()","df_isnull2_4728sjuizhappiness"
+"4728sjuiz","P10","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"scatterplot","CHART","alx.jointplot(df, 'freedom', 'corruption')","jointplot_freedom_corruption_4728sjuizhappiness"
+"4728sjuiz","P10","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"dataframe","TABLE","df","df_display7_4728sjuizhappiness"
+"4728sjuiz","P10","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"dataframe","TABLE","df.groupby('country').mean()","country_mean_4728sjuizhappiness"
+"4728sjuiz","P10","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"dataframe","TABLE","df.groupby('country').mean().reset_index()","reset_country_mean_4728sjuizhappiness"
+"8v892iige","P11","static","space","space-first",1.69e+12,NA,"none",FALSE,"dataframe","TABLE","url = ""https://gist.githubusercontent.com/dwootton/6e45d15f0b6936bd8c54df7849930117/raw/c7bdac122b3babce87b6a2f000c71f66c8fba0c2/final_space_titanic.csv""
+df = pd.read_csv(""https://gist.githubusercontent.com/dwootton/6e45d15f0b6936bd8c54df7849930117/raw/c7bdac122b3babce87b6a2f000c71f66c8fba0c2/final_space_titanic.csv"")
+df.head()","load_data_and_head_8v892iigespace"
+"8v892iige","P11","static","space","space-first",1.69e+12,NA,"none",FALSE,"describe","TABLE","df.describe().T","df_describe_transpose_8v892iigespace"
+"8v892iige","P11","static","space","space-first",1.69e+12,NA,"none",FALSE,"describe","TABLE","df['VIP'].describe()","VIP_describe_8v892iigespace"
+"8v892iige","P11","static","space","space-first",1.69e+12,NA,"none",FALSE,"describe","TABLE","df['RoomService'].describe()","roomService_describe_8v892iigespace"
+"8v892iige","P11","static","space","space-first",1.69e+12,NA,"none",FALSE,"profile","CHART","alx.profile(df,vars=['VIP'])","profile_df_VIP_8v892iigespace"
+"8v892iige","P11","static","space","space-first",1.69e+12,NA,"none",FALSE,"profile","CHART","alx.profile(df,vars=['RoomService'])","profile_df_roomService_8v892iigespace"
+"8v892iige","P11","static","space","space-first",1.69e+12,NA,"none",FALSE,"profile","CHART","df['VIP'] = df['VIP'].fillna(df['VIP'].median())
+alx.profile(df,vars=['VIP'])","fillna_VIP_median_profile_8v892iigespace"
+"8v892iige","P11","static","space","space-first",1.69e+12,NA,"none",FALSE,"profile","CHART","df['RoomService'] = df['RoomService'].fillna(df['RoomService'].median())
+alx.profile(df,vars=['RoomService'])","fillna_roomService_median_profile_8v892iigespace"
+"8v892iige","P11","static","space","space-first",1.69e+12,NA,"none",FALSE,"describe","TABLE","df['CryoSleep'].describe()","cryoSleep_describe_8v892iigespace"
+"8v892iige","P11","ixn","happiness","space-first",1.69e+12,NA,"none",FALSE,"dataframe","TABLE","url = ""https://gist.githubusercontent.com/dwootton/d7b2fc427697928e7fe218cc2add0f53/raw/500cd1d5f98143da8d733a95b33087d146938cde/World_happiness.csv""
+df = pd.read_csv(""https://gist.githubusercontent.com/dwootton/d7b2fc427697928e7fe218cc2add0f53/raw/500cd1d5f98143da8d733a95b33087d146938cde/World_happiness.csv"")
+df.head()","load_happiness_csv_head_8v892iigehappiness"
+"8v892iige","P11","ixn","happiness","space-first",1.69e+12,NA,"none",FALSE,"profile","CHART","alx.profile(df,vars=df.columns)","profile_all_columns3_8v892iigehappiness"
+"8v892iige","P11","ixn","happiness","space-first",1.69e+12,NA,"none",FALSE,"describe","TABLE","df.describe().T","df_describe_transpose2_8v892iigehappiness"
+"8v892iige","P11","ixn","happiness","space-first",1.69e+12,NA,"none",FALSE,"scatterplot","CHART","alx.scatterplot(df,x='logGDPPerCapita',y='happinessScore')","scatterplot_GDP_happiness_8v892iigehappiness"
+"8v892iige","P11","ixn","happiness","space-first",1.69e+12,NA,"none",FALSE,"scatterplot","CHART","dfs = df[df['corruption']<0.5]
+alx.scatterplot(dfs,x='logGDPPerCapita',y='happinessScore')","scatterplot_lowCorruption_GDP_happiness_8v892iigehappiness"
+"8v892iige","P11","ixn","happiness","space-first",1.69e+12,NA,"none",FALSE,"scatterplot","CHART","dfh = df[df['corruption']>=0.5]
+alx.scatterplot(dfh,x='logGDPPerCapita',y='happinessScore')","scatterplot_highCorruption_GDP_happiness_8v892iigehappiness"
+"iurmer289","P12","ixn","space","happiness-first",1.69e+12,NA,"none",FALSE,"dataframe","TABLE","df.head()","titanic_df_head_iurmer289space"
+"iurmer289","P12","ixn","space","happiness-first",1.69e+12,NA,"none",FALSE,"info","TABLE","df.info()","titanic_df_info_iurmer289space"
+"iurmer289","P12","ixn","space","happiness-first",1.69e+12,NA,"highlight_brush+tooltip_hover",TRUE,"multiviewchart","CHART","profile = alx.profile(df)
+ 
+
+ barplot = alx.barplot(df, x='HomePlanet', y='Age',sort='-y',width=600) # sort descending by the height of the bars
+ 
+
+ alx.highlight_brush() + alx.tooltip_hover() + (profile & barplot)","profile_and_barplot_age_iurmer289space"
+"iurmer289","P12","ixn","space","happiness-first",1.69e+12,NA,"highlight_brush+tooltip_hover",TRUE,"multiviewchart","CHART","profile = alx.profile(df)
+ 
+
+ barplot = alx.barplot(df, x='HomePlanet', y='count()',sort='-y',width=600) # sort descending by the height of the bars
+ 
+
+ alx.highlight_brush() + alx.tooltip_hover() + (profile & barplot)","profile_and_barplot_count_iurmer289space"
+"iurmer289","P12","ixn","space","happiness-first",1.69e+12,NA,"none",FALSE,"dataframe","TABLE","df.query("" HomePlanet in ['Earth'] "")","query_earth_iurmer289space"
+"iurmer289","P12","ixn","space","happiness-first",1.69e+12,NA,"highlight_brush+tooltip_hover",TRUE,"barplot","CHART","barplot1 = alx.barplot(df, x='VIP', y='count()', color='CryoSleep', column='survived', sort='-y',width=600)
+ barplot2 = alx.barplot(df, x='HomePlanet', y='count()',sort='-y',width=600) # sort descending by the height of the bars
+ 
+
+ alx.highlight_brush() + alx.tooltip_hover() + (barplot1 & barplot2)","barplot_combo_VIP_HomePlanet_iurmer289space"
+"iurmer289","P12","ixn","space","happiness-first",1.69e+12,NA,"tooltip_hover",TRUE,"barplot","CHART","barplot1 = alx.barplot(df, x='VIP', y='count()', color='CryoSleep', column='survived', sort='-y',width=600)
+ # barplot2 = alx.barplot(df, x='HomePlanet', y='count()',sort='-y',width=600) # sort descending by the height of the bars
+ 
+
+ alx.tooltip_hover() + (barplot1)","tooltip_only_barplot_VIP_iurmer289space"
+"iurmer289","P12","ixn","space","happiness-first",1.69e+12,NA,"highlight_brush+tooltip_hover",TRUE,"barplot","CHART","barplot1 = alx.barplot(df, x='VIP', y='count()', color='CryoSleep', column='survived', sort='-y',width=600)
+ # barplot2 = alx.barplot(df, x='HomePlanet', y='count()',sort='-y',width=600) # sort descending by the height of the bars
+ 
+
+ alx.highlight_brush() + alx.tooltip_hover() + (barplot1)","highlight_brush_tooltip_barplot_VIP_v1_iurmer289space"
+"iurmer289","P12","ixn","space","happiness-first",1.69e+12,NA,"highlight_brush+tooltip_hover",TRUE,"barplot","CHART","barplot1 = alx.barplot(df, x='VIP', y='count()', color='CryoSleep', sort='-y',width=600)
+ # barplot2 = alx.barplot(df, x='HomePlanet', y='count()',sort='-y',width=600) # sort descending by the height of the bars
+ 
+
+ alx.highlight_brush() + alx.tooltip_hover() + (barplot1)","highlight_brush_tooltip_barplot_VIP_v2_iurmer289space"
+"iurmer289","P12","ixn","space","happiness-first",1.69e+12,NA,"highlight_brush+tooltip_hover",TRUE,"barplot","CHART","barplot1 = alx.barplot(df, x='VIP', y='count()', color='survived', sort='-y',width=600)
+ # barplot2 = alx.barplot(df, x='HomePlanet', y='count()',sort='-y',width=600) # sort descending by the height of the bars
+ 
+
+ alx.highlight_brush() + alx.tooltip_hover() + (barplot1)","highlight_brush_tooltip_barplot_VIP_color_survived_corrected_iurmer289space"
+"iurmer289","P12","ixn","space","happiness-first",1.69e+12,NA,"highlight_brush+tooltip_hover",TRUE,"scatterplot","CHART","scatter = alx.scatterplot(df, x='RoomService',y='Age', color='survived', size='count()',width=500)
+ alx.highlight_brush() + alx.tooltip_hover() + (scatter)","highlight_brush_tooltip_scatterplot_iurmer289space"
+"iurmer289","P12","ixn","space","happiness-first",1.69e+12,NA,"highlight_brush+tooltip_hover",TRUE,"scatterplot","CHART","scatter = alx.scatterplot(df, x='RoomService',y='Age', color='survived', width=500)
+ alx.highlight_brush() + alx.tooltip_hover() + (scatter)","tooltip_scatterplot_without_size_iurmer289space"
+"iurmer289","P12","ixn","space","happiness-first",1.69e+12,NA,"none",FALSE,"dataframe","TABLE","df['spending'] = df['RoomService']+df['FoodCourt']+df['ShoppingMall']+df['Spa'] + df['VRDeck']
+ df","compute_spending_v2_iurmer289space"
+"iurmer289","P12","ixn","space","happiness-first",1.69e+12,NA,"highlight_brush+tooltip_hover",TRUE,"multiviewchart","CHART","# scatter = alx.scatterplot(df, x='RoomService',y='Age', color='survived', width=500)
+ barplot = alx.barplot(df, x='spending', y='count()', color='survived', sort='-y',width=600)
+ alx.highlight_brush() + alx.tooltip_hover() + (scatter)","commented_scatter_highlight_brush_tooltip_barplot_spending_iurmer289space"
+"iurmer289","P12","ixn","space","happiness-first",1.69e+12,NA,"highlight_brush+tooltip_hover",TRUE,"multiviewchart","CHART","# scatter = alx.scatterplot(df, x='RoomService',y='Age', color='survived', width=500)
+ barplot = alx.barplot(df, x='spending', y='count()', color='survived', sort='-y',width=600)
+ alx.highlight_brush() + alx.tooltip_hover() + (barplot)","highlight_brush_tooltip_barplot_spending_iurmer289space"
+"iurmer289","P12","ixn","space","happiness-first",1.69e+12,NA,"highlight_brush+tooltip_hover",TRUE,"multiviewchart","CHART","# scatter = alx.scatterplot(df, x='RoomService',y='Age', color='survived', width=500)
+ df_f = df.dropna(subset=['spending'])
+ barplot = alx.barplot(df_f, x='spending', y='count()', color='survived', sort='-y',width=600)
+ alx.highlight_brush() + alx.tooltip_hover() + (barplot)","dropna_spending_highlight_brush_tooltip_barplot_iurmer289space"
+"iurmer289","P12","ixn","space","happiness-first",1.69e+12,NA,"highlight_brush+tooltip_hover",TRUE,"dataframe","TABLE","# scatter = alx.scatterplot(df, x='RoomService',y='Age', color='survived', width=500)
+ df_f = df.dropna(subset=['spending'])
+ df_f
+ # barplot = alx.barplot(df_f, x='spending', y='count()', color='survived', sort='-y',width=600)
+ # alx.highlight_brush() + alx.tooltip_hover() + (barplot)","dropna_spending_display_iurmer289space"
+"iurmer289","P12","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"dataframe","TABLE","df.head()","happiness_df_head_iurmer289happiness"
+"iurmer289","P12","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"info","TABLE","df.info()","happiness_df_info_iurmer289happiness"
+"iurmer289","P12","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"profile","CHART","columns = df.columns # returns list of column names [""year"",""country""...]
+ alx.profile(df,vars=columns)","initial_data_profile_iurmer289happiness"
+"iurmer289","P12","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"profile","CHART","columns = df.columns # returns list of column names [""year"",""country""...]
+ alx.profile(df,vars=columns)","repeat_initial_data_profile_iurmer289happiness"
+"iurmer289","P12","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"profile","CHART","columns = df_filtered.columns # returns list of column names [""year"",""country""...]
+ alx.profile(df,vars=columns)","incorrect_filtered_data_profile_iurmer289happiness"
+"iurmer289","P12","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"profile","CHART","columns = df_filtered.columns # returns list of column names [""year"",""country""...]
+ alx.profile(df_filtered,vars=columns)","correct_filtered_data_profile_iurmer289happiness"
+"iurmer289","P12","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"scatterplot","CHART","alx.scatterplot(df_filtered,x='happinessScore',y='lifeExpectancy')","corrected_lifeExpectancy_scatterplot_iurmer289happiness"
+"iurmer289","P12","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"scatterplot","CHART","alx.scatterplot(df_filtered,x='happinessScore',y='logGDPPerCapita')","happiness_vs_logGDP_scatterplot_iurmer289happiness"
+"iurmer289","P12","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"pairplot","CHART","alx.pairplot(df_filtered)","happiness_pairplot_iurmer289happiness"
+"iurmer289","P12","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"heatmap","CHART","correlation_matrix = df_filtered.corr()
+ alx.heatmap(correlation_matrix)","correlation_heatmap_iurmer289happiness"
+"s294hoei","P13","ixn","space","happiness-first",1.69e+12,NA,"none",FALSE,"dataframe","TABLE","df.head()","space_titanic_head_view_s294hoeispace"
+"s294hoei","P13","ixn","space","happiness-first",1.69e+12,NA,"none",FALSE,"dataframe","TABLE","df.head()","space_titanic_head_repeated_s294hoeispace"
+"s294hoei","P13","ixn","space","happiness-first",1.69e+12,NA,"highlight_brush",TRUE,"profile","CHART","alx.highlight_brush() + alx.profile(df,vars=df.columns)","combined_profile_s294hoeispace"
+"s294hoei","P13","ixn","space","happiness-first",1.69e+12,NA,"none",FALSE,"dataframe","TABLE","df.head()","space_titanic_head_third_s294hoeispace"
+"s294hoei","P13","ixn","space","happiness-first",1.69e+12,NA,"filter_slider+highlight_brush+tooltip_hover",TRUE,"multiviewchart","CHART","profile = alx.profile(df)
+ barplot = alx.countplot(df,x='HomePlanet') 
+ alx.highlight_brush() + alx.tooltip_hover() + alx.filter_slider(field='Age') + (profile & barplot)","combined_visuals_s294hoeispace"
+"s294hoei","P13","ixn","space","happiness-first",1.69e+12,NA,"highlight_brush",TRUE,"multiviewchart","CHART","brush = alx.highlight_brush()
+ Profile = brush + alx.profile(df, vars=df.columns)
+ Profile & alx.barplot(df,x='HomePlanet',y='count()',effects={""filter"":[brush]})","updated_barplot_count_function_s294hoeispace"
+"s294hoei","P13","ixn","space","happiness-first",1.69e+12,NA,"highlight_brush",TRUE,"multiviewchart","CHART","brush = alx.highlight_brush()
+ Profile = brush + alx.profile(df, vars=df.columns)
+ Profile & alx.barplot(df,x='HomePlanet',y='count()',effects={""highlight"":[brush]})","highlight_effect_barplot_s294hoeispace"
+"s294hoei","P13","ixn","space","happiness-first",1.69e+12,NA,"none",FALSE,"heatmap","CHART","correlation_matrix = df.corr()
+ alx.heatmap(correlation_matrix) # heatmap takes a NxN matrix of numbers","space_titanic_corr_heatmap_s294hoeispace"
+"s294hoei","P13","ixn","space","happiness-first",1.69e+12,NA,"highlight_brush",TRUE,"multiviewchart","CHART","brush = alx.highlight_brush()
+ Profile = brush + alx.profile(df, vars=df.columns)
+ Profile & alx.barplot(df,x='RoomService',y='count()',effects={""highlight"":[brush]})","roomservice_highlight_count_barplot_s294hoeispace"
+"s294hoei","P13","ixn","space","happiness-first",1.69e+12,NA,"highlight_brush",TRUE,"columns","TABLE","brush = alx.highlight_brush()
+ Profile = brush + alx.profile(df, vars=df.columns)
+ Profile & alx.barplot(df,x='RoomService',y='sum()',effects={""highlight"":[brush]})","roomservice_highlight_sum_barplot_s294hoeispace"
+"s294hoei","P13","ixn","space","happiness-first",1.69e+12,NA,"highlight_brush",TRUE,"multiviewchart","CHART","brush = alx.highlight_brush()
+ Profile = brush + alx.profile(df, vars=df.columns)
+ Profile & alx.barplot(df,x='RoomService',y='count()',effects={""highlight"":[brush]})","roomservice_highlight_count_repeated_s294hoeispace"
+"s294hoei","P13","ixn","space","happiness-first",1.69e+12,NA,"filter_brush",TRUE,"multiviewchart","CHART","brush = alx.filter_brush()
+ Profile = brush + alx.profile(df, vars=df.columns)
+ Profile & alx.barplot(df,x='RoomService',y='count()',effects={""highlight"":[brush]})","updated_filter_brush_barplot_s294hoeispace"
+"s294hoei","P13","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"dataframe","TABLE","df.head()","happiness_head_view_s294hoeihappiness"
+"s294hoei","P13","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"dataframe","TABLE","df.head()","happiness_head_repeated_s294hoeihappiness"
+"s294hoei","P13","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"dataframe","TABLE","df[df.country=='Pakistan']","correct_country_filter_s294hoeihappiness"
+"s294hoei","P13","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"lineplot","CHART","alx.lineplot(df[df.country=='Pakistan'],x='year',y='lifeExpectancy')","pakistan_life_expectancy_lineplot_s294hoeihappiness"
+"s294hoei","P13","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"lineplot","CHART","alx.lineplot(df[df.country=='Pakistan'],x='year',y='lifeExpectancy',color='green') & alx.lineplot(df[df.country=='India'],x='year',y='lifeExpectancy',color='blue')","pakistan_india_combined_lineplot_initial_s294hoeihappiness"
+"s294hoei","P13","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"lineplot","CHART","alx.lineplot(df[df.country=='Pakistan'],x='year',y='lifeExpectancy',color='red') & alx.lineplot(df[df.country=='India'],x='year',y='lifeExpectancy',color='blue')","pakistan_india_combined_lineplot_red_blue_s294hoeihappiness"
+"s294hoei","P13","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"lineplot","CHART","alx.lineplot(df[df.country=='Pakistan'],x='year',y='lifeExpectancy',color='green') & alx.lineplot(df[df.country=='India'],x='year',y='lifeExpectancy',color='blue')","pakistan_india_combined_lineplot_repeated_green_blue_s294hoeihappiness"
+"s294hoei","P13","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"lineplot","CHART","alx.lineplot(df[df.country=='Pakistan'],x='year',y='lifeExpectancy',color='green') & alx.lineplot(df[df.country=='India'],x='year',y='lifeExpectancy',color='blue',)","pakistan_india_combined_lineplot_simplified_s294hoeihappiness"
+"s294hoei","P13","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"lineplot","CHART","alx.lineplot(df[df.country=='Pakistan'],x='year',y='lifeExpectancy',color='green') & alx.lineplot(df[df.country=='India'],x='year',y='lifeExpectancy',color='blue')","pakistan_india_combined_lineplot_simplified_repeated_s294hoeihappiness"
+"s294hoei","P13","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"lineplot","CHART","alx.lineplot(df[df.country=='Pakistan'],x='year',y='lifeExpectancy',color='green') + alx.lineplot(df[df.country=='India'],x='year',y='lifeExpectancy',color='blue')","pakistan_india_combined_lineplot_addition_s294hoeihappiness"
+"s294hoei","P13","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"lineplot","CHART","alx.lineplot(df[df.country=='Pakistan'],x='year',y='lifeExpectancy',color='country') + alx.lineplot(df[df.country=='India'],x='year',y='lifeExpectancy',color='country')","pakistan_india_color_by_country_two_countries_s294hoeihappiness"
+"s294hoei","P13","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"lineplot","CHART","alx.lineplot(df[df.country=='Pakistan'],x='year',y='lifeExpectancy',color='country') + alx.lineplot(df[df.country=='India'],x='year',y='lifeExpectancy',color='country') + alx.lineplot(df[df.country=='Sri Lanka'],x='year',y='lifeExpectancy',color='country')","pakistan_india_srilanka_combined_lineplot_s294hoeihappiness"
+"s294hoei","P13","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"lineplot","CHART","alx.lineplot(df[df.country=='Pakistan'],x='year',y='lifeExpectancy',color='country') + alx.lineplot(df[df.country=='India'],x='year',y='lifeExpectancy',color='country') + alx.lineplot(df[df.country=='Sri Lanka'],x='year',y='lifeExpectancy',color='country') + alx.lineplot(df[df.country=='Pakistan'],x='year',y='lifeExpectancy',color='country') + alx.lineplot(df[df.country=='India'],x='year',y='lifeExpectancy',color='country') + alx.lineplot(df[df.country=='Sweden'],x='year',y='lifeExpectancy',color='country')","multi_country_life_expectancy_lineplot_s294hoeihappiness"
+"s294hoei","P13","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"heatmap","CHART","correlation_matrix = df.corr()
+ alx.heatmap(correlation_matrix) # heatmap takes a NxN matrix of numbers","happiness_corr_heatmap_s294hoeihappiness"
+"s294hoei","P13","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"scatterplot","CHART","alx.scatterplot(df,x='lifeExpectancy',y='logGDPPerCapita',color='rgba(70, 130, 180,0.1)')","life_expectancy_vs_gdp_scatterplot_initial_s294hoeihappiness"
+"s294hoei","P13","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"scatterplot","CHART","alx.scatterplot(df,x='lifeExpectancy',y='logGDPPerCapita',color='rgba(70, 130, 180,0.1)')","life_expectancy_vs_gdp_scatterplot_repeated_s294hoeihappiness"
+"s294hoei","P13","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"scatterplot","CHART","alx.scatterplot(df,x='lifeExpectancy',y='logGDPPerCapita',color='rgba(70, 130, 180,0.1)').facet(row='year')","life_expectancy_vs_gdp_scatterplot_facet_row_s294hoeihappiness"
+"s294hoei","P13","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"scatterplot","CHART","alx.scatterplot(df,x='lifeExpectancy',y='logGDPPerCapita',color='rgba(70, 130, 180,0.5)').facet(column='year')","life_expectancy_vs_gdp_scatterplot_facet_column_s294hoeihappiness"
+"s294hoei","P13","static","happiness","happiness-first",1.69e+12,NA,"none",FALSE,"lineplot","CHART","alx.lineplot(df,x='year',y='happinessScore').facet(column='country')","happiness_over_years_facet_by_country_s294hoeihappiness"

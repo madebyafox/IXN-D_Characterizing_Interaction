@@ -1,0 +1,665 @@
+---
+title: "IXN 1 — Exploratory Data Analysis"
+author: "ANONYMIZED"
+date: "2023-09-08"
+output:
+  html_document:
+    theme: flatly
+    code_folding: hide
+    fig_caption: yes
+    number_sections: yes
+    toc: yes
+    toc_float:
+      collapsed: yes
+      smooth_scroll: yes
+    toc_depth: 4
+  pdf_document:
+    toc: yes
+    toc_depth: '4'
+always_allow_html: yes
+font-family: DejaVu Sans
+mainfont: DejaVu Sans
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+#UTILITIES
+library(Hmisc) # %nin% operator
+library(tidyverse) #all the things
+library(summarytools) #data quality
+library(jtools) #Social Science regression utilities
+
+#VIZ
+library(kableExtra) #printing tables
+library(ggformula) #regression syntax viz
+library(vcd) #mosaic plots
+library(vcdExtra) #mosaic plot helpers
+
+#MODELLING
+library(easystats) #modelling helpers
+library(see)
+library(sjPlot)
+library(lme4)
+library(lmerTest) #for CIs in glmer 
+
+options(readr.show_col_types = FALSE) #don't show coltypes on read_csv
+
+```
+
+
+```{r IMPORT}  
+
+#IMPORT (wrangled) data 
+raw_data <- read_csv("data/wrangled_utterances_representations.csv") 
+
+#WRANGLE into DF of utterance-insights [eg not unique utterances, 1 obs for each utterance_detail-code]
+df_insights <- raw_data %>% 
+  #rename and factorize columns
+  mutate(
+    sid = factor(UID), #NOT actually a unique utterance id, treat as sheet order id
+    pid = factor(PID, levels = c( #define level order so happiness first
+          "bjs827ee1u", "3r2sh20ei", "4728sjuiz", "7ACC0B75","92ghd48xe","iurmer28", "s294hoei", #HAPPINESS-FIRST
+          "j2719eertu2","lkin27js09b","li832lin23","7382kwtue","E1D39056","8v892iige")),   #SPACE-FIRST
+    
+    utterance = Utterance,
+    uid = factor(as.numeric(factor(paste(pid,factor(utterance))))), #construct a unique ID for utterances
+    
+    TASK = factor(recode(Condition, "Static"="static", "Interactive"="ixn" )),
+    TASK = factor(TASK, levels = c("static", "ixn")), #reorder factor levels
+    DATASET = factor(recode(Notebook, "Happiness"="happiness", "Space"="space")), #cleanup diff case
+    outcomeType = recode(DATASET, "happiness"="numeric", "space"="nominal"),
+    data_order = factor(paste(TASK,"_",DATASET)), #create an order var 
+    data_order = recode(data_order, "ixn _ happiness"="space-first",
+                                  "ixn _ space"="happiness-first",
+                                  "NA _ NA"="NA",
+                                  "static _ happiness"="happiness-first",
+                                  "static _ space"="space-first"),
+    top_code = factor(highlevel),
+    #recode process 
+    top_code = recode(top_code, "ANALYSIS PROCESS" = "PROCESS"),
+    top_code = factor(top_code, levels = c("PROCESS","DATASET","VARIABLE","RELATIONSHIP")),
+    mid_code = factor(`Data Type`),
+    low_code = factor(UtteranceType),
+    timestamp = Timestamp,
+    repns = group,
+    ixn = factor(interaction_used) #was interaction used?
+  ) %>% select( #select only needed columns
+    sid,uid,pid, TASK, DATASET, data_order, ixn, top_code, mid_code, low_code, repns, timestamp, utterance
+  )
+
+#DF OF UNIQUE UTTERANCES
+df_uniques <- df_insights %>% select(uid, pid, TASK, DATASET) %>% 
+  distinct()  #take only unique utterances
+
+print("DF of utterances — 1 row per utterance_detail-code")
+glimpse(df_insights)
+
+print("DF of unique utterances — 1 row per utterance [no codes]")
+glimpse(df_uniques)
+
+```
+
+
+# UTTERANCES
+
+
+## NUMBER OF UTTERANCES 
+
+*What factors affect how many utterances were produced by participants?*
+
+### BY Factors
+```{r}
+
+#DEFINE DATAFRAME
+df <- df_insights %>% select(pid, uid, TASK, DATASET, data_order, top_code, low_code) 
+
+#SUMMARY TABLE
+title = "Utterances by TASK and DATASET"
+cols = c("Static Task","Interactive Task","Total Utterances")
+cont <- table(df$DATASET, df$TASK)
+cont %>% addmargins() %>% kbl(caption = title, col.names = cols) %>%  kable_classic()
+
+#MOSAIC PLOTS
+# vcd::mosaic(main="Proportion of Utterances by TASK and DATASET",
+#             data = df_raw, TASK ~ DATASET, rot_labels=c(0,90,0,0),
+#             offset_varnames = c(left = 4.5), offset_labels = c(left = -0.5),just_labels = "right",
+#             spacing = spacing_dimequal(unit(1:2, "lines")))
+ 
+# mosaic(formula = ~DATASET + TASK,
+#        data = df,
+#        main = "Proportion of Utterances by TASK and DATASET",
+#        sub = "u = 734 coded utterances",
+#        labeling = labeling_values,
+#        labeling_args = list(set_varnames = c(graph = "TASK",
+#                             datset = "DATASET")))
+
+#DF SUMMARIZED BY TASK + DATASET
+df_summary <- df %>% 
+  group_by(TASK,DATASET) %>% 
+  dplyr::summarise(
+    c = n()
+  )
+
+#STACKED BAR BY TASK
+ggplot(df_summary, aes(x = TASK, y=c, fill= DATASET)) + 
+  geom_col() + 
+  geom_text(aes(label=c), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") + 
+  labs(title = "Utterances by TASK and DATASET")
+
+#STACKED BAR BY DATASET
+ggplot(df_summary, aes(x = DATASET, y=c, fill= TASK)) + 
+  geom_col() + 
+  scale_fill_brewer(type="qual", palette = 1) +
+  geom_text(aes(label=c), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") 
+
+
+
+```
+
+
+### By Participant
+
+```{r}
+
+#DEFINE DATAFRAME
+df <- df_insights %>% select(pid, uid, TASK, DATASET, data_order, top_code, low_code) 
+
+#SUMMARY TABLE
+title = "Utterances by Participant and TASK"
+cols = c("Static Task","Interactive Task","Total Utterances")
+cont <- table(df$pid, df$TASK)
+cont %>% addmargins() %>% kbl(caption = title, col.names = cols) %>%  kable_classic()
+
+#SUMMARY TABLE
+title = "Utterances by Participant and DATASET"
+cols = c("Happiness","Space","Total Utterances")
+cont <- table(df$pid, df$DATASET)
+cont %>% addmargins() %>% kbl(caption = title, col.names = cols) %>%  kable_classic()
+
+
+
+```
+
+
+
+
+
+
+
+```{r UTTERANCE-TASK, warning=FALSE, message=FALSE}
+
+
+#VISUALIZE TASK+DATASET FACET BY PARTICIPANTS
+gf_bar( ~ TASK, fill = ~DATASET, data = df) %>% 
+gf_facet_grid(~pid)
+
+#UTTERANCES by PARTICPANT and TASK (horizontal)
+gf_bar(  pid ~ uid , fill = ~ TASK, data = df) +
+# %>%   gf_facet_grid(.~TASK) +
+  labs(
+    title = "Number of Utterances by Participant and Task",
+    subtitle = "some participants were far more talkative than others",
+    x = "number of coded utterances",
+    y = "participant",
+    fill = "Analysis Task"
+  )
+
+#UTTERANCES by PARTICPANT and DATASET (horizontal)
+gf_bar(  pid ~ uid , fill = ~ DATASET, data = df) + 
+  # %>% gf_facet_grid(.~DATASET) +
+  labs(
+    title = "Number of Utterances by Participant and Dataset",
+    subtitle = "Nominal outcome variable (happiness) tended to yield more utterances",
+    x = "number of coded utterances",
+    y = "participant",
+    fill = "Dataset"
+  )
+
+#UTTERANCES by PARTICPANT and DATASET (horizontal)
+gf_bar(  pid ~ uid , fill = ~ DATASET, data = df) %>% 
+  gf_facet_grid(.~TASK) + 
+  labs(
+    title = "Number of Utterances by Participant, Dataset and Task",
+    subtitle = "",
+    x = "number of coded utterances",
+    y = "participant",
+    fill = "DATASET"
+  )
+
+```
+
+## KINDS OF UTTERANCES
+
+### BY Factors
+
+```{r}
+
+#SUMMARIZED DF
+df_summary <- df %>% mutate(
+  top_code = fct_rev(top_code)) %>%  #reorder
+  select( TASK, DATASET, top_code) %>% 
+  group_by(TASK,DATASET, top_code) %>% 
+  dplyr::summarise( 
+    c = n()
+  )
+
+#SUMMARY TABLE
+title = "CODED Utterances by TYPE and DATASET"
+cols = c("Static Task","Interactive Task","Total Utterances")
+cont <- table(df$top_code, df$DATASET, df$TASK)
+cont %>% addmargins() 
+# %>% kbl(caption = title, col.names = cols) %>%  kable_classic()
+
+#CODED UTTERANCES BAR BY TASK and DATASET
+(p_coded_utterances <- 
+  ggplot(df_summary, aes(x = TASK, y=c, fill= top_code)) + 
+  geom_col() + 
+  facet_grid(.~df_summary$DATASET)+
+  geom_text(aes(label=c), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") + 
+  scale_fill_brewer(type="qual", palette = 3) +  
+  labs(title = "CODED Utterances by TASK and DATASET"))
+
+
+```
+
+### By Participant
+
+```{r}
+
+#UTTERANCES by PARTICPANT, TASK, and DATASET (horizontal)
+#FACETED BY PARTICIPANT AND TOP CODE 
+gf_bar(  TASK ~ uid , fill = ~ DATASET, data = df_insights) %>%  
+  gf_facet_grid(top_code ~ pid) + 
+  labs(
+    title = "High Level Utterances by Participant, Dataset and Dataset",
+    subtitle = "",
+    x = "number of utterances",
+    y = "Analysis Task",
+    fill = "Dataset"
+  )
+```
+
+```{r}
+
+#REMOVE NAS
+d <- df %>% na.omit()
+
+#TOP CODE by PARTICIPANT & TASK
+ggplot (d) +
+  geom_bar(aes(y = pid, fill = top_code)) +
+  facet_wrap(d$TASK)+
+  scale_fill_brewer(type="qual", palette = 3) +
+  theme_minimal() + 
+  labs(title = "TOP-CODE by TASK")
+
+
+#TOP CODE by PARTICIPANT & TASK
+ggplot (d) +
+  geom_bar(aes(y = pid, fill = top_code)) +
+  facet_wrap(d$DATASET)+
+  scale_fill_brewer(type="qual", palette = 3) +
+  theme_minimal() + 
+  labs(title = "TOP-CODE by DATASET")
+
+
+#HACK BIDIRECTIONAL BAR CHART
+#SUMMARIZED == reverse static to make bidirectional
+# df_summ <- df %>% group_by(pid,TASK,DATASET,top_code,data_order) %>% 
+#   dplyr::summarise(
+#     n_utterances = n()
+#   ) %>% mutate(
+#     adj_utterances = ifelse(TASK=="static", (n_utterances*-1), (n_utterances*1))
+#   ) %>% arrange(data_order) %>% na.omit()
+#   
+#  #BIDIRECTIONAL REVERSED
+#  ggplot (df_summ, aes(x=adj_utterances, y=pid, fill = top_code)) + 
+#   geom_bar(stat="identity") + 
+#   facet_wrap(~TASK) +
+#   scale_fill_brewer(type="qual", palette = 3) +
+#   theme_minimal()
+  
+# df_hap_first <- df %>% filter(data_order == "happiness-first")
+# df_space_first <- df %>% filter(data_order == "space-first")
+# 
+# top <- gf_bar( pid ~ ., fill = ~top_code, data = df_hap_first) %>%
+#   gf_facet_grid(. ~ TASK) +
+#   scale_fill_brewer(type="qual", palette = 3)+
+#   theme_minimal()
+# 
+# bottom <- gf_bar( pid ~ ., fill = ~top_code, data = df_space_first) %>%
+#   gf_facet_grid(. ~ TASK) +
+#   scale_fill_brewer(type="qual", palette = 3)+
+#   theme_minimal()
+# 
+# top
+# bottom
+
+```
+
+```{r}
+
+df_summary <- df %>% 
+group_by(TASK,DATASET, low_code) %>% 
+  dplyr::summarise( 
+    c = n()
+  )
+
+#SUMMARY TABLE
+print("DETAIL-CODES TYPE and DATASET") 
+table(df$low_code, df$TASK, df$DATASET) %>% addmargins()
+
+
+
+# #CODED UTTERANCES BAR BY TASK and DATASET
+# # (p_coded_utterances <- 
+#   ggplot(df_summary, aes(x = TASK, y=c, fill= low_code)) + 
+#   geom_col() + 
+#   facet_grid(.~df_summary$DATASET)+
+#   # geom_text(aes(label=c), size = 3, hjust = 0.5, vjust = 1.5, position = "stack") + 
+#   scale_fill_brewer(type="qual", palette = 3) +  
+#   labs(title = "CODED Utterances by TASK and DATASET")
+#   # )
+# 
+# 
+
+
+```
+
+## PROCESS
+
+```{r PROCESS-codes}
+
+df_process <- df %>% filter(top_code == "PROCESS")
+
+
+summ_process <- df_process %>% 
+group_by(TASK,DATASET, low_code) %>% 
+  dplyr::summarise( 
+    c = n()
+  )
+
+#BY TASK
+gf_bar(df_process, ~TASK, fill = ~low_code)
+
+#BY PARTICIPANT
+gf_bar(df_process, ~TASK, fill = ~low_code) %>% 
+  gf_facet_grid(.~pid)
+
+
+```
+## DATASET
+```{r DATASET-codes}
+
+df_dataset <- df %>% filter(top_code == "DATASET")
+
+
+summ_process <- df_dataset %>% 
+group_by(TASK,DATASET, low_code) %>% 
+  dplyr::summarise( 
+    c = n()
+  )
+
+#BY TASK
+gf_bar(df_dataset, ~TASK, fill = ~low_code)
+
+#BY PARTICIPANT
+gf_bar(df_dataset, ~TASK, fill = ~low_code) %>% 
+  gf_facet_grid(.~pid)
+
+
+```
+## VARIABLE
+
+```{r VARIABLE-codes}
+
+df_variable <- df %>% filter(top_code == "VARIABLE")
+
+
+summ_process <- df_variable %>% 
+group_by(TASK,DATASET, low_code) %>% 
+  dplyr::summarise( 
+    c = n()
+  )
+
+#BY TASK
+gf_bar(df_variable, ~TASK, fill = ~low_code)
+
+#BY PARTICIPANT
+gf_bar(df_variable, ~TASK, fill = ~low_code) %>% 
+  gf_facet_grid(.~pid)
+
+
+```
+## RELATIONSHIP
+
+```{r RELATIONSHIP-codes}
+
+df_relationship <- df %>% filter(top_code == "RELATIONSHIP")
+
+
+summ_process <- df_relationship %>% 
+group_by(TASK,DATASET, low_code) %>% 
+  dplyr::summarise( 
+    c = n()
+  )
+
+#BY TASK
+gf_bar(df_relationship, ~TASK, fill = ~low_code)
+
+#BY PARTICIPANT
+gf_bar(df_relationship, ~TASK, fill = ~low_code) %>% 
+  gf_facet_grid(.~pid)
+
+
+```
+# MODELLING
+
+```{r VIZ-B4-MODEL, message=FALSE}
+
+#DEFINE DATAFRAME
+df_raw <- df_insights %>% select(pid, uid, TASK, DATASET) %>% mutate(
+  TASK = factor(TASK, levels = c("static", "ixn")) #reorder factor levels
+) %>% na.omit()
+print("WARNING: THE FOLLOWING HAVE OMMITED MISSING DATA RATHER THAN FINDING THE SOURCE")
+
+#DF SUMMARIZED BY SUBJECT
+df_subject <- df_raw %>% group_by(pid, TASK, DATASET) %>% dplyr::summarise(
+  n_utterances = n()
+)
+
+#VISUALIZE PARTICIPANTS
+gf_bar( ~ TASK, fill = ~DATASET, data = df_raw) %>% 
+gf_facet_grid(.~pid)
+
+#VISUALIZE TOTALS
+gf_bar (~ TASK, fill = ~DATASET, data = df_raw)
+gf_bar (~ DATASET, fill = ~TASK, data = df_raw)
+
+#MOSAIC PLOT
+vcd::mosaic(main="Proportion of Utterances by TASK and DATASET",
+            data = df_raw, TASK ~ DATASET, rot_labels=c(0,90,0,0), 
+            offset_varnames = c(left = 4.5), offset_labels = c(left = -0.5),just_labels = "right",
+            spacing = spacing_dimequal(unit(1:2, "lines")))
+
+
+mosaic(formula = ~DATASET + TASK, 
+       data = df_raw,
+       main = "Proportion of Utterances by TASK and DATASET", 
+       sub = "u = 734 utterance codes",
+       labeling = labeling_values,
+       labeling_args = list(set_varnames = c(graph = "TASK",
+                            datset = "DATASET")))
+
+
+
+
+```
+
+
+## UTTERANCES
+
+*How much variance in number of utterances is explained DATASET, TASK and PARTICIPANT?*
+
+### OLS Fixed Effects Models
+```{r OLS-FIXED-EFFECTS-MODELS}
+
+#NUMBER UTTERANCES predicted by DATASET + TASK --> OLS LINEAR REGRESSION
+print("OLS-LM, UTTERANCES ~ DATASET + TASK")
+m1 <- lm(n_utterances ~ DATASET + TASK, data = df_subject)
+paste("Model")
+summ(m1)
+paste("Partition Variance")
+anova(m1)
+paste("Confidence Interval on Parameter Estimates")
+confint(m1)
+report(m1) #sanity check
+plot_model(m1,  show.intercept = TRUE)
+check_model(m1)
+
+
+#NUMBER UTTERANCES predicted by DATASET X TASK --> LINEAR REGRESSION
+print("OLS-LM, UTTERANCES ~ DATASET * TASK")
+m2 <- lm(n_utterances ~ DATASET * TASK, data = df_subject)
+paste("Model")
+summ(m2)
+paste("Partition Variance")
+anova(m2)
+paste("Confidence Interval on Parameter Estimates")
+confint(m2)
+report(m2) #sanity check
+plot_model(m2,  show.intercept = TRUE)
+check_model(m2)
+
+```
+
+
+### POISSON Fixed Effects Models
+
+```{r POISSON-FIXED-EFFECTS-MODELS}
+
+#NUMBER UTTERANCES predicted by DATASET + TASK --> POISSON DISTRIBUTION
+print("GLM-POISSON, UTTERANCES ~ DATASET + TASK")
+p.1 <- glm(n_utterances ~ DATASET + TASK, data = df_subject, family = "poisson")
+paste("Model")
+summ(p.1)
+paste("Partition Variance")
+anova(p.1)
+paste("Confidence Interval on Parameter Estimates")
+confint(p.1)
+report(p.1) #sanity check
+plot_model(p.1,show.intercept = TRUE)
+check_model(p.1)
+
+#NUMBER UTTERANCES predicted by DATASET * TASK --> POISSON DISTRIBUTION
+print("GLM-POISSON, UTTERANCES ~ DATASET X TASK")
+p.2 <- glm(n_utterances ~ DATASET * TASK, data = df_subject, family = "poisson")
+paste("Model")
+summ(p.2)
+paste("Partition Variance")
+anova(p.2)
+paste("Confidence Interval on Parameter Estimates")
+confint(p.2)
+report(p.2) #sanity check
+plot_model(p.2,show.intercept = TRUE)
+check_model(p.2)
+
+```
+
+### OLS Mixed Effects Models
+```{r OLS-MIXED-EFFECTS-MODELS}
+
+#NUMBER UTTERANCES predicted by DATASET + TASK | participatnt--> MIXED LINEAR REGRESSION
+print("LMER, UTTERANCES ~ DATASET + TASK")
+mm1 <- lmer(n_utterances ~ DATASET + TASK+ (1|pid), data = df_subject)
+paste("Model")
+summ(mm1)
+paste("Partition Variance")
+anova(mm1)
+paste("Confidence Interval on Parameter Estimates")
+confint(mm1)
+report(mm1) #sanity check
+plot_model(mm1,  show.intercept = TRUE)
+check_model(mm1)
+
+
+#NUMBER UTTERANCES predicted by DATASET * TASK  | participatnt--> MIXED LINEAR REGRESSION
+print("LMER, UTTERANCES ~ DATASET X TASK")
+mm2 <- lmer(n_utterances ~ DATASET * TASK + (1|pid), data = df_subject)
+paste("Model")
+summ(mm2)
+paste("Partition Variance")
+anova(mm2)
+paste("Confidence Interval on Parameter Estimates")
+confint(mm2)
+report(mm2) #sanity check
+plot_model(mm2,  show.intercept = TRUE)
+check_model(mm2)
+```
+
+### POISSON Mixed Effects Models
+```{r POISSON-MIXED-EFFECTS-MODELS}
+
+
+#NUMBER UTTERANCES predicted by TASK + DATASET  | participatnt--> POISSON MIXED LINEAR REGRESSION
+print("POISSON-MER, UTTERANCES ~ DATASET + TASK")
+pmm1 <- glmer(n_utterances ~ TASK + DATASET + (1|pid), data = df_subject, family = "poisson")
+paste("Model")
+summ(pmm1)
+paste("Partition Variance")
+anova(pmm1)
+paste("Confidence Interval on Parameter Estimates")
+confint(pmm1)
+report(pmm1) #sanity check
+plot_model(pmm1,  show.intercept = TRUE)
+check_model(pmm1)
+
+#NUMBER UTTERANCES predicted by TASK X DATASET  | participatnt--> POISSON MIXED LINEAR REGRESSION
+print("POISSON-MER, UTTERANCES ~ DATASET X TASK")
+pmm2 <- glmer(n_utterances ~ TASK * DATASET + (1|pid), data = df_subject, family = "poisson")
+paste("Model")
+summ(pmm2)
+paste("Partition Variance")
+anova(pmm2)
+paste("Confidence Interval on Parameter Estimates")
+confint(pmm2)
+report(pmm2) #sanity check
+plot_model(pmm2,  show.intercept = TRUE)
+check_model(pmm2)
+
+```
+
+
+
+
+
+
+# TODO REPRESENTATIONS
+
+
+```{r SHAPE-REPS}
+
+#COUNTS 
+# n_rows <- df_insights %>% nrow()
+# n_unique <- nlevels(df_insights$uid)
+# n_participants <- nlevels(df_insights$pid)
+# 
+# #count number of codes per unique utterance
+# s <- df_insights %>% group_by(uid) %>% 
+#     dplyr::summarise(
+#       count = n()
+# ) %>% arrange(desc(count), .by_group = TRUE)
+# 
+# max_codes <- max(s$count)
+# 
+# #display frequencies
+# (f <- freq(s$count,
+#      order    = "freq",
+#      rows     = 1:10,
+#      headings = FALSE))
+# 
+# coded_single <- f[1,1]
+# coded_double <- f[2,1]
+```
+
+
